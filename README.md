@@ -24,7 +24,7 @@ Pick your poison — your AI will tell you what fits.
 
 You don't necessarily need all of this — go through it with your AI and see what fits. If it's too much flavour to handle, just tell your agent what to skip.
 
-This guide was built with Claude Code, Codex and Grok 4.20. Claude's the chillest and most popular, but any of them work.
+This guide was built with Claude Code, Codex and Grok 4.20. Claude's the chillest and most popular, but they all work.
 
 ### AI CLI Tools
 

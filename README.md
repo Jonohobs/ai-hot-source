@@ -1,6 +1,16 @@
 # AI Hot Sauce 🌶️
 
-A practical guide to setting up an AI-powered dev rig. Feed this to your AI assistant and it'll help you set up whatever applies to you.
+Drop this whole repo into Claude, Codex, Gemini or whatever you run and say:
+**"Build me the rig from AI Hot Sauce."**
+
+### Heat Levels 🌡️
+
+Pick your poison — your AI will tell you what fits.
+
+- **Mild** — One CLI tool + basic chat
+- **Medium** — Add memory system + hooks
+- **Ghost Pepper** — Full stack: voice, MCP servers, local models, dashboard, sub-agents
+- **Reaper** — Everything above + custom skills + 24/7 agent swarm
 
 ---
 

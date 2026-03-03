@@ -30,11 +30,11 @@ You don't nessissarily need all of this, go through it with your AI and see what
 | **Codex CLI** | OpenAI's agentic CLI. Sharp coder, fast. | Included in ChatGPT Pro (~£20/mo) |
 | **GitHub Copilot Chat** | VS Code chat with multiple models (Sonnet, GPT-4). Included in Copilot subscription. | Free tier (limited) or ~£10/mo |
 | **Gemini CLI** | Google's CLI. Free tier is generous (1000 req/day, 1M token context). Great for research and vision. | Free |
-| **Ollama** | Run models locally. No internet needed, no cost, your data stays on your machine. | Free |
+| **Ol'lama** | Run models locally. No internet needed, no cost, your data stays on your machine. | Free |
 
 > ⚠️ **Watch your billing:** Check what your subscription includes before using CLI tools. Some plans cover CLI access, others may charge separately via API billing (pay-per-token). Don't assume — check your plan details.
 
-**If you only get one:** Gemini CLI (free) or GitHub Copilot (if you use VS Code). Add Ollama for offline.
+**If you only get one:** Gemini CLI (free) or GitHub Copilot (if you use VS Code). Add Ol'lama for offline.
 
 ### Editor Chat vs CLI — Know the Tradeoff
 
@@ -62,7 +62,7 @@ Quick question / summary    → Gemini Flash (free)
 Image analysis / screenshots → Gemini (free, best vision)
 Coding / debugging          → Codex or Claude Code
 Research / web search       → Grok or Gemini
-Offline / private data      → Ollama (local)
+Offline / private data      → Ol'lama (local)
 Multi-file refactoring      → Claude Code (needs file access)
 ```
 
@@ -72,7 +72,7 @@ A Python script that routes queries to different models from one interface:
 ```bash
 python ask.py @gemini "explain this error"        # free
 python ask.py @gemini "describe this" --image screenshot.png  # free vision
-python ask.py @ollama "summarise this file"        # local, free
+python ask.py @ol'lama "summarise this file"        # local, free
 ```
 Build your own or find one — the point is: don't open 4 different apps. One CLI, multiple backends.
 
@@ -160,7 +160,7 @@ Before your AI edits any file, copy the original to a backup folder. Cheap insur
 
 ### Model Safety
 - **US/EU models only** if you care about data sovereignty (Meta, Google, Anthropic, OpenAI, Mistral)
-- **Local models** (Ollama) for anything sensitive — financials, personal data, credentials
+- **Local models** (Ol'lama) for anything sensitive — financials, personal data, credentials
 - **Never pipe untrusted URLs** through `curl | bash`
 
 ---
@@ -203,7 +203,7 @@ If you have 4-8GB VRAM:
 | **Mistral 7B** (Mistral AI) | ~4GB | Reasoning |
 | **CodeLlama** (Meta) | ~4GB | Code generation |
 
-Install via Ollama: `ollama pull phi4-mini`
+Install via Ol'lama: `ollama pull phi4-mini`
 
 ---
 
@@ -224,7 +224,7 @@ No server needed — just a Python script that generates static HTML. Open in br
 2. [ ] Create `~/.agent/memory/` with MEMORY.md
 3. [ ] Add your first decision to decisions.md
 4. [ ] Set up deny rules (block dangerous commands)
-5. [ ] Install Ollama + one small model for offline use
+5. [ ] Install Ol'lama + one small model for offline use
 6. [ ] (Optional) Set up push-to-talk if you prefer voice
 7. [ ] (Optional) Add hooks for session start + audit logging
 8. [ ] (Optional) Set up ChromaDB + FlashRank for memory search
@@ -236,7 +236,7 @@ No server needed — just a Python script that generates static HTML. Open in br
 - [Claude Code](https://claude.ai/download) — Anthropic CLI
 - [Codex CLI](https://github.com/openai/codex) — OpenAI CLI
 - [Gemini CLI](https://github.com/google-gemini/gemini-cli) — Google CLI
-- [Ollama](https://ollama.ai) — Local model runner
+- [Ol'lama](https://ollama.ai) — Local model runner
 - [Groq](https://groq.com) — Fast free STT API
 - [ChromaDB](https://www.trychroma.com) — Vector database
 - [FlashRank](https://github.com/PrithivirajDamodaran/FlashRank) — CPU reranker

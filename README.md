@@ -72,7 +72,7 @@ A Python script that routes queries to different models from one interface:
 ```bash
 python ask.py @gemini "explain this error"        # free
 python ask.py @gemini "describe this" --image screenshot.png  # free vision
-python ask.py @ol'lama "summarise this file"        # local, free
+python ask.py @ollama "summarise this file"        # local, free
 ```
 Build your own or find one — the point is: don't open 4 different apps. One CLI, multiple backends.
 
@@ -203,7 +203,7 @@ If you have 4-8GB VRAM:
 | **Mistral 7B** (Mistral AI) | ~4GB | Reasoning |
 | **CodeLlama** (Meta) | ~4GB | Code generation |
 
-Install via Ol'lama: `ollama pull phi4-mini`
+Install via Ol'lama: `ollama pull phi4-mini` (yes, the real command is `ollama`)
 
 ---
 
@@ -236,7 +236,7 @@ No server needed — just a Python script that generates static HTML. Open in br
 - [Claude Code](https://claude.ai/download) — Anthropic CLI
 - [Codex CLI](https://github.com/openai/codex) — OpenAI CLI
 - [Gemini CLI](https://github.com/google-gemini/gemini-cli) — Google CLI
-- [Ol'lama](https://ollama.ai) — Local model runner
+- [Ollama](https://ollama.ai) — Local model runner
 - [Groq](https://groq.com) — Fast free STT API
 - [ChromaDB](https://www.trychroma.com) — Vector database
 - [FlashRank](https://github.com/PrithivirajDamodaran/FlashRank) — CPU reranker

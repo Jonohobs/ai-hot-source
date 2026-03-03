@@ -1,5 +1,9 @@
 # AI Hot Sauce 🌶️
 
+<p align="center">
+  <img src="logo.jpg" alt="AI Hot Sauce" width="300">
+</p>
+
 Drop this whole repo into Claude, Codex, Gemini or whatever you run and say:
 **"Build me the rig from AI Hot Sauce."**
 

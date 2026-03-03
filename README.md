@@ -192,7 +192,7 @@ Worth building skills for:
 
 ---
 
-## Local Models — Home-Grown, Grass-Fed Ol'lamas
+## Local Models — 2-4GB GPU Friendly (Home-Grown, Grass-Fed Ol'lamas)
 
 If you have 4-8GB VRAM:
 

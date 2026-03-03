@@ -28,13 +28,13 @@ This guide was built with Claude Code, Codex and Grok 4.20. Claude's the chilles
 
 ### AI CLI Tools
 
-| Tool | What it does | Cost |
-|------|-------------|------|
-| **Claude Code** | Anthropic's CLI. Reads/writes files, runs commands, has subagents and hooks. Best multi-file editor. | Included in Claude Pro (~£17/mo) |
-| **Codex CLI** | OpenAI's agentic CLI. Sharp coder, fast. | Included in ChatGPT Pro (~£20/mo) |
-| **GitHub Copilot Chat** | VS Code chat with multiple models (Sonnet, GPT-4). Included in Copilot subscription. | Free tier (limited) or ~£10/mo |
-| **Gemini CLI** | Google's CLI. Free tier is generous (1000 req/day, 1M token context). Great for research and vision. | Free |
-| **Ol'lama** | Run models locally. No internet needed, no cost, your data stays on your machine. | Free |
+| Tool | What it does |
+|------|-------------|
+| **Claude Code** | Anthropic's CLI. Reads/writes files, runs commands, has subagents and hooks. Best multi-file editor. |
+| **Codex CLI** | OpenAI's agentic CLI. Sharp coder, fast. |
+| **GitHub Copilot Chat** | VS Code chat with multiple models (Sonnet, GPT-4). Included in Copilot subscription. |
+| **Gemini CLI** | Google's CLI. Free tier is generous (1000 req/day, 1M token context). Great for research and vision. |
+| **Ol'lama** | Run models locally. No internet needed, no cost, your data stays on your machine. |
 
 > ⚠️ **Watch your billing:** Check what your subscription includes before using CLI tools. Some plans cover CLI access, others may charge separately via API billing (pay-per-token). Don't assume — check your plan details.
 

@@ -141,6 +141,14 @@ Your AI gets measurably dumber as its context window fills up. This section matt
 
 Your AI forgets everything between sessions. Fix that.
 
+### Know, Don't Infer
+
+When you ask your AI a question, it should check its memory and verify before answering — not guess from vibes. Add this rule to your config:
+
+> When asked a question, search memory files and verify before answering. Reason through it, look it up, confirm it. Don't infer when you can know.
+
+This one rule stops a surprising amount of confident-sounding wrong answers.
+
 ### Memory Architecture
 
 Create a `~/.agent/memory/` folder with these files:

@@ -70,6 +70,33 @@ Offline / private data      → Ol'lama (local)
 Multi-file refactoring      → Claude Code (needs file access)
 ```
 
+### Beware Agent Bias
+
+Agents can drift into two bad habits:
+
+- **Responsibility overreach:** acting like they own product decisions instead of executing your intent.
+- **Vendor bias:** nudging you toward one ecosystem while dismissing viable alternatives.
+
+Countermeasures:
+- Keep final decisions human-owned for architecture, cost, and tooling.
+- Ask for at least 2 alternatives with tradeoffs on major choices.
+- Require evidence for recommendations (benchmarks, docs, test output, costs).
+- Use a second agent for periodic disagreement review.
+- Prefer neutral wording in prompts: "compare options" over "use X."
+
+### Approval Policy: Fast by Default, Guardrails for Risk
+
+Auto or low-friction:
+- Read-only commands (`rg`, `ls`, `cat`, logs)
+- Normal repo file edits
+- Local test/lint/build/format loops
+
+Keep guardrails/manual checks for:
+- Destructive deletes (`rm -rf`, `del /s /q`, `rd /s /q`)
+- Risky git (`reset --hard`, force push, aggressive clean/rebase)
+- Deploy/release actions (`vercel --prod`, `npm publish`, infra apply/deploy)
+- Sensitive paths (e.g. `~/.ssh/*`)
+
 ### ask.py — One Command, Multiple Models
 
 A Python script that routes queries to different models from one interface:
@@ -82,24 +109,130 @@ Build your own or find one — the point is: don't open 4 different apps. One CL
 
 ---
 
+## Context Management — Keep Your AI Sharp
+
+Your AI gets measurably dumber as its context window fills up. This section matters more than most people realise.
+
+### What Degrades AI Output Quality
+
+1. **Context bloat.** The "lost in the middle" problem is real and documented. At 70%+ context, the model is measurably worse at following instructions and catching details.
+2. **Redundant instructions.** The same rule in your config file AND injected by a hook doesn't help — it just costs attention budget.
+3. **Irrelevant context.** If your AI is loaded with Project A details and you ask about Project B, it's spending capacity filtering noise.
+4. **Competing priorities.** When 6 practice checklists, inbox items, memory rules, and evaluation criteria are all active, the model reasons about *which rule applies* instead of *solving your problem*.
+5. **Long conversation history.** Many file reads, large agent outputs, and long back-and-forth all accumulate.
+
+### When to Save, Compact, and Clear
+
+- **Save before compact AND clear.** Both are lossy. Anything important should hit your memory files first.
+- **Compact at 40-50%.** Later = the model is already degraded and the summary itself is lower quality.
+- **Clear > compact for quality.** Compact keeps a vague summary. Clear + good memory save = sharp restart with exactly what matters.
+- **Build a pre-compact hook** that saves state, not just a timestamp marker.
+
+### What This Means for Your Setup
+
+- Keep your always-loaded config file short. Under 100 lines is good. Under 80 is better.
+- Don't repeat instructions across multiple injection points (config file, hooks, memory files).
+- Use session modes (see below) to skip context injection on simple tasks.
+- `/clear` between unrelated topics. The quality improvement is immediate and noticeable.
+
+---
+
 ## Memory System
 
 Your AI forgets everything between sessions. Fix that.
 
-### Persistent Memory Files
-Create a `~/.agent/memory/` folder (or wherever you like) with markdown files:
-- **MEMORY.md** — critical rules and quick references (always loaded)
-- **decisions.md** — why you chose X over Y (you'll forget, your AI will forget)
-- **learnings.md** — what worked, what didn't
-- **inbox.md** — dump thoughts here, curate later
+### Memory Architecture
 
-**Key rule:** Keep MEMORY.md short (<200 lines). Link to topic files for details. Your AI loads this every session — bloat kills it.
+Create a `~/.agent/memory/` folder with these files:
 
-### RAG Search (optional, powerful)
-- **ChromaDB** + **FlashRank** reranker = semantic search over all your notes
-- Index your memory files, search by meaning not just keywords
-- FlashRank is CPU-only, tiny, and dramatically improves search quality
-- `pip install chromadb flashrank`
+| File | What it stores | Who writes |
+|------|---------------|------------|
+| `MEMORY.md` | Critical rules, quick references. Always loaded. Keep under 200 lines. | Your primary AI tool |
+| `context.md` | Who you are — role, skills, hardware, preferences. Your AI reads this to know you. | Your primary AI tool |
+| `decisions.md` | Why you chose X over Y, with dates. You'll forget, your AI will forget. | Your primary AI tool |
+| `learnings.md` | What worked, what didn't. Solutions to problems you've hit. | Your primary AI tool |
+| `practices.md` | Triggered checklists (see Practices section below). | Your primary AI tool |
+| `inbox.md` | Quick-capture scratchpad. Dump thoughts here, curate later. | Any tool or manual |
+| `priorities.md` | What matters now. Task ranking. | Your primary AI tool |
+| `model-routing.md` | Which model for which task. Cost strategy. | Your primary AI tool |
+
+**Key rules:**
+- **Single writer for main files.** One AI tool owns the main memory files. Others can read any file but only append to `inbox.md`. This prevents quality dilution.
+- **Keep MEMORY.md short** (<200 lines). Link to topic files for details. Your AI loads this every session — bloat kills quality.
+- **Archive at ~100 lines.** When a file gets long, move detail to `archive/`, leave a summary + pointer. Never delete — archive preserves full resolution.
+- **Pointer-based references.** Store references to docs, not full copies.
+- **Save before `/clear` or session end.** Context loss is painful.
+- **Attribution format:** `### [YYYY-MM-DD] Title` + `**Source:** Tool / Model`
+
+Claude Code users: drop a `CLAUDE.md` in your project root for automatic session loading. This is your behavioural config — vibe, rules, shortcuts, references.
+
+### Decision Log — The Most Underrated File
+
+`decisions.md` is the highest-value memory file. After a few weeks you'll have dozens of entries like:
+
+```markdown
+### [2026-02-22] Chose RealityScan over COLMAP
+**Source:** Claude Code / Opus
+RealityScan is 10-50x faster, has full CLI, EU company, free for <$1M revenue.
+COLMAP is open source but slow and finicky on Windows.
+```
+
+This prevents you from re-researching the same decision. It prevents your AI from suggesting something you already rejected. It builds institutional knowledge that survives session boundaries.
+
+### Learnings Log
+
+`learnings.md` captures solutions to problems:
+
+```markdown
+### [2026-02-24] mx-auto Centering Requires Explicit Width
+**Source:** Claude Code / Sonnet
+**Problem:** mx-auto only centres a block element if it has explicit width or w-full.
+**Solution:** Always pair max-w-* mx-auto with w-full.
+```
+
+When your AI hits a similar problem months later, it finds this instead of rediscovering it.
+
+### RAG Search — Tiered Semantic Index
+
+ChromaDB + FlashRank reranker = search your knowledge by meaning, not just keywords. Organised in tiers so searches stay fast and relevant:
+
+| Tier | What's indexed | Searched by default? |
+|------|---------------|---------------------|
+| **Core** | Memory files, project docs (README/DESIGN/HANDOFF) | Yes |
+| **Source** | Project source code (.py/.ts/.js), depth-limited, capped at 500 files | No — opt-in with `-c source` |
+| **Session** | Conversation logs (human + assistant text only, last 30 days) | No — opt-in with `-c session` |
+
+```bash
+pip install chromadb flashrank
+
+python memory-search.py index                          # full rebuild (all tiers)
+python memory-search.py update                         # incremental (changed files only)
+python memory-search.py search "centering bug"         # core tier (default)
+python memory-search.py search "WebSocket client" -c source   # source code only
+python memory-search.py search "that auth discussion" -c session  # session logs only
+```
+
+FlashRank is CPU-only, ~22MB, and dramatically improves result ranking.
+
+---
+
+## Practices — Triggered Checklists
+
+Practices are checklists that fire when specific conditions are met. They catch mistakes before they happen.
+
+| ID | Name | When it fires | What it checks |
+|----|------|--------------|----------------|
+| P000 | CSS Centering | Writing layout classes in frontend files | mx-auto needs explicit width, copy full class sets from reference |
+| P001 | Build Rails First | Starting a new feature | Test after each layer, don't add complexity before the foundation works |
+| P002 | Test Harness First | Creating a new project | Install test framework, write 1 trivial test before any real code |
+| P003 | Verify Before Done | About to claim something is complete | Run tests, lint, manual check. Prove it works. |
+| P004 | Measure First | Performance optimisation | Profile before changing. Measure the delta. Gut feelings are hypotheses. |
+| P005 | Session Start | New session | Load context, check inbox, note where you left off |
+| P006 | Session End | Wrapping up or high context % | Save decisions, learnings, task state to memory |
+| P007 | Track Measure Optimise | Every task | Baseline, work, measure, learn |
+| P008 | OSS Security | Ingesting any GitHub/OSS code | Read-only first, verify legitimacy, scan for injection, no blind execution |
+
+These live in `~/.agent/memory/practices.md`. Your hooks can pattern-match tool calls and inject the relevant checklist before execution.
 
 ---
 
@@ -107,18 +240,50 @@ Create a `~/.agent/memory/` folder (or wherever you like) with markdown files:
 
 Hooks are scripts that run before/after your AI does things. Claude Code has native hook support. For other tools, you can script similar behaviour.
 
-### What hooks are worth having:
+### Hooks Worth Having
+
 | Hook | When it fires | What it does |
 |------|--------------|-------------|
-| **Session start** | New conversation | Loads your memory, shows inbox items, reminds you where you left off |
-| **Pre-tool guard** | Before file edits | Backs up files before AI modifies them. Catches bad patterns. |
-| **Post-tool memory** | After file writes | Auto-indexes new files into your search system |
-| **Pre-compact** | Before context compression | Saves conversation state so you don't lose context |
+| **Session start** | New conversation | Loads memory, shows inbox, surfaces what changed since last session |
+| **Pre-tool guard** | Before file edits | Pattern-matches for known gotchas (CSS centering, SDK bias, dangerous commands) and injects the relevant practice checklist |
+| **Post-tool memory** | After file writes | Auto-indexes new/changed files into your search system |
+| **Pre-compact** | Before context compression | Saves conversation state (decisions, learnings, task progress) to memory files |
 | **Audit log** | After bash commands | Logs what commands your AI ran (security + debugging) |
-| **Context monitor** | After any action | Warns you when context window is getting full |
 
-### Example: Session Start Hook
-Your AI starts every session by reading your memory files and giving you a "since last time" briefing. No more repeating yourself.
+### What Hooks Actually Do (Specific Examples)
+
+The pre-tool hook pattern-matches tool calls:
+- **Edit/Write to `.tsx`/`.css` + layout classes** → injects CSS centering checklist
+- **`git push`/`deploy`/`build` commands** → injects verify-before-done checklist
+- **`WebSearch`/`WebFetch`** → reminds to try free Gemini first
+- **Screenshot/image reads** → reminds to use Gemini vision (free, best at it)
+- **Anthropic SDK imports** → flags provider neutrality check
+
+If nothing matches, the hook exits silently. No overhead on most tool calls.
+
+**Important tradeoff:** Hook injections add tokens to your context. Over a long session with many tool calls, this adds up. In lean mode (see Session Modes), skip all injections for simple tasks where you don't need guardrails.
+
+---
+
+## Session Modes
+
+Not every task needs your full rig context. Session modes let you control how much gets loaded.
+
+| Mode | What loads | Good for |
+|------|-----------|----------|
+| **Normal** | Everything — practices, inbox, memory reading, full hooks | Regular development work |
+| **Lean** | Just your config rules. No practices, no inbox, no memory injection. | Quick one-off tasks, simple fixes |
+| **Clean** | Bare skeleton. No personal context. Just file structure pointers. | Sharing the rig, fresh starts, onboarding |
+
+### How to switch (Claude Code)
+
+Say "lean mode", "clean mode", or "normal mode". Your AI writes the mode to a state file. Then `/clear` to restart the session with the new mode active.
+
+The session-start hook reads `~/.agent/state/session-mode` and adjusts what it injects.
+
+### Why this matters
+
+Your full startup context is ~3-5K tokens. On a "fix this one typo" task, that's wasted context window competing for the model's attention. Lean mode gives it back. The quality difference on simple tasks is real.
 
 ---
 
@@ -301,6 +466,46 @@ Worth building skills for:
 
 ---
 
+## Dual-Agent Pattern
+
+If you're running two AI tools (e.g. Claude Code + Codex), use them together instead of separately:
+
+1. Primary agent implements.
+2. Secondary agent reviews only (bugs, regressions, missing tests).
+3. Resolve findings once.
+4. When agents disagree, trust runnable evidence (tests/logs).
+
+Switch roles daily if you want freshness.
+
+### Fast Handoff Template
+
+For quick tasks (<= 1 hour), use this to keep agents aligned:
+
+```md
+## Assignment
+- Primary agent:
+- Secondary agent:
+- Goal:
+
+## Changes
+- Files touched:
+- What changed:
+
+## Verify
+- Commands:
+- Result: `pass` | `fail`
+
+## Review
+- Top findings (max 3):
+- Fixes applied:
+
+## Ship
+- Status: `ready` | `needs work` | `blocked`
+- Next step:
+```
+
+---
+
 ## Local Models — 2-4GB GPU Friendly (Home-Grown, Grass-Fed Ol'lamas 🦙)
 
 If you have 2-4GB+ VRAM:
@@ -327,6 +532,25 @@ No server needed — just a Python script that generates static HTML. Open in br
 
 ---
 
+## Tools That Earn Their Keep
+
+Scripts that live in `~/.agent/tools/` and get used regularly:
+
+| Tool | What it does |
+|------|-------------|
+| `ask.py` | Multi-model CLI router. Gemini (free), Ol'lama (local), Groq. Text + vision. |
+| `memory-search.py` | Tiered ChromaDB search — memory, docs, source code, session logs. FlashRank reranker. |
+| `dashboard.py` | Generates HTML dashboard — context %, tokens, projects, status. |
+| `rig-doctor.py` | Infrastructure audit — checks hooks, tasks, paths, state files. |
+| `package-rig.py` | Generates sanitized, shareable version of your rig (strips personal data). |
+| `mine-conversations.py` | Extracts learnings from past session logs. |
+| `integrity-check.py` | Verifies file hashes against expected state. Catches unexpected changes. |
+| `voice-daemon.py` | Push-to-talk daemon. Groq STT, singleton lock, auto-paste. |
+
+You don't need all of these. `ask.py` and `memory-search.py` are the highest-value. Build the rest as you need them.
+
+---
+
 ## Extra Toppings — Bonus Tools
 
 These aren't essential but they're worth knowing about. All free or self-hostable.
@@ -343,22 +567,97 @@ These aren't essential but they're worth knowing about. All free or self-hostabl
 
 ---
 
-## Clawd's Claws 🐾 — Pixel Art Sprint
+## Clawd's Claws 🦀 — Screen Pointer Overlay
 
-A set of Python scripts for generating and rendering pixel art sprites in the terminal. Define characters as simple text grids, map letters to colours, and render them as PNGs, ANSI terminal art, or HTML previews.
+Clawd's claws ain't working right, grabbing at damn near everything — the claws want what they want.
 
-**What's in the box:**
+A pixel art claw in Claude orange that slides out from the screen edge, grabs at whatever you point it at, and talks to you through a speech bubble. Think of it as your AI's physical hand reaching into your screen.
+
+```
+                                ████████   ← top prong
+                                █
+|═══════════════════════════════█          ← arm extends from screen edge
+                                █
+                                ████████   ← bottom prong
+```
+
+### What It Does
+
+- Transparent, always-on-top, click-through overlay (Python/tkinter)
+- Claw extends from left or right edge toward any (x, y) coordinate
+- Auto-detects which side to come from based on target position
+- Smooth ease-out animation with a pulsing white dot at the prong tips
+- Speech bubble anchored at the screen edge — the speaker talks from off-screen
+- Polls `instruction.json` — update the file, claw repoints
+
+### How to Use It
+
+```bash
+# Demo mode — watch it go, clamp clamp
+python overlay.py --demo
+
+# Normal mode — watches instruction.json for targets
+python overlay.py
+
+# Point at something from another terminal
+python point.py 600 400 "Click 'Projects'"
+python point.py 1200 300 "Open this menu" right
+python point.py hide
+```
+
+### Hook It Up to Your Browser
+
+The real play: your AI reads a screenshot, identifies where the user should click, writes `instruction.json`, and the claw points at it. Step-by-step guided walkthroughs with a physical pointer.
+
+```
+instruction.json  ←  Your AI writes this (or point.py for testing)
+       ↓
+   overlay.py     ←  Polls JSON every 250ms, animates claw to target
+```
+
+Escape to quit. That's it. The claws do the rest.
+
+### Pixel Art Toolkit 🐾
+
+Also in the box: a set of Python scripts for generating and rendering pixel art sprites in the terminal. Define characters as simple text grids, map letters to colours, render as PNGs, ANSI terminal art, or HTML previews.
+
 - `make_clawd.py` — char grid → scaled PNG (PIL)
 - `print_sprite.py` — ANSI half-block renderer (one terminal char = two pixels, zero deps)
 - `preview.py` — char grid → HTML table with coloured cells
 - `terminal_preview.py` — ANSI art → self-contained HTML page
-- `analyze_sprite.py` — reverse-engineer sprites from screenshots (detect colours, crop, export as ASCII grid)
+- `analyze_sprite.py` — reverse-engineer sprites from screenshots
 
-**The catch:** These are rough. Some bugs, some unfinished features. That's the point — grab them, feed them to your AI, and see if you can get them working. Good practice for AI-assisted debugging.
-
-**Sprites so far:** A character with a newsboy hat, a Stardew-style tree. TODO: house, campfire, stars, more hat variants.
+**The catch:** These are rough. Some bugs, some unfinished features. That's the point — grab them, feed them to your AI, and see if you can get them working.
 
 **Try it:** Tell your AI "Here's a pixel art toolkit with some bugs. Help me get it working and make a new sprite."
+
+---
+
+## Cross-Platform CLI Setup
+
+### Shells
+
+- **Windows:** PowerShell 7 (not the built-in v5.1)
+- **Mac:** Zsh (default)
+- **Linux:** Bash
+
+### Terminal Emulators
+
+Don't use the default app. Get one with tabs, split-panes, and themes:
+
+- **Windows:** Windows Terminal
+- **Mac:** iTerm2 or Warp
+- **Linux:** Alacritty or Kitty
+
+### Package Managers
+
+- **Windows:** Winget (built-in) or Chocolatey
+- **Mac:** Homebrew
+- **Linux:** apt, dnf, or pacman
+
+### Git Config
+
+Set your global identity once: `git config --global user.name "Your Name"`. Windows tip: select "OpenSSH" during Git for Windows install so SSH keys work the same everywhere.
 
 ---
 

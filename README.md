@@ -14,7 +14,7 @@ Or just chuck it into ChatGPT or Gemini if you want.
 Pick your poison — your AI will tell you what fits.
 
 - **Mild** — One CLI tool + model routing
-- **Medium** — Add persistent memory + hooks + audit logging
+- **Medium** — Add persistent memory + hooks
 - **Ghost Pepper** — Full stack: voice input, MCP (CLI convenience plugins), local models, RAG search, dashboard
 - **Reaper** — Everything above + custom skills, subagent prompts, scheduled automation (all local-first where possible; home-grown, grass-fed Ol'lamas 🦙)
 
@@ -22,7 +22,7 @@ Pick your poison — your AI will tell you what fits.
 
 ## The Stack
 
-You don't necessarily need all of this — go through it with your AI and see what fits. If it's too much flavour to handle, just tell your agent what to skip.
+Flavour text aside, you're free to take or leave any of these — ask your AI what they are and if you even want them. Who knows, they could be old news in a couple of days with the way things move.
 
 This guide was built with Claude Code, Codex and Grok 4.20. Claude's the chillest and most popular, but they all work.
 

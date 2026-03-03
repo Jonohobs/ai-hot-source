@@ -14,7 +14,7 @@ Pick your poison — your AI will tell you what fits.
 - **Mild** — One CLI tool + model routing
 - **Medium** — Add persistent memory + hooks + audit logging
 - **Ghost Pepper** — Full stack: voice input, MCP servers, local models, RAG search, dashboard
-- **Reaper** — Everything above + custom skills, subagent prompts, scheduled automation
+- **Reaper** — Everything above + custom skills, subagent prompts, scheduled automation (all local-first where possible; home-grown, grass-fed Ol'lamas)
 
 ---
 
@@ -192,7 +192,7 @@ Worth building skills for:
 
 ---
 
-## Local Models That Actually Fit on Consumer GPUs
+## Local Models — Home-Grown, Grass-Fed Ol'lamas
 
 If you have 4-8GB VRAM:
 

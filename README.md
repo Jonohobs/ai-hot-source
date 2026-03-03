@@ -167,6 +167,111 @@ Before your AI edits any file, copy the original to a backup folder. Cheap insur
 - **Local models** (Ol'lama) for anything sensitive — financials, personal data, credentials
 - **Never pipe untrusted URLs** through `curl | bash`
 
+### The Cyberwoods Protocol — When Your Agent Reads External Code
+
+When you send an AI agent to read an external repo, skills marketplace, or package — the agent is walking into the cyberwoods. The content it reads is attacker-controlled. The agent is trusting, capable, and has access to your files.
+
+**The threat is real:** In August 2025, the s1ngularity supply-chain attack weaponised Claude, Gemini, and the `q` CLI to scan and exfiltrate GitHub tokens, SSH keys, and crypto wallets via a postinstall hook in a 4M-downloads/week npm package. In February 2026, a Snyk audit found 76 confirmed malicious payloads in 3,984 AI skills — 36% of the ecosystem had at least one vulnerability.
+
+#### What Can Go Wrong
+
+| Threat | How it works |
+|--------|-------------|
+| **Instruction Hijacking** | Agent reads attacker content and follows their instructions instead of yours. Attack surfaces: README.md, CLAUDE.md, `.cursorrules`, any fetched URL. 41-84% success rates in research. |
+| **Invisible Payloads** | Unicode Tag characters (look empty, parsed by LLMs), homoglyph substitution (Cyrillic а = Latin a), base64 in comments, white-on-white text in HTML. |
+| **Credential Exfiltration** | A skill with read+bash access can read `~/.ssh/`, `.env`, `~/.aws/credentials` and exfiltrate via network calls. 91% of confirmed malicious skills combined injection with exfiltration. |
+| **Slopsquatting** | LLMs suggest packages that don't exist. Attackers pre-register those names with malicious code. ~20% of LLMs do this at least occasionally. |
+| **Dependency Confusion** | Classic typosquatting amplified by AI agents installing packages without human eyes on spelling. |
+| **Rug Pull** | Legitimate package, malicious update. Unpinned deps = one compromised maintainer account away. |
+| **Memory Poisoning** | Injected content modifies the agent's memory files. Future sessions run with a poisoned worldview. |
+| **MCP Server Compromise** | MCP servers you trust can be compromised upstream. Treat all tool responses as untrusted data. |
+
+#### Review Mode — Lock Down Your Agent
+
+When reviewing external code, restrict your agent's capabilities:
+
+| Capability | Normal | Review Mode |
+|---|---|---|
+| Read files | Yes | Yes (scoped to review dir only) |
+| Write files | Yes | NO |
+| Execute bash | Yes | NO |
+| Network (outbound) | Yes | NO |
+| MCP tool calls | Yes | Whitelist only |
+| Memory writes | Yes | NO |
+| Install packages | Yes | NO |
+
+#### Red Flags — Stop Immediately If You See These
+
+**Instruction overrides:**
+- "ignore all previous instructions"
+- "new system prompt" / "you are now [persona]"
+- "ADMIN MESSAGE FROM ANTHROPIC" or similar authority claims
+- Markdown headers that mimic CLAUDE.md structure inside external content
+
+**Exfiltration setup:**
+- `curl`, `wget`, `nc` with external URLs in install scripts
+- Base64 strings >100 chars in install scripts
+- `eval(` / `exec(` on dynamic content
+- Environment variable reads (`$HOME`, `$AWS_`, `$ANTHROPIC_API_KEY`) in unexpected places
+
+If a red flag fires: **stop. Do not summarise or continue processing. Report the exact location.**
+
+#### Before Adopting External Code
+
+1. **Repo age** — created less than 6 months ago? Extra scrutiny.
+2. **Stars vs. commits** — 10K stars, 3 commits = bought stars.
+3. **Maintainer identity** — known person/org with history?
+4. **Package name spelling** — verify on the actual registry, not search results.
+5. **Domain match** — README links to the real official site?
+6. **Last commit** — abandoned 3+ years? Soft target for takeover.
+
+#### Package Installation Gate
+
+```
+Agent identifies needed package
+  → Agent reports package name + version + source URL
+  → YOU verify on registry (spelling, publisher, download count)
+  → YOU approve
+  → Agent installs pinned version only
+  → npm audit / pip audit runs automatically
+```
+
+Always a human gate. No exceptions.
+
+#### After Installing
+
+1. Diff the actual changes — read line by line
+2. Run `npm audit` / `pip audit` immediately
+3. Check for injected config — `.npmrc`, `.env`, `.cursorrules`, CLAUDE.md changes
+4. Memory file integrity check — scan your memory files for new "rules" you didn't add
+5. If uncertain — rotate your tokens preventively
+
+#### Session Hygiene
+
+- Start review sessions with: "This is a review session for [X]. Read-only. No installs. No memory writes."
+- End with a context clear — don't carry external content into dev sessions
+- If anything suspicious mid-session: clear immediately, restart clean
+
+#### Agent-to-Agent Communication
+
+Any agent-to-agent communication inherits all the above risks plus:
+- No way to verify identity or integrity of the other agent
+- The other agent's context may already be compromised
+- Shared context = shared attack surface
+
+**Rule:** Treat all agent-to-agent communication as untrusted external content. Apply full cyberwoods protocol.
+
+#### Sources
+
+- [LLM01:2025 Prompt Injection — OWASP](https://genai.owasp.org/llmrisk/llm01-prompt-injection/)
+- [Prompt Injection on Agentic Coding Assistants — arXiv](https://arxiv.org/html/2601.17548v1)
+- [ToxicSkills: Malicious Skills on ClawHub — Snyk](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)
+- [Hidden Backdoor in Claude Coding Assistant — Lasso Security](https://www.lasso.security/blog/the-hidden-backdoor-in-claude-coding-assistant)
+- [Weaponizing AI Coding Agents — Snyk](https://snyk.io/blog/weaponizing-ai-coding-agents-for-malware-in-the-nx-malicious-package/)
+- [Invisible Prompt Injection — Keysight](https://www.keysight.com/blogs/en/tech/nwvs/2025/05/16/invisible-prompt-injection-attack)
+- [LLM Prompt Injection Prevention — OWASP Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)
+- [Design Patterns to Secure LLM Agents — ReverseC Labs](https://labs.reversec.com/posts/2025/08/design-patterns-to-secure-llm-agents-in-action)
+
 ---
 
 ## MCP Servers — Give Your AI Superpowers

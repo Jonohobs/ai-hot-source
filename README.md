@@ -339,6 +339,7 @@ These aren't essential but they're worth knowing about. All free or self-hostabl
 | **OpenCode** | Provider-agnostic coding agent. 75+ LLM providers through one terminal UI. Route Gemini or Ol'lama through a proper coding agent for free. | `npm i -g opencode-ai@latest` |
 | **LiteLLM** | API proxy — lets Claude-compatible tools talk to Gemini/Ol'lama instead. Point your client at localhost, save money. Uses official APIs only. | `pip install litellm` |
 | **OpenRouter** | Multi-model gateway. 200+ models, pay-per-token, no subscriptions. Good for agent health checks and fallback routing. | API key from openrouter.ai |
+| **Godot** | Open-source game engine. 2D/3D, GDScript (Python-like), ships to web/mobile/desktop. AI agents can write GDScript and scene files directly. Great for making games with your trusty Hot Sauce-powered dev bot. | Free, [godotengine.org](https://godotengine.org) |
 
 ---
 

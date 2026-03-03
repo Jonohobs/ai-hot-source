@@ -32,7 +32,7 @@ This guide was built with Claude Code, Codex and Grok 4.20. Claude's the chilles
 |------|-------------|
 | **Claude Code** | Anthropic's CLI. Reads/writes files, runs commands, has subagents and hooks. Best multi-file editor. |
 | **Codex CLI** | OpenAI's agentic CLI. Sharp coder, fast. |
-| **GitHub Copilot Chat** | VS Code chat with multiple models (Sonnet, GPT-4). Included in Copilot subscription. |
+| **GitHub Copilot Chat** | VS Code chat with multiple models (Sonnet, GPT-4o). Included in Copilot subscription. |
 | **Gemini CLI** | Google's CLI. Free tier is generous (1000 req/day, 1M token context). Great for research and vision. |
 | **Ol'lama** | Run models locally. No internet needed, no cost, your data stays on your machine. |
 
@@ -679,7 +679,7 @@ Set your global identity once: `git config --global user.name "Your Name"`. Wind
 - [Claude Code](https://claude.ai/download) — Anthropic CLI
 - [Codex CLI](https://github.com/openai/codex) — OpenAI CLI
 - [Gemini CLI](https://github.com/google-gemini/gemini-cli) — Google CLI
-- [Ollama](https://ollama.ai) — Local model runner
+- [Ollama](https://ollama.com) — Local model runner
 - [Groq](https://groq.com) — Fast free STT API
 - [ChromaDB](https://www.trychroma.com) — Vector database
 - [FlashRank](https://github.com/PrithivirajDamodaran/FlashRank) — CPU reranker

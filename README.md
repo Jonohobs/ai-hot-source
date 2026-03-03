@@ -327,6 +327,40 @@ No server needed — just a Python script that generates static HTML. Open in br
 
 ---
 
+## Extra Toppings — Bonus Tools
+
+These aren't essential but they're worth knowing about. All free or self-hostable.
+
+| Tool | What it does | Install |
+|------|-------------|---------|
+| **Langfuse** | Open-source observability for AI calls. Traces agent actions, RAG retrieval, latency, cost. Self-hostable, no vendor lock-in. | `pip install langfuse` |
+| **OpenWebUI** | Full ChatGPT-style web UI for Ol'lama. Voice, vision, RAG, model switching. Great for showing non-technical people what your stack does. | `docker run -d -p 3000:8080 ghcr.io/open-webui/open-webui:main` |
+| **Mem0** | Entity memory — remembers facts about people and things across sessions. Goes beyond document search. | `pip install mem0ai` |
+| **OpenCode** | Provider-agnostic coding agent. 75+ LLM providers through one terminal UI. Route Gemini or Ol'lama through a proper coding agent for free. | `npm i -g opencode-ai@latest` |
+| **LiteLLM** | API proxy — lets Claude-compatible tools talk to Gemini/Ol'lama instead. Point your client at localhost, save money. Uses official APIs only. | `pip install litellm` |
+| **OpenRouter** | Multi-model gateway. 200+ models, pay-per-token, no subscriptions. Good for agent health checks and fallback routing. | API key from openrouter.ai |
+
+---
+
+## Clawd's Claws 🐾 — Pixel Art Sprint
+
+A set of Python scripts for generating and rendering pixel art sprites in the terminal. Define characters as simple text grids, map letters to colours, and render them as PNGs, ANSI terminal art, or HTML previews.
+
+**What's in the box:**
+- `make_clawd.py` — char grid → scaled PNG (PIL)
+- `print_sprite.py` — ANSI half-block renderer (one terminal char = two pixels, zero deps)
+- `preview.py` — char grid → HTML table with coloured cells
+- `terminal_preview.py` — ANSI art → self-contained HTML page
+- `analyze_sprite.py` — reverse-engineer sprites from screenshots (detect colours, crop, export as ASCII grid)
+
+**The catch:** These are rough. Some bugs, some unfinished features. That's the point — grab them, feed them to your AI, and see if you can get them working. Good practice for AI-assisted debugging.
+
+**Sprites so far:** A character with a newsboy hat, a Stardew-style tree. TODO: house, campfire, stars, more hat variants.
+
+**Try it:** Tell your AI "Here's a pixel art toolkit with some bugs. Help me get it working and make a new sprite."
+
+---
+
 ## Quick Setup Checklist
 
 1. [ ] Install at least one AI CLI tool (Gemini CLI is free)

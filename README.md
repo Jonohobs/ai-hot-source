@@ -1,4 +1,4 @@
-# Jono's AI Hot Sauce 🌶️
+# AI Hot Sauce 🌶️
 
 A practical guide to setting up an AI-powered dev rig. Feed this to your AI assistant and it'll help you set up whatever applies to you.
 

@@ -7,20 +7,24 @@
 Drop this whole repo into Claude, Codex, Gemini or whatever you run and say:
 **"Build me the rig from AI Hot Sauce."**
 
+Or just chuck it into ChatGPT or Gemini if you want.
+
 ### Heat Levels 🌡️
 
 Pick your poison — your AI will tell you what fits.
 
 - **Mild** — One CLI tool + model routing
 - **Medium** — Add persistent memory + hooks + audit logging
-- **Ghost Pepper** — Full stack: voice input, MCP servers, local models, RAG search, dashboard
+- **Ghost Pepper** — Full stack: voice input, MCP (CLI convenience plugins), local models, RAG search, dashboard
 - **Reaper** — Everything above + custom skills, subagent prompts, scheduled automation (all local-first where possible; home-grown, grass-fed Ol'lamas 🦙)
 
 ---
 
 ## The Stack
 
-You don't nessissarily need all of this, go through it with your AI and see what fits, I like to run claudecode straight from the CLI (Powershell for Windows,). Pick what fits.
+You don't necessarily need all of this — go through it with your AI and see what fits. If it's too much flavour to handle, just tell your agent what to skip.
+
+I mainly use Claude Code, Codex and Grok 4.20. Claude's the chillest and most popular, but you could use any of them.
 
 ### AI CLI Tools
 
@@ -55,7 +59,7 @@ CLI tools (Claude Code, Codex) give you:
 
 ### Model Routing — Don't Overpay
 
-The biggest mistake people make is using one expensive model for everything. Route tasks to the cheapest thing that can handle them:
+Route tasks to the cheapest thing that can handle them:
 
 ```
 Quick question / summary    → Gemini Flash (free)
@@ -194,7 +198,7 @@ Worth building skills for:
 
 ## Local Models — 2-4GB GPU Friendly (Home-Grown, Grass-Fed Ol'lamas 🦙)
 
-If you have 4-8GB VRAM:
+If you have 2-4GB+ VRAM:
 
 | Model | Size | Good for |
 |-------|------|----------|

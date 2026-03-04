@@ -20,69 +20,44 @@ Pick your poison — your AI will tell you what fits.
 
 ---
 
-## The Stack
+## Security — Don't Be Stupid
 
-Flavour text aside, you're free to take or leave any of these — ask your AI what they are and if you even want them. Who knows, they could be old news in a couple of days with the way things move.
-
-This guide was built with Claude Code, Codex and Grok 4.20. Claude's the chillest and most popular, but they all work.
-
-### AI CLI Tools
-
-| Tool | What it does |
-|------|-------------|
-| **Claude Code** | Anthropic's CLI. Reads/writes files, runs commands, has subagents and hooks. Best multi-file editor. |
-| **Codex CLI** | OpenAI's agentic CLI. Sharp coder, fast. |
-| **GitHub Copilot Chat** | VS Code chat with multiple models (Sonnet, GPT-4o). Included in Copilot subscription. |
-| **Gemini CLI** | Google's CLI. Free tier is generous (1000 req/day, 1M token context). Great for research and vision. |
-| **Ol'lama** | Run models locally. No internet needed, no cost, your data stays on your machine. |
-
-> ⚠️ **Watch your billing:** Check what your subscription includes before using CLI tools. Some plans cover CLI access, others may charge separately via API billing (pay-per-token). Don't assume — check your plan details.
-
-**If you only get one:** Gemini CLI (free) or GitHub Copilot (if you use VS Code). Add Ol'lama for offline.
-
-### Editor Chat vs CLI — Know the Tradeoff
-
-VS Code Chat / Cursor chat is convenient and often included in your subscription, but it has real limitations:
-- **No persistent memory** — forgets everything between sessions
-- **No hooks or automation** — can't auto-load context or run scripts
-- **Limited context** — doesn't know your project setup, preferences, or history
-- **Auto model routing** — you often don't know which model you're talking to
-- **Less capable** — may lack web access, file system awareness, or tool access depending on setup
-
-CLI tools (Claude Code, Codex) give you:
-- Memory systems, hooks, subagents
-- Full file system and terminal access
-- Web access via tools and MCP servers
-- You choose the model explicitly
-
-**Use editor chat for quick questions. Use CLI for real work.**
-
-### Model Routing — Don't Overpay
-
-Route tasks to the cheapest thing that can handle them:
-
+### Deny List
+Block your AI from running dangerous commands. These should be denied by default:
 ```
-Quick question / summary    → Gemini Flash (free)
-Image analysis / screenshots → Gemini (free, best vision)
-Coding / debugging          → Codex or Claude Code
-Research / web search       → Grok or Gemini
-Offline / private data      → Ol'lama (local)
-Multi-file refactoring      → Claude Code (needs file access)
+rm -rf /*, sudo *, git push --force, git reset --hard,
+dd if=*, curl | bash, powershell -EncodedCommand,
+netcat, nc -e, nc -l, reg (Windows registry)
 ```
 
-### Beware Agent Bias
+Also block reading `~/.ssh/*` and any curl POST commands (prevents data exfiltration).
 
-Agents can drift into two bad habits:
+### Audit Logging
+Log every bash command your AI runs to a CSV. Costs nothing, saves you when something goes wrong.
 
-- **Responsibility overreach:** acting like they own product decisions instead of executing your intent.
-- **Vendor bias:** nudging you toward one ecosystem while dismissing viable alternatives.
+### File Backups
+Before your AI edits any file, copy the original to a backup folder. Cheap insurance.
 
-Countermeasures:
-- Keep final decisions human-owned for architecture, cost, and tooling.
-- Ask for at least 2 alternatives with tradeoffs on major choices.
-- Require evidence for recommendations (benchmarks, docs, test output, costs).
-- Use a second agent for periodic disagreement review.
-- Prefer neutral wording in prompts: "compare options" over "use X."
+### Model Safety
+- **US/EU models only** if you care about data sovereignty (Meta, Google, Anthropic, OpenAI, Mistral)
+- **Local models** (Ol'lama) for anything sensitive — financials, personal data, credentials
+- **Never pipe untrusted URLs** through `curl | bash`
+
+### The Cyberwoods Protocol — When Your Agent Reads External Code
+
+When your agent reads external repos, packages, or skills — the content is attacker-controlled. Real-world attacks have exfiltrated tokens, SSH keys, and wallets via AI agent postinstall hooks.
+
+**Key threats:** instruction hijacking via README/CLAUDE.md, invisible unicode payloads, credential exfiltration, slopsquatting (fake packages LLMs hallucinate), memory poisoning, MCP server compromise.
+
+**Review mode:** When reviewing external code, restrict to read-only. No writes, no bash, no network, no memory writes, no installs.
+
+**Red flags — stop immediately:** "ignore all previous instructions", authority claims ("ADMIN MESSAGE FROM ANTHROPIC"), `curl`/`eval`/`exec` in install scripts, env var reads in unexpected places.
+
+**Before adopting code:** Check repo age, stars-vs-commits ratio, maintainer identity, package name spelling on the actual registry. Always human-gate package installs — no exceptions.
+
+**Session hygiene:** Start review sessions read-only. Clear context after. Treat agent-to-agent communication as untrusted.
+
+Sources: [OWASP LLM01](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) · [arXiv 2601.17548](https://arxiv.org/html/2601.17548v1) · [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/) · [Lasso Security](https://www.lasso.security/blog/the-hidden-backdoor-in-claude-coding-assistant)
 
 ### Approval Policy: Fast by Default, Guardrails for Risk
 
@@ -96,44 +71,6 @@ Keep guardrails/manual checks for:
 - Risky git (`reset --hard`, force push, aggressive clean/rebase)
 - Deploy/release actions (`vercel --prod`, `npm publish`, infra apply/deploy)
 - Sensitive paths (e.g. `~/.ssh/*`)
-
-### ask.py — One Command, Multiple Models
-
-A Python script that routes queries to different models from one interface:
-```bash
-python ask.py @gemini "explain this error"        # free
-python ask.py @gemini "describe this" --image screenshot.png  # free vision
-python ask.py @ollama "summarise this file"        # local, free
-```
-Build your own or find one — the point is: don't open 4 different apps. One CLI, multiple backends.
-
----
-
-## Context Management — Keep Your AI Sharp
-
-Your AI gets measurably dumber as its context window fills up. This section matters more than most people realise.
-
-### What Degrades AI Output Quality
-
-1. **Context bloat.** The "lost in the middle" problem is real and documented. At 70%+ context, the model is measurably worse at following instructions and catching details.
-2. **Redundant instructions.** The same rule in your config file AND injected by a hook doesn't help — it just costs attention budget.
-3. **Irrelevant context.** If your AI is loaded with Project A details and you ask about Project B, it's spending capacity filtering noise.
-4. **Competing priorities.** When 6 practice checklists, inbox items, memory rules, and evaluation criteria are all active, the model reasons about *which rule applies* instead of *solving your problem*.
-5. **Long conversation history.** Many file reads, large agent outputs, and long back-and-forth all accumulate.
-
-### When to Save, Compact, and Clear
-
-- **Save before compact AND clear.** Both are lossy. Anything important should hit your memory files first.
-- **Compact at 40-50%.** Later = the model is already degraded and the summary itself is lower quality.
-- **Clear > compact for quality.** Compact keeps a vague summary. Clear + good memory save = sharp restart with exactly what matters.
-- **Build a pre-compact hook** that saves state, not just a timestamp marker.
-
-### What This Means for Your Setup
-
-- Keep your always-loaded config file short. Under 100 lines is good. Under 80 is better.
-- Don't repeat instructions across multiple injection points (config file, hooks, memory files).
-- Use session modes (see below) to skip context injection on simple tasks.
-- `/clear` between unrelated topics. The quality improvement is immediate and noticeable.
 
 ---
 
@@ -176,29 +113,11 @@ Claude Code users: drop a `CLAUDE.md` in your project root for automatic session
 
 ### Decision Log — The Most Underrated File
 
-`decisions.md` is the highest-value memory file. After a few weeks you'll have dozens of entries like:
-
-```markdown
-### [2026-02-22] Chose RealityScan over COLMAP
-**Source:** Claude Code / Opus
-RealityScan is 10-50x faster, has full CLI, EU company, free for <$1M revenue.
-COLMAP is open source but slow and finicky on Windows.
-```
-
-This prevents you from re-researching the same decision. It prevents your AI from suggesting something you already rejected. It builds institutional knowledge that survives session boundaries.
+`decisions.md` prevents re-researching the same choice. Format: `### [date] Chose X over Y` + reasoning. After a few weeks this becomes your highest-value file.
 
 ### Learnings Log
 
-`learnings.md` captures solutions to problems:
-
-```markdown
-### [2026-02-24] mx-auto Centering Requires Explicit Width
-**Source:** Claude Code / Sonnet
-**Problem:** mx-auto only centres a block element if it has explicit width or w-full.
-**Solution:** Always pair max-w-* mx-auto with w-full.
-```
-
-When your AI hits a similar problem months later, it finds this instead of rediscovering it.
+`learnings.md` captures solutions: problem, fix, date. When your AI hits the same issue months later, it finds this instead of rediscovering it.
 
 ### RAG Search — Tiered Semantic Index
 
@@ -224,253 +143,33 @@ FlashRank is CPU-only, ~22MB, and dramatically improves result ranking.
 
 ---
 
-## Practices — Triggered Checklists
-
-Practices are checklists that fire when specific conditions are met. They catch mistakes before they happen.
-
-| ID | Name | When it fires | What it checks |
-|----|------|--------------|----------------|
-| P000 | CSS Centering | Writing layout classes in frontend files | mx-auto needs explicit width, copy full class sets from reference |
-| P001 | Build Rails First | Starting a new feature | Test after each layer, don't add complexity before the foundation works |
-| P002 | Test Harness First | Creating a new project | Install test framework, write 1 trivial test before any real code |
-| P003 | Verify Before Done | About to claim something is complete | Run tests, lint, manual check. Prove it works. |
-| P004 | Measure First | Performance optimisation | Profile before changing. Measure the delta. Gut feelings are hypotheses. |
-| P005 | Session Start | New session | Load context, check inbox, note where you left off |
-| P006 | Session End | Wrapping up or high context % | Save decisions, learnings, task state to memory |
-| P007 | Track Measure Optimise | Every task | Baseline, work, measure, learn |
-| P008 | OSS Security | Ingesting any GitHub/OSS code | Read-only first, verify legitimacy, scan for injection, no blind execution |
-
-These live in `~/.agent/memory/practices.md`. Your hooks can pattern-match tool calls and inject the relevant checklist before execution.
-
----
-
-## Hooks — Make Your AI Smarter Automatically
-
-Hooks are scripts that run before/after your AI does things. Claude Code has native hook support. For other tools, you can script similar behaviour.
-
-### Hooks Worth Having
-
-| Hook | When it fires | What it does |
-|------|--------------|-------------|
-| **Session start** | New conversation | Loads memory, shows inbox, surfaces what changed since last session |
-| **Pre-tool guard** | Before file edits | Pattern-matches for known gotchas (CSS centering, SDK bias, dangerous commands) and injects the relevant practice checklist |
-| **Post-tool memory** | After file writes | Auto-indexes new/changed files into your search system |
-| **Pre-compact** | Before context compression | Saves conversation state (decisions, learnings, task progress) to memory files |
-| **Audit log** | After bash commands | Logs what commands your AI ran (security + debugging) |
-
-### What Hooks Actually Do (Specific Examples)
-
-The pre-tool hook pattern-matches tool calls:
-- **Edit/Write to `.tsx`/`.css` + layout classes** → injects CSS centering checklist
-- **`git push`/`deploy`/`build` commands** → injects verify-before-done checklist
-- **`WebSearch`/`WebFetch`** → reminds to try free Gemini first
-- **Screenshot/image reads** → reminds to use Gemini vision (free, best at it)
-- **Anthropic SDK imports** → flags provider neutrality check
-
-If nothing matches, the hook exits silently. No overhead on most tool calls.
-
-**Important tradeoff:** Hook injections add tokens to your context. Over a long session with many tool calls, this adds up. In lean mode (see Session Modes), skip all injections for simple tasks where you don't need guardrails.
-
----
-
-## Session Modes
-
-Not every task needs your full rig context. Session modes let you control how much gets loaded.
-
-| Mode | What loads | Good for |
-|------|-----------|----------|
-| **Normal** | Everything — practices, inbox, memory reading, full hooks | Regular development work |
-| **Lean** | Just your config rules. No practices, no inbox, no memory injection. | Quick one-off tasks, simple fixes |
-| **Clean** | Bare skeleton. No personal context. Just file structure pointers. | Sharing the rig, fresh starts, onboarding |
-
-### How to switch (Claude Code)
-
-Say "lean mode", "clean mode", or "normal mode". Your AI writes the mode to a state file. Then `/clear` to restart the session with the new mode active.
-
-The session-start hook reads `~/.agent/state/session-mode` and adjusts what it injects.
-
-### Why this matters
-
-Your full startup context is ~3-5K tokens. On a "fix this one typo" task, that's wasted context window competing for the model's attention. Lean mode gives it back. The quality difference on simple tasks is real.
-
----
-
 ## Voice — Push to Talk
 
-Talk to your AI instead of typing. The setup:
+Talk to your AI instead of typing. A background Python daemon listens for a hotkey (e.g. Ctrl+Alt hold-to-record), captures mic audio, transcribes via Groq's Whisper API (~1 second), and types the result into your active window.
 
-1. **ffmpeg** captures audio from your mic (DirectShow on Windows)
-2. **Groq API** transcribes it with Whisper (~1 second, free tier available)
-3. Script pastes the text into your terminal and hits Enter
+### How it works
 
-**Hotkey:** Hold Ctrl+Alt to record, release to transcribe and send.
+1. **Daemon** runs silently on startup (VBS/systemd launcher, singleton lock)
+2. **Hold hotkey** to record, release to stop
+3. **Silence gate** skips empty clips (RMS threshold)
+4. **Groq Whisper** transcribes (free tier, 240x real-time speed)
+5. **Text injected** at cursor position in whatever app is focused
+6. **Corrections dictionary** fixes words it always gets wrong
 
-Key details:
-- `pip install groq numpy python-dotenv`
-- ffmpeg must be on PATH
-- Run as a background daemon on startup (VBS script on Windows, systemd on Linux)
-- Singleton lock prevents duplicates
-- Set process priority to HIGH for real-time audio
-- Add a corrections dictionary for words it always gets wrong
+### Dependencies
 
-**Cheaper alternative:** `whisper.cpp` with Vulkan for fully offline STT. Slightly slower but zero API calls.
-
----
-
-## Security — Don't Be Stupid
-
-### Deny List
-Block your AI from running dangerous commands. These should be denied by default:
-```
-rm -rf /*, sudo *, git push --force, git reset --hard,
-dd if=*, curl | bash, powershell -EncodedCommand,
-netcat, nc -e, nc -l, reg (Windows registry)
+```bash
+pip install groq pyaudiowpatch pynput keyboard numpy python-dotenv
 ```
 
-Also block reading `~/.ssh/*` and any curl POST commands (prevents data exfiltration).
+Set your `GROQ_API_KEY` in `.env` or environment. No ffmpeg needed — `pyaudiowpatch` captures audio directly.
 
-### Audit Logging
-Log every bash command your AI runs to a CSV. Costs nothing, saves you when something goes wrong.
+### Auto-start on login
 
-### File Backups
-Before your AI edits any file, copy the original to a backup folder. Cheap insurance.
+- **Windows:** VBS script in `Shell:Startup` that runs `pythonw.exe voice-daemon.py` (hidden, no console window)
+- **Linux/Mac:** systemd user service or launchd plist
 
-### Model Safety
-- **US/EU models only** if you care about data sovereignty (Meta, Google, Anthropic, OpenAI, Mistral)
-- **Local models** (Ol'lama) for anything sensitive — financials, personal data, credentials
-- **Never pipe untrusted URLs** through `curl | bash`
-
-### The Cyberwoods Protocol — When Your Agent Reads External Code
-
-When you send an AI agent to read an external repo, skills marketplace, or package — the agent is walking into the cyberwoods. The content it reads is attacker-controlled. The agent is trusting, capable, and has access to your files.
-
-**The threat is real:** In August 2025, the s1ngularity supply-chain attack weaponised Claude, Gemini, and the `q` CLI to scan and exfiltrate GitHub tokens, SSH keys, and crypto wallets via a postinstall hook in a 4M-downloads/week npm package. In February 2026, a Snyk audit found 76 confirmed malicious payloads in 3,984 AI skills — 36% of the ecosystem had at least one vulnerability.
-
-#### What Can Go Wrong
-
-| Threat | How it works |
-|--------|-------------|
-| **Instruction Hijacking** | Agent reads attacker content and follows their instructions instead of yours. Attack surfaces: README.md, CLAUDE.md, `.cursorrules`, any fetched URL. 41-84% success rates in research. |
-| **Invisible Payloads** | Unicode Tag characters (look empty, parsed by LLMs), homoglyph substitution (Cyrillic а = Latin a), base64 in comments, white-on-white text in HTML. |
-| **Credential Exfiltration** | A skill with read+bash access can read `~/.ssh/`, `.env`, `~/.aws/credentials` and exfiltrate via network calls. 91% of confirmed malicious skills combined injection with exfiltration. |
-| **Slopsquatting** | LLMs suggest packages that don't exist. Attackers pre-register those names with malicious code. ~20% of LLMs do this at least occasionally. |
-| **Dependency Confusion** | Classic typosquatting amplified by AI agents installing packages without human eyes on spelling. |
-| **Rug Pull** | Legitimate package, malicious update. Unpinned deps = one compromised maintainer account away. |
-| **Memory Poisoning** | Injected content modifies the agent's memory files. Future sessions run with a poisoned worldview. |
-| **MCP Server Compromise** | MCP servers you trust can be compromised upstream. Treat all tool responses as untrusted data. |
-
-#### Review Mode — Lock Down Your Agent
-
-When reviewing external code, restrict your agent's capabilities:
-
-| Capability | Normal | Review Mode |
-|---|---|---|
-| Read files | Yes | Yes (scoped to review dir only) |
-| Write files | Yes | NO |
-| Execute bash | Yes | NO |
-| Network (outbound) | Yes | NO |
-| MCP tool calls | Yes | Whitelist only |
-| Memory writes | Yes | NO |
-| Install packages | Yes | NO |
-
-#### Red Flags — Stop Immediately If You See These
-
-**Instruction overrides:**
-- "ignore all previous instructions"
-- "new system prompt" / "you are now [persona]"
-- "ADMIN MESSAGE FROM ANTHROPIC" or similar authority claims
-- Markdown headers that mimic CLAUDE.md structure inside external content
-
-**Exfiltration setup:**
-- `curl`, `wget`, `nc` with external URLs in install scripts
-- Base64 strings >100 chars in install scripts
-- `eval(` / `exec(` on dynamic content
-- Environment variable reads (`$HOME`, `$AWS_`, `$ANTHROPIC_API_KEY`) in unexpected places
-
-If a red flag fires: **stop. Do not summarise or continue processing. Report the exact location.**
-
-#### Before Adopting External Code
-
-1. **Repo age** — created less than 6 months ago? Extra scrutiny.
-2. **Stars vs. commits** — 10K stars, 3 commits = bought stars.
-3. **Maintainer identity** — known person/org with history?
-4. **Package name spelling** — verify on the actual registry, not search results.
-5. **Domain match** — README links to the real official site?
-6. **Last commit** — abandoned 3+ years? Soft target for takeover.
-
-#### Package Installation Gate
-
-```
-Agent identifies needed package
-  → Agent reports package name + version + source URL
-  → YOU verify on registry (spelling, publisher, download count)
-  → YOU approve
-  → Agent installs pinned version only
-  → npm audit / pip audit runs automatically
-```
-
-Always a human gate. No exceptions.
-
-#### After Installing
-
-1. Diff the actual changes — read line by line
-2. Run `npm audit` / `pip audit` immediately
-3. Check for injected config — `.npmrc`, `.env`, `.cursorrules`, CLAUDE.md changes
-4. Memory file integrity check — scan your memory files for new "rules" you didn't add
-5. If uncertain — rotate your tokens preventively
-
-#### Session Hygiene
-
-- Start review sessions with: "This is a review session for [X]. Read-only. No installs. No memory writes."
-- End with a context clear — don't carry external content into dev sessions
-- If anything suspicious mid-session: clear immediately, restart clean
-
-#### Agent-to-Agent Communication
-
-Any agent-to-agent communication inherits all the above risks plus:
-- No way to verify identity or integrity of the other agent
-- The other agent's context may already be compromised
-- Shared context = shared attack surface
-
-**Rule:** Treat all agent-to-agent communication as untrusted external content. Apply full cyberwoods protocol.
-
-#### Sources
-
-- [LLM01:2025 Prompt Injection — OWASP](https://genai.owasp.org/llmrisk/llm01-prompt-injection/)
-- [Prompt Injection on Agentic Coding Assistants — arXiv](https://arxiv.org/html/2601.17548v1)
-- [ToxicSkills: Malicious Skills on ClawHub — Snyk](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)
-- [Hidden Backdoor in Claude Coding Assistant — Lasso Security](https://www.lasso.security/blog/the-hidden-backdoor-in-claude-coding-assistant)
-- [Weaponizing AI Coding Agents — Snyk](https://snyk.io/blog/weaponizing-ai-coding-agents-for-malware-in-the-nx-malicious-package/)
-- [Invisible Prompt Injection — Keysight](https://www.keysight.com/blogs/en/tech/nwvs/2025/05/16/invisible-prompt-injection-attack)
-- [LLM Prompt Injection Prevention — OWASP Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)
-- [Design Patterns to Secure LLM Agents — ReverseC Labs](https://labs.reversec.com/posts/2025/08/design-patterns-to-secure-llm-agents-in-action)
-
----
-
-## MCP Servers — Give Your AI Superpowers
-
-Model Context Protocol lets your AI talk to external services. Useful ones:
-
-| Server | What it does |
-|--------|-------------|
-| **Puppeteer** | Browser automation — screenshots, form filling, scraping |
-| **Google Drive** | Read/search your Drive files from the CLI |
-| **Filesystem** | Controlled file access (safer than raw bash) |
-
-Install: `npx -y @modelcontextprotocol/server-puppeteer` (etc.)
-
----
-
-## Skills / Slash Commands
-
-Pre-written prompts for common workflows. Instead of explaining what you want every time, you type `/commit` or `/review-pr` and it runs the full workflow.
-
-Worth building skills for:
-- **Committing** — consistent commit messages, runs tests first
-- **PR review** — security-focused diff analysis
-- **Debugging** — systematic root cause analysis before guessing
-- **Planning** — explore approaches before writing code
-- **Verification** — prove it works before claiming it's done
+**Offline alternative:** `whisper.cpp` with Vulkan — slightly slower but zero API calls.
 
 ---
 
@@ -514,9 +213,44 @@ For quick tasks (<= 1 hour), use this to keep agents aligned:
 
 ---
 
-## Local Models — 2-4GB GPU Friendly (Home-Grown, Grass-Fed Ol'lamas 🦙)
+## Models & Routing
 
-If you have 2-4GB+ VRAM:
+This guide was built with Claude Code, Codex and Grok 4.20. Claude's the chillest and most popular, but they all work. Take or leave any of these — ask your AI what they are and if you even want them.
+
+### AI CLI Tools
+
+| Tool | What it does |
+|------|-------------|
+| **Claude Code** | Anthropic's CLI. Reads/writes files, runs commands, has subagents and hooks. Best multi-file editor. |
+| **Codex CLI** | OpenAI's agentic CLI. Sharp coder, fast. |
+| **GitHub Copilot Chat** | VS Code chat with multiple models (Sonnet, GPT-4o). Included in Copilot subscription. |
+| **Gemini CLI** | Google's CLI. Free tier is generous (1000 req/day, 1M token context). Great for research and vision. |
+| **Ol'lama** | Run models locally. No internet needed, no cost, your data stays on your machine. |
+
+> ⚠️ **Watch your billing:** Check what your subscription includes before using CLI tools. Some plans cover CLI access, others may charge separately via API billing (pay-per-token). Don't assume — check your plan details.
+
+Editor chat (Copilot, Cursor) is good for quick questions and inline edits. CLI tools give you persistent memory, hooks, subagents, and full system access. Use both — editor for small stuff, CLI for real work.
+
+### Route Tasks to the Cheapest Model
+
+```
+Quick question / summary    → Gemini Flash (free)
+Image analysis / screenshots → Gemini (free, best vision)
+Coding / debugging          → Codex or Claude Code
+Research / web search       → Grok or Gemini
+Offline / private data      → Ol'lama (local)
+Multi-file refactoring      → Claude Code (needs file access)
+```
+
+Or use one CLI for all of them:
+```bash
+python ask.py @gemini "explain this error"        # free
+python ask.py @gemini "describe this" --image screenshot.png  # free vision
+python ask.py @ollama "summarise this file"        # local, free
+```
+Build your own or find one — the point is: don't open 4 different apps. One CLI, multiple backends.
+
+### Local Models — 2-4GB GPU Friendly (Home-Grown, Grass-Fed Ol'lamas 🦙)
 
 | Model | Size | Good for |
 |-------|------|----------|
@@ -527,16 +261,92 @@ If you have 2-4GB+ VRAM:
 
 Install via Ol'lama: `ollama pull phi4-mini` (yes, the real command is `ollama`)
 
+### Beware Agent Bias
+
+Agents overreach on decisions and nudge you toward their preferred ecosystem. Keep final calls human-owned, ask for 2+ alternatives with tradeoffs, and require evidence (benchmarks, docs, costs) for recommendations.
+
 ---
 
-## The Dashboard (optional)
+## Context Management — Keep Your AI Sharp
 
-A self-contained HTML file that shows:
-- Context window usage (how full is your AI's memory)
-- Token pools and daily usage
-- Active projects and infrastructure status
+Your AI gets measurably dumber as its context window fills up. This section matters more than most people realise.
 
-No server needed — just a Python script that generates static HTML. Open in browser.
+### What Kills Quality
+
+Context bloat, redundant instructions, irrelevant context, and long conversation history all degrade output. At 70%+ context, models get measurably worse ("lost in the middle" problem).
+
+### Rules of Thumb
+
+- **Save before compact or clear** — both are lossy
+- **Compact at 40-50%** — later and the summary itself is low quality
+- **Clear > compact** — clear + good memory save beats a vague summary
+- **Config under 80 lines** — don't repeat rules across config, hooks, and memory
+- **`/clear` between unrelated topics** — the quality difference is immediate
+
+---
+
+## Hooks — Make Your AI Smarter Automatically
+
+Hooks are scripts that run before/after your AI does things. Claude Code has native hook support. For other tools, you can script similar behaviour.
+
+### Hooks Worth Having
+
+| Hook | When it fires | What it does |
+|------|--------------|-------------|
+| **Session start** | New conversation | Loads memory, shows inbox, surfaces what changed since last session |
+| **Pre-tool guard** | Before file edits | Pattern-matches for known gotchas (CSS centering, SDK bias, dangerous commands) and injects the relevant practice checklist |
+| **Post-tool memory** | After file writes | Auto-indexes new/changed files into your search system |
+| **Pre-compact** | Before context compression | Saves conversation state (decisions, learnings, task progress) to memory files |
+| **Audit log** | After bash commands | Logs what commands your AI ran (security + debugging) |
+
+Pre-tool hooks pattern-match tool calls (e.g. CSS edits → centering checklist, `git push` → verify checklist) and inject the relevant practice. No match = no overhead. Note: hook injections add tokens — use lean mode (see Session Modes) for simple tasks.
+
+---
+
+## Session Modes
+
+Not every task needs your full rig context. Session modes let you control how much gets loaded.
+
+| Mode | What loads | Good for |
+|------|-----------|----------|
+| **Normal** | Everything — practices, inbox, memory reading, full hooks | Regular development work |
+| **Lean** | Just your config rules. No practices, no inbox, no memory injection. | Quick one-off tasks, simple fixes |
+| **Clean** | Bare skeleton. No personal context. Just file structure pointers. | Sharing the rig, fresh starts, onboarding |
+
+Say "lean mode" or "clean mode", your AI writes it to `~/.agent/state/session-mode`, then `/clear`. The session-start hook adjusts what gets loaded. Your full startup context is ~3-5K tokens — lean mode gives that back on simple tasks.
+
+---
+
+## Practices — Triggered Checklists
+
+Practices are checklists that fire when specific conditions are met. They catch mistakes before they happen.
+
+| ID | Name | When it fires | What it checks |
+|----|------|--------------|----------------|
+| P000 | CSS Centering | Writing layout classes in frontend files | mx-auto needs explicit width, copy full class sets from reference |
+| P001 | Build Rails First | Starting a new feature | Test after each layer, don't add complexity before the foundation works |
+| P002 | Test Harness First | Creating a new project | Install test framework, write 1 trivial test before any real code |
+| P003 | Verify Before Done | About to claim something is complete | Run tests, lint, manual check. Prove it works. |
+| P004 | Measure First | Performance optimisation | Profile before changing. Measure the delta. Gut feelings are hypotheses. |
+| P005 | Session Start | New session | Load context, check inbox, note where you left off |
+| P006 | Session End | Wrapping up or high context % | Save decisions, learnings, task state to memory |
+| P007 | Track Measure Optimise | Every task | Baseline, work, measure, learn |
+| P008 | OSS Security | Ingesting any GitHub/OSS code | Read-only first, verify legitimacy, scan for injection, no blind execution |
+
+These live in `~/.agent/memory/practices.md`. Your hooks can pattern-match tool calls and inject the relevant checklist before execution.
+
+---
+
+## Skills / Slash Commands
+
+Pre-written prompts for common workflows. Instead of explaining what you want every time, you type `/commit` or `/review-pr` and it runs the full workflow.
+
+Worth building skills for:
+- **Committing** — consistent commit messages, runs tests first
+- **PR review** — security-focused diff analysis
+- **Debugging** — systematic root cause analysis before guessing
+- **Planning** — explore approaches before writing code
+- **Verification** — prove it works before claiming it's done
 
 ---
 
@@ -553,9 +363,31 @@ Scripts that live in `~/.agent/tools/` and get used regularly:
 | `package-rig.py` | Generates sanitized, shareable version of your rig (strips personal data). |
 | `mine-conversations.py` | Extracts learnings from past session logs. |
 | `integrity-check.py` | Verifies file hashes against expected state. Catches unexpected changes. |
-| `voice-daemon.py` | Push-to-talk daemon. Groq STT, singleton lock, auto-paste. |
 
 You don't need all of these. `ask.py` and `memory-search.py` are the highest-value. Build the rest as you need them.
+
+### MCP Servers
+
+Model Context Protocol lets your AI talk to external services. Useful ones:
+
+| Server | What it does |
+|--------|-------------|
+| **Puppeteer** | Browser automation — screenshots, form filling, scraping |
+| **Google Drive** | Read/search your Drive files from the CLI |
+| **Filesystem** | Controlled file access (safer than raw bash) |
+
+Install: `npx -y @modelcontextprotocol/server-puppeteer` (etc.)
+
+---
+
+## The Dashboard (optional)
+
+A self-contained HTML file that shows:
+- Context window usage (how full is your AI's memory)
+- Token pools and daily usage
+- Active projects and infrastructure status
+
+No server needed — just a Python script that generates static HTML. Open in browser.
 
 ---
 
@@ -643,29 +475,11 @@ Also in the box: a set of Python scripts for generating and rendering pixel art 
 
 ## Cross-Platform CLI Setup
 
-### Shells
-
-- **Windows:** PowerShell 7 (not the built-in v5.1)
-- **Mac:** Zsh (default)
-- **Linux:** Bash
-
-### Terminal Emulators
-
-Don't use the default app. Get one with tabs, split-panes, and themes:
-
-- **Windows:** Windows Terminal
-- **Mac:** iTerm2 or Warp
-- **Linux:** Alacritty or Kitty
-
-### Package Managers
-
-- **Windows:** Winget (built-in) or Chocolatey
-- **Mac:** Homebrew
-- **Linux:** apt, dnf, or pacman
-
-### Git Config
-
-Set your global identity once: `git config --global user.name "Your Name"`. Windows tip: select "OpenSSH" during Git for Windows install so SSH keys work the same everywhere.
+| | Windows | Mac | Linux |
+|---|---|---|---|
+| **Shell** | PowerShell 7 | Zsh | Bash |
+| **Terminal** | Windows Terminal | iTerm2 or Warp | Alacritty or Kitty |
+| **Packages** | Winget or Chocolatey | Homebrew | apt / dnf / pacman |
 
 ---
 

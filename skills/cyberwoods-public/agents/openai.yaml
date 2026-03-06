@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cyberwoods Public"
+  short_description: "Sanitized Cyberwoods protocol for secure external code review"
+  default_prompt: "Use the public Cyberwoods protocol to assess untrusted code and tool integrations with practical safety checks."

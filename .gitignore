@@ -1,0 +1,5 @@
+# Never publish private skill variants
+skills/*-private/
+skills/**/private-*/
+skills/**/internal-*/
+

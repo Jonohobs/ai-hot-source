@@ -1,0 +1,62 @@
+# Self-eval test vectors for routing classification
+# Run with: python -m pytest tests/test_eval.py -v
+
+- name: simple_question
+  input: "what is a closure"
+  expect_type: quick
+  expect_vision: false
+  expect_tools: false
+
+- name: code_debug
+  input: "fix this bug in the function that parses JSON"
+  expect_type: code
+  expect_vision: false
+  expect_tools: false
+
+- name: architecture_reasoning
+  input: "explain why microservices are better than monoliths for this use case"
+  expect_type: reasoning
+  expect_vision: false
+  expect_tools: false
+
+- name: screenshot_vision
+  input: "describe what's in this screenshot"
+  expect_type: vision
+  expect_vision: true
+  expect_tools: false
+
+- name: web_search
+  input: "search for recent papers on transformer attention"
+  expect_type: quick
+  expect_vision: false
+  expect_tools: true
+
+- name: code_with_override
+  input: "@gemini refactor this class"
+  expect_type: code
+  expect_vision: false
+  expect_tools: false
+
+- name: definition
+  input: "define polymorphism"
+  expect_type: quick
+  expect_vision: false
+  expect_tools: false
+
+- name: compare_tradeoffs
+  input: "compare the trade-offs between REST and GraphQL"
+  expect_type: reasoning
+  expect_vision: false
+  expect_tools: false
+
+- name: implement_feature
+  input: "implement a binary search tree with insert and delete"
+  expect_type: code
+  expect_vision: false
+  expect_tools: false
+
+- name: image_analysis
+  input: "what's wrong with this diagram of the database schema"
+  expect_type: vision
+  expect_vision: true
+  expect_tools: false

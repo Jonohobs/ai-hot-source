@@ -1,0 +1,20 @@
+[project]
+name = "ai-hot-sauce"
+version = "0.1.0"
+description = "Scoring-based multi-model router with circuit breakers, quality gates, and session persistence"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = []
+
+[project.optional-dependencies]
+openai = ["openai>=1.0"]
+anthropic = ["anthropic>=0.40"]
+google = ["google-genai>=1.0"]
+all = ["openai>=1.0", "anthropic>=0.40", "google-genai>=1.0"]
+dev = ["pytest", "pyyaml"]
+
+[project.scripts]
+sauce = "sauce:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

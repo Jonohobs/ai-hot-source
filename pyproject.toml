@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "community-scrapes"
+version = "0.1.0"
+description = "Regularly updated public datasets for AI and computer-useful sources."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  { name = "Jonathan Hobman" }
+]
+dependencies = []
+
+[project.scripts]
+community-scrapes = "community_scrapes.main:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

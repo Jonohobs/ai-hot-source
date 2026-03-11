@@ -1,0 +1,568 @@
+{
+  "source": "arxiv_cs_ai_recent",
+  "generated_at": "2026-03-11T21:31:28.176097+00:00",
+  "record_count": 30,
+  "records": [
+    {
+      "id": "http://arxiv.org/abs/2603.09974v1",
+      "title": "Task Aware Modulation Using Representation Learning for Upsaling of Terrestrial Carbon Fluxes",
+      "summary": "Accurately upscaling terrestrial carbon fluxes is central to estimating the global carbon budget, yet remains challenging due to the sparse and regionally biased distribution of ground measurements. Existing data-driven upscaling products often fail to generalize beyond observed domains, leading to systematic regional biases and high predictive uncertainty. We introduce Task-Aware Modulation with Representation Learning (TAM-RL), a framework that couples spatio-temporal representation learning with knowledge-guided encoder-decoder architecture and loss function derived from the carbon balance equation. Across 150+ flux tower sites representing diverse biomes and climate regimes, TAM-RL improves predictive performance relative to existing state-of-the-art datasets, reducing RMSE by 8-9.6% and increasing explained variance ($R^2$) from 19.4% to 43.8%, depending on the target flux. These results demonstrate that integrating physically grounded constraints with adaptive representation learning can substantially enhance the robustness and transferability of global carbon flux estimates.",
+      "published": "2026-03-10T17:59:29Z",
+      "updated": "2026-03-10T17:59:29Z",
+      "authors": [
+        "Aleksei Rozanov",
+        "Arvind Renganathan",
+        "Vipin Kumar"
+      ],
+      "categories": [
+        "cs.LG",
+        "physics.ao-ph"
+      ],
+      "primary_category": "cs.LG"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09972v1",
+      "title": "From Data Statistics to Feature Geometry: How Correlations Shape Superposition",
+      "summary": "A central idea in mechanistic interpretability is that neural networks represent more features than they have dimensions, arranging them in superposition to form an over-complete basis. This framing has been influential, motivating dictionary learning approaches such as sparse autoencoders. However, superposition has mostly been studied in idealized settings where features are sparse and uncorrelated. In these settings, superposition is typically understood as introducing interference that must be minimized geometrically and filtered out by non-linearities such as ReLUs, yielding local structures like regular polytopes. We show that this account is incomplete for realistic data by introducing Bag-of-Words Superposition (BOWS), a controlled setting to encode binary bag-of-words representations of internet text in superposition. Using BOWS, we find that when features are correlated, interference can be constructive rather than just noise to be filtered out. This is achieved by arranging features according to their co-activation patterns, making interference between active features constructive, while still using ReLUs to avoid false positives. We show that this kind of arrangement is more prevalent in models trained with weight decay and naturally gives rise to semantic clusters and cyclical structures which have been observed in real language models yet were not explained by the standard picture of superposition. Code for this paper can be found at https://github.com/LucasPrietoAl/correlations-feature-geometry.",
+      "published": "2026-03-10T17:59:02Z",
+      "updated": "2026-03-10T17:59:02Z",
+      "authors": [
+        "Lucas Prieto",
+        "Edward Stevinson",
+        "Melih Barsbey",
+        "Tolga Birdal",
+        "Pedro A. M. Mediano"
+      ],
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CV"
+      ],
+      "primary_category": "cs.LG"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09970v1",
+      "title": "CREATE: Testing LLMs for Associative Creativity",
+      "summary": "A key component of creativity is associative reasoning: the ability to draw novel yet meaningful connections between concepts. We introduce CREATE, a benchmark designed to evaluate models' capacity for creative associative reasoning. CREATE requires models to generate sets of paths connecting concepts in a model's parametric knowledge. Paths should have high specificity (distinctiveness and closeness of the concept connection) and high diversity (dissimilarity from other paths), and models are scored more highly if they produce a larger set of strong, diverse paths. This task shares demands of real creativity tasks like hypothesis generation, including an extremely large search space, but enables collection of a sizable benchmark with objective answer grading. Evaluation of frontier models shows that the strongest models achieve higher creative utility than others, with the high multiplicity of answers and complexity of the search making benchmark saturation difficult to achieve. Furthermore, our results illustrate that thinking models are not always more effective on our task, even with high token budgets. Recent approaches for creative prompting give some but limited additional improvement. CREATE provides a sandbox for developing new methods to improve models' capacity for associative creativity.",
+      "published": "2026-03-10T17:58:44Z",
+      "updated": "2026-03-10T17:58:44Z",
+      "authors": [
+        "Manya Wadhwa",
+        "Tiasa Singha Roy",
+        "Harvey Lederman",
+        "Junyi Jessy Li",
+        "Greg Durrett"
+      ],
+      "categories": [
+        "cs.CL"
+      ],
+      "primary_category": "cs.CL"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09968v1",
+      "title": "ReCoSplat: Autoregressive Feed-Forward Gaussian Splatting Using Render-and-Compare",
+      "summary": "Online novel view synthesis remains challenging, requiring robust scene reconstruction from sequential, often unposed, observations. We present ReCoSplat, an autoregressive feed-forward Gaussian Splatting model supporting posed or unposed inputs, with or without camera intrinsics. While assembling local Gaussians using camera poses scales better than canonical-space prediction, it creates a dilemma during training: using ground-truth poses ensures stability but causes a distribution mismatch when predicted poses are used at inference. To address this, we introduce a Render-and-Compare (ReCo) module. ReCo renders the current reconstruction from the predicted viewpoint and compares it with the incoming observation, providing a stable conditioning signal that compensates for pose errors. To support long sequences, we propose a hybrid KV cache compression strategy combining early-layer truncation with chunk-level selective retention, reducing the KV cache size by over 90% for 100+ frames. ReCoSplat achieves state-of-the-art performance across different input settings on both in- and out-of-distribution benchmarks. Code and pretrained models will be released. Our project page is at https://freemancheng.com/ReCoSplat .",
+      "published": "2026-03-10T17:58:08Z",
+      "updated": "2026-03-10T17:58:08Z",
+      "authors": [
+        "Freeman Cheng",
+        "Botao Ye",
+        "Xueting Li",
+        "Junqi You",
+        "Fangneng Zhan",
+        "Ming-Hsuan Yang"
+      ],
+      "categories": [
+        "cs.CV"
+      ],
+      "primary_category": "cs.CV"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09964v1",
+      "title": "Understanding the Use of a Large Language Model-Powered Guide to Make Virtual Reality Accessible for Blind and Low Vision People",
+      "summary": "As social virtual reality (VR) grows more popular, addressing accessibility for blind and low vision (BLV) users is increasingly critical. Researchers have proposed an AI \"sighted guide\" to help users navigate VR and answer their questions, but it has not been studied with users. To address this gap, we developed a large language model (LLM)-powered guide and studied its use with 16 BLV participants in virtual environments with confederates posing as other users. We found that when alone, participants treated the guide as a tool, but treated it companionably around others, giving it nicknames, rationalizing its mistakes with its appearance, and encouraging confederate-guide interaction. Our work furthers understanding of guides as a versatile method for VR accessibility and presents design recommendations for future guides.",
+      "published": "2026-03-10T17:56:57Z",
+      "updated": "2026-03-10T17:56:57Z",
+      "authors": [
+        "Jazmin Collins",
+        "Sharon Y Lin",
+        "Tianqi Liu",
+        "Andrea Stevenson Won",
+        "Shiri Azenkot"
+      ],
+      "categories": [
+        "cs.HC",
+        "cs.AI",
+        "cs.ET"
+      ],
+      "primary_category": "cs.HC"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09963v1",
+      "title": "Emotional Modulation in Swarm Decision Dynamics",
+      "summary": "Collective decision-making in biological and human groups often emerges from simple interaction rules that amplify minor differences into consensus. The bee equation, developed initially to describe nest-site selection in honeybee swarms, captures this dynamic through recruitment and inhibition processes. Here, we extend the bee equation into an agent-based model in which emotional valence (positive-negative) and arousal (low-high) act as modulators of interaction rates, effectively altering the recruitment and cross-inhibition parameters. Agents display simulated facial expressions mapped from their valence-arousal states, allowing the study of emotional contagion in consensus formation.\n  Three scenarios are explored: (1) the joint effect of valence and arousal on consensus outcomes and speed, (2) the role of arousal in breaking ties when valence is matched, and (3) the \"snowball effect\" in which consensus accelerates after surpassing intermediate support thresholds. Results show that emotional modulation can bias decision outcomes and alter convergence times by shifting effective recruitment and inhibition rates. At the same time, intrinsic non-linear amplification can produce decisive wins even in fully symmetric emotional conditions.\n  These findings link classical swarm decision theory with affective and social modelling, highlighting how both emotional asymmetries and structural tipping points shape collective outcomes. The proposed framework offers a flexible tool for studying the emotional dimensions of collective choice in both natural and artificial systems.",
+      "published": "2026-03-10T17:56:42Z",
+      "updated": "2026-03-10T17:56:42Z",
+      "authors": [
+        "David Freire-Obreg\u00f3n"
+      ],
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "primary_category": "cs.MA"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09961v1",
+      "title": "BEACON: Language-Conditioned Navigation Affordance Prediction under Occlusion",
+      "summary": "Language-conditioned local navigation requires a robot to infer a nearby traversable target location from its current observation and an open-vocabulary, relational instruction. Existing vision-language spatial grounding methods usually rely on vision-language models (VLMs) to reason in image space, producing 2D predictions tied to visible pixels. As a result, they struggle to infer target locations in occluded regions, typically caused by furniture or moving humans. To address this issue, we propose BEACON, which predicts an ego-centric Bird's-Eye View (BEV) affordance heatmap over a bounded local region including occluded areas. Given an instruction and surround-view RGB-D observations from four directions around the robot, BEACON predicts the BEV heatmap by injecting spatial cues into a VLM and fusing the VLM's output with depth-derived BEV features. Using an occlusion-aware dataset built in the Habitat simulator, we conduct detailed experimental analysis to validate both our BEV space formulation and the design choices of each module. Our method improves the accuracy averaged across geodesic thresholds by 22.74 percentage points over the state-of-the-art image-space baseline on the validation subset with occluded target locations. Our project page is: https://xin-yu-gao.github.io/beacon.",
+      "published": "2026-03-10T17:56:16Z",
+      "updated": "2026-03-10T17:56:16Z",
+      "authors": [
+        "Xinyu Gao",
+        "Gang Chen",
+        "Javier Alonso-Mora"
+      ],
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.CV"
+      ],
+      "primary_category": "cs.RO"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09957v1",
+      "title": "Think Before You Lie: How Reasoning Improves Honesty",
+      "summary": "While existing evaluations of large language models (LLMs) measure deception rates, the underlying conditions that give rise to deceptive behavior are poorly understood. We investigate this question using a novel dataset of realistic moral trade-offs where honesty incurs variable costs. Contrary to humans, who tend to become less honest given time to deliberate (Capraro, 2017; Capraro et al., 2019), we find that reasoning consistently increases honesty across scales and for several LLM families. This effect is not only a function of the reasoning content, as reasoning traces are often poor predictors of final behaviors. Rather, we show that the underlying geometry of the representational space itself contributes to the effect. Namely, we observe that deceptive regions within this space are metastable: deceptive answers are more easily destabilized by input paraphrasing, output resampling, and activation noise than honest ones. We interpret the effect of reasoning in this vein: generating deliberative tokens as part of moral reasoning entails the traversal of a biased representational space, ultimately nudging the model toward its more stable, honest defaults.",
+      "published": "2026-03-10T17:52:49Z",
+      "updated": "2026-03-10T17:52:49Z",
+      "authors": [
+        "Ann Yuan",
+        "Asma Ghandeharioun",
+        "Carter Blum",
+        "Alicia Machado",
+        "Jessica Hoffmann",
+        "Daphne Ippolito",
+        "Martin Wattenberg",
+        "Lucas Dixon",
+        "Katja Filippova"
+      ],
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "primary_category": "cs.AI"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09955v1",
+      "title": "From Semantics to Pixels: Coarse-to-Fine Masked Autoencoders for Hierarchical Visual Understanding",
+      "summary": "Self-supervised visual pre-training methods face an inherent tension: contrastive learning (CL) captures global semantics but loses fine-grained detail, while masked image modeling (MIM) preserves local textures but suffers from \"attention drift\" due to semantically-agnostic random masking. We propose C2FMAE, a coarse-to-fine masked autoencoder that resolves this tension by explicitly learning hierarchical visual representations across three data granularities: semantic masks (scene-level), instance masks (object-level), and RGB images (pixel-level). Two synergistic innovations enforce a strict top-down learning principle. First, a cascaded decoder sequentially reconstructs from scene semantics to object instances to pixel details, establishing explicit cross-granularity dependencies that parallel decoders cannot capture. Second, a progressive masking curriculum dynamically shifts the training focus from semantic-guided to instance-guided and finally to random masking, creating a structured learning path from global context to local features. To support this framework, we construct a large-scale multi-granular dataset with high-quality pseudo-labels for all 1.28M ImageNet-1K images. Extensive experiments show that C2FMAE achieves significant performance gains on image classification, object detection, and semantic segmentation, validating the effectiveness of our hierarchical design in learning more robust and generalizable representations.",
+      "published": "2026-03-10T17:51:12Z",
+      "updated": "2026-03-10T17:51:12Z",
+      "authors": [
+        "Wenzhao Xiang",
+        "Yue Wu",
+        "Hongyang Yu",
+        "Feng Gao",
+        "Fan Yang",
+        "Xilin Chen"
+      ],
+      "categories": [
+        "cs.CV",
+        "cs.LG"
+      ],
+      "primary_category": "cs.CV"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09953v1",
+      "title": "Leveraging whole slide difficulty in Multiple Instance Learning to improve prostate cancer grading",
+      "summary": "Multiple Instance Learning (MIL) has been widely applied in histopathology to classify Whole Slide Images (WSIs) with slide-level diagnoses. While the ground truth is established by expert pathologists, the slides can be difficult to diagnose for non-experts and lead to disagreements between the annotators. In this paper, we introduce the notion of Whole Slide Difficulty (WSD), based on the disagreement between an expert and a non-expert pathologist. We propose two different methods to leverage WSD, a multi-task approach and a weighted classification loss approach, and we apply them to Gleason grading of prostate cancer slides. Results show that integrating WSD during training consistently improves the classification performance across different feature encoders and MIL methods, particularly for higher Gleason grades (i.e. worse diagnosis).",
+      "published": "2026-03-10T17:49:29Z",
+      "updated": "2026-03-10T17:49:29Z",
+      "authors": [
+        "Marie Arrivat",
+        "R\u00e9my Peyret",
+        "Elsa Angelini",
+        "Pietro Gori"
+      ],
+      "categories": [
+        "cs.CV"
+      ],
+      "primary_category": "cs.CV"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09952v1",
+      "title": "On the Width Scaling of Neural Optimizers Under Matrix Operator Norms I: Row/Column Normalization and Hyperparameter Transfer",
+      "summary": "A central question in modern deep learning is how to design optimizers whose behavior remains stable as the network width $w$ increases. We address this question by interpreting several widely used neural-network optimizers, including \\textrm{AdamW} and \\textrm{Muon}, as instances of steepest descent under matrix operator norms. This perspective links optimizer geometry with the Lipschitz structure of the network forward map, and enables width-independent control of both Lipschitz and smoothness constants. However, steepest-descent rules induced by standard $p \\to q$ operator norms lack layerwise composability and therefore cannot provide width-independent bounds in deep architectures. We overcome this limitation by introducing a family of mean-normalized operator norms, denoted $\\pmean \\to \\qmean$, that admit layerwise composability, yield width-independent smoothness bounds, and give rise to practical optimizers such as \\emph{rescaled} \\textrm{AdamW}, row normalization, and column normalization. The resulting learning rate width-aware scaling rules recover $\u03bc$P scaling~\\cite{yang2021tensor} as a special case and provide a principled mechanism for cross-width learning-rate transfer across a broad class of optimizers. We further show that \\textrm{Muon} can suffer an $\\mathcal{O}(\\sqrt{w})$ worst-case growth in the smoothness constant, whereas a new family of row-normalized optimizers we propose achieves width-independent smoothness guarantees. Based on the observations, we propose MOGA (Matrix Operator Geometry Aware), a width-aware optimizer based only on row/column-wise normalization that enables stable learning-rate transfer across model widths. Large-scale pre-training on GPT-2 and LLaMA shows that MOGA, especially with row normalization, is competitive with Muon while being notably faster in large-token and low-loss regimes.",
+      "published": "2026-03-10T17:49:19Z",
+      "updated": "2026-03-10T17:49:19Z",
+      "authors": [
+        "Ruihan Xu",
+        "Jiajin Li",
+        "Yiping Lu"
+      ],
+      "categories": [
+        "cs.LG",
+        "eess.SY",
+        "math.NA",
+        "math.OC",
+        "stat.ML"
+      ],
+      "primary_category": "cs.LG"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09951v1",
+      "title": "Towards a Neural Debugger for Python",
+      "summary": "Training large language models (LLMs) on Python execution traces grounds them in code execution and enables the line-by-line execution prediction of whole Python programs, effectively turning them into neural interpreters (FAIR CodeGen Team et al., 2025). However, developers rarely execute programs step by step; instead, they use debuggers to stop execution at certain breakpoints and step through relevant portions only while inspecting or modifying program variables. Existing neural interpreter approaches lack such interactive control. To address this limitation, we introduce neural debuggers: language models that emulate traditional debuggers, supporting operations such as stepping into, over, or out of functions, as well as setting breakpoints at specific source lines. We show that neural debuggers -- obtained via fine-tuning large LLMs or pre-training smaller models from scratch -- can reliably model both forward execution (predicting future states and outputs) and inverse execution (inferring prior states or inputs) conditioned on debugger actions. Evaluated on CruxEval, our models achieve strong performance on both output and input prediction tasks, demonstrating robust conditional execution modeling. Our work takes first steps towards future agentic coding systems in which neural debuggers serve as a world model for simulated debugging environments, providing execution feedback or enabling agents to interact with real debugging tools. This capability lays the foundation for more powerful code generation, program understanding, and automated debugging.",
+      "published": "2026-03-10T17:47:05Z",
+      "updated": "2026-03-10T17:47:05Z",
+      "authors": [
+        "Maximilian Beck",
+        "Jonas Gehring",
+        "Jannik Kossen",
+        "Gabriel Synnaeve"
+      ],
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.SE"
+      ],
+      "primary_category": "cs.LG"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09950v1",
+      "title": "When Learning Rates Go Wrong: Early Structural Signals in PPO Actor-Critic",
+      "summary": "Deep Reinforcement Learning systems are highly sensitive to the learning rate (LR), and selecting stable and performant training runs often requires extensive hyperparameter search. In Proximal Policy Optimization (PPO) actor--critic methods, small LR values lead to slow convergence, whereas large LR values may induce instability or collapse. We analyse this phenomenon from the behavior of the hidden neurons in the network using the Overfitting-Underfitting Indicator (OUI), a metric that quantifies the balance of binary activation patterns over a fixed probe batch. We introduce an efficient batch-based formulation of OUI and derive a theoretical connection between LR and activation sign changes, clarifying how a correct evolution of the neuron's inner structure depends on the step size.\n  Empirically, across three discrete-control environments and multiple seeds, we show that OUI measured at only 10\\% of training already discriminates between LR regimes. We observe a consistent asymmetry: critic networks achieving highest return operate in an intermediate OUI band (avoiding saturation), whereas actor networks achieving highest return exhibit comparatively high OUI values. We then compare OUI-based screening rules against early return, clip-based, divergence-based, and flip-based criteria under matched recall over successful runs. In this setting, OUI provides the strongest early screening signal: OUI alone achieves the best precision at broader recall, while combining early return with OUI yields the highest precision in best-performing screening regimes, enabling aggressive pruning of unpromising runs without requiring full training.",
+      "published": "2026-03-10T17:46:31Z",
+      "updated": "2026-03-10T17:46:31Z",
+      "authors": [
+        "Alberto Fern\u00e1ndez-Hern\u00e1ndez",
+        "Cristian P\u00e9rez-Corral",
+        "Jose I. Mestre",
+        "Manuel F. Dolz",
+        "Jose Duato",
+        "Enrique S. Quintana-Ort\u00ed"
+      ],
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "primary_category": "cs.LG"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09947v1",
+      "title": "The Confidence Gate Theorem: When Should Ranked Decision Systems Abstain?",
+      "summary": "Ranked decision systems -- recommenders, ad auctions, clinical triage queues -- must decide when to intervene in ranked outputs and when to abstain. We study when confidence-based abstention monotonically improves decision quality, and when it fails. The formal conditions are simple: rank-alignment and no inversion zones. The substantive contribution is identifying why these conditions hold or fail: the distinction between structural uncertainty (missing data, e.g., cold-start) and contextual uncertainty (missing context, e.g., temporal drift). Empirically, we validate this distinction across three domains: collaborative filtering (MovieLens, 3 distribution shifts), e-commerce intent detection (RetailRocket, Criteo, Yoochoose), and clinical pathway triage (MIMIC-IV). Structural uncertainty produces near-monotonic abstention gains in all domains; structurally grounded confidence signals (observation counts) fail under contextual drift, producing as many monotonicity violations as random abstention on our MovieLens temporal split. Context-aware alternatives -- ensemble disagreement and recency features -- substantially narrow the gap (reducing violations from 3 to 1--2) but do not fully restore monotonicity, suggesting that contextual uncertainty poses qualitatively different challenges. Exception labels defined from residuals degrade substantially under distribution shift (AUC drops from 0.71 to 0.61--0.62 across three splits), providing a clean negative result against the common practice of exception-based intervention. The results provide a practical deployment diagnostic: check C1 and C2 on held-out data before deploying a confidence gate, and match the confidence signal to the dominant uncertainty type.",
+      "published": "2026-03-10T17:44:10Z",
+      "updated": "2026-03-10T17:44:10Z",
+      "authors": [
+        "Ronald Doku"
+      ],
+      "categories": [
+        "cs.AI"
+      ],
+      "primary_category": "cs.AI"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09945v1",
+      "title": "No Image, No Problem: End-to-End Multi-Task Cardiac Analysis from Undersampled k-Space",
+      "summary": "Conventional clinical CMR pipelines rely on a sequential \"reconstruct-then-analyze\" paradigm, forcing an ill-posed intermediate step that introduces avoidable artifacts and information bottlenecks. This creates a fundamental mathematical paradox: it attempts to recover high-dimensional pixel arrays (i.e., images) from undersampled k-space, rather than directly extracting the low-dimensional physiological labels actually required for diagnosis. To unlock the direct diagnostic potential of k-space, we propose k-MTR (k-space Multi-Task Representation), a k-space representation learning framework that aligns undersampled k-space data and fully-sampled images into a shared semantic manifold. Leveraging a large-scale controlled simulation of 42,000 subjects, k-MTR forces the k-space encoder to restore anatomical information lost to undersampling directly within the latent space, bypassing the explicit inverse problem for downstream analysis. We demonstrate that this latent alignment enables the dense latent space embedded with high-level physiological semantics directly from undersampled frequencies. Across continuous phenotype regression, disease classification, and anatomical segmentation, k-MTR achieves highly competitive performance against state-of-the-art image-domain baselines. By showcasing that precise spatial geometries and multi-task features can be successfully recovered directly from the k-space representations, k-MTR provides a robust architectural blueprint for task-aware cardiac MRI workflows.",
+      "published": "2026-03-10T17:38:38Z",
+      "updated": "2026-03-10T17:38:38Z",
+      "authors": [
+        "Yundi Zhang",
+        "Sevgi Gokce Kafali",
+        "Niklas Bubeck",
+        "Daniel Rueckert",
+        "Jiazhen Pan"
+      ],
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "primary_category": "cs.CV"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09943v1",
+      "title": "PathMem: Toward Cognition-Aligned Memory Transformation for Pathology MLLMs",
+      "summary": "Computational pathology demands both visual pattern recognition and dynamic integration of structured domain knowledge, including taxonomy, grading criteria, and clinical evidence. In practice, diagnostic reasoning requires linking morphological evidence with formal diagnostic and grading criteria. Although multimodal large language models (MLLMs) demonstrate strong vision language reasoning capabilities, they lack explicit mechanisms for structured knowledge integration and interpretable memory control. As a result, existing models struggle to consistently incorporate pathology-specific diagnostic standards during reasoning. Inspired by the hierarchical memory process of human pathologists, we propose PathMem, a memory-centric multimodal framework for pathology MLLMs. PathMem organizes structured pathology knowledge as a long-term memory (LTM) and introduces a Memory Transformer that models the dynamic transition from LTM to working memory (WM) through multimodal memory activation and context-aware knowledge grounding, enabling context-aware memory refinement for downstream reasoning. PathMem achieves SOTA performance across benchmarks, improving WSI-Bench report generation (12.8% WSI-Precision, 10.1% WSI-Relevance) and open-ended diagnosis by 9.7% and 8.9% over prior WSI-based models.",
+      "published": "2026-03-10T17:35:49Z",
+      "updated": "2026-03-10T17:35:49Z",
+      "authors": [
+        "Jinyue Li",
+        "Yuci Liang",
+        "Qiankun Li",
+        "Xinheng Lyu",
+        "Jiayu Qian",
+        "Huabao Chen",
+        "Kun Wang",
+        "Zhigang Zeng",
+        "Anil Anthony Bharath",
+        "Yang Liu"
+      ],
+      "categories": [
+        "cs.AI"
+      ],
+      "primary_category": "cs.AI"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09942v1",
+      "title": "Towards Flexible Spectrum Access: Data-Driven Insights into Spectrum Demand",
+      "summary": "In the diverse landscape of 6G networks, where wireless connectivity demands surge and spectrum resources remain limited, flexible spectrum access becomes paramount. The success of crafting such schemes hinges on our ability to accurately characterize spectrum demand patterns across space and time. This paper presents a data-driven methodology for estimating spectrum demand variations over space and identifying key drivers of these variations in the mobile broadband landscape. By leveraging geospatial analytics and machine learning, the methodology is applied to a case study in Canada to estimate spectrum demand dynamics in urban regions. Our proposed model captures 70\\% of the variability in spectrum demand when trained on one urban area and tested on another. These insights empower regulators to navigate the complexities of 6G networks and devise effective policies to meet future network demands.",
+      "published": "2026-03-10T17:34:16Z",
+      "updated": "2026-03-10T17:34:16Z",
+      "authors": [
+        "Mohamad Alkadamani",
+        "Amir Ghasemi",
+        "Halim Yanikomeroglu"
+      ],
+      "categories": [
+        "eess.SY",
+        "cs.AI",
+        "cs.NI"
+      ],
+      "primary_category": "cs.AI"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09940v1",
+      "title": "SignalMC-MED: A Multimodal Benchmark for Evaluating Biosignal Foundation Models on Single-Lead ECG and PPG",
+      "summary": "Recent biosignal foundation models (FMs) have demonstrated promising performance across diverse clinical prediction tasks, yet systematic evaluation on long-duration multimodal data remains limited. We introduce SignalMC-MED, a benchmark for evaluating biosignal FMs on synchronized single-lead electrocardiogram (ECG) and photoplethysmogram (PPG) data. Derived from the MC-MED dataset, SignalMC-MED comprises 22,256 visits with 10-minute overlapping ECG and PPG signals, and includes 20 clinically relevant tasks spanning prediction of demographics, emergency department disposition, laboratory value regression, and detection of prior ICD-10 diagnoses. Using this benchmark, we perform a systematic evaluation of representative time-series and biosignal FMs across ECG-only, PPG-only, and ECG + PPG settings. We find that domain-specific biosignal FMs consistently outperform general time-series models, and that multimodal ECG + PPG fusion yields robust improvements over unimodal inputs. Moreover, using the full 10-minute signal consistently outperforms shorter segments, and larger model variants do not reliably outperform smaller ones. Hand-crafted ECG domain features provide a strong baseline and offer complementary value when combined with learned FM representations. Together, these results establish SignalMC-MED as a standardized benchmark and provide practical guidance for evaluating and deploying biosignal FMs.",
+      "published": "2026-03-10T17:32:28Z",
+      "updated": "2026-03-10T17:32:28Z",
+      "authors": [
+        "Fredrik K. Gustafsson",
+        "Xiao Gu",
+        "Mattia Carletti",
+        "Patitapaban Palo",
+        "David W. Eyre",
+        "David A. Clifton"
+      ],
+      "categories": [
+        "cs.LG"
+      ],
+      "primary_category": "cs.LG"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09938v1",
+      "title": "Model Merging in the Era of Large Language Models: Methods, Applications, and Future Directions",
+      "summary": "Model merging has emerged as a transformative paradigm for combining the capabilities of multiple neural networks into a single unified model without additional training. With the rapid proliferation of fine-tuned large language models~(LLMs), merging techniques offer a computationally efficient alternative to ensembles and full retraining, enabling practitioners to compose specialized capabilities at minimal cost. This survey presents a comprehensive and structured examination of model merging in the LLM era through the \\textbf{FUSE} taxonomy, a four-dimensional framework organized along \\textbf{F}oundations, \\textbf{U}nification Strategies, \\textbf{S}cenarios, and \\textbf{E}cosystem. We first establish the theoretical underpinnings of merging, including loss landscape geometry, mode connectivity, and the linear mode connectivity hypothesis. We then systematically review the algorithmic landscape, spanning weight averaging, task vector arithmetic, sparsification-enhanced methods, mixture-of-experts architectures, and evolutionary optimization approaches. For each method family, we analyze the core formulation, highlight representative works, and discuss practical trade-offs. We further examine downstream applications across multi-task learning, safety alignment, domain specialization, multilingual transfer, and federated learning. Finally, we survey the supporting ecosystem of open-source tools, community platforms, and evaluation benchmarks, and identify key open challenges including theoretical gaps, scalability barriers, and standardization needs. This survey aims to equip researchers and practitioners with a structured foundation for advancing model merging.",
+      "published": "2026-03-10T17:31:55Z",
+      "updated": "2026-03-10T17:31:55Z",
+      "authors": [
+        "Mingyang Song",
+        "Mao Zheng"
+      ],
+      "categories": [
+        "cs.CL"
+      ],
+      "primary_category": "cs.CL"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09936v1",
+      "title": "Generative Drifting is Secretly Score Matching: a Spectral and Variational Perspective",
+      "summary": "Generative Modeling via Drifting has recently achieved state-of-the-art one-step image generation through a kernel-based drift operator, yet the success is largely empirical and its theoretical foundations remain poorly understood. In this paper, we make the following observation: \\emph{under a Gaussian kernel, the drift operator is exactly a score difference on smoothed distributions}. This insight allows us to answer all three key questions left open in the original work: (1) whether a vanishing drift guarantees equality of distributions ($V_{p,q}=0\\Rightarrow p=q$), (2) how to choose between kernels, and (3) why the stop-gradient operator is indispensable for stable training. Our observations position drifting within the well-studied score-matching family and enable a rich theoretical perspective. By linearizing the McKean-Vlasov dynamics and probing them in Fourier space, we reveal frequency-dependent convergence timescales comparable to \\emph{Landau damping} in plasma kinetic theory: the Gaussian kernel suffers an exponential high-frequency bottleneck, explaining the empirical preference for the Laplacian kernel. We also propose an exponential bandwidth annealing schedule $\u03c3(t)=\u03c3_0 e^{-rt}$ that reduces convergence time from $\\exp(O(K_{\\max}^2))$ to $O(\\log K_{\\max})$. Finally, by formalizing drifting as a Wasserstein gradient flow of the smoothed KL divergence, we prove that the stop-gradient operator is derived directly from the frozen-field discretization mandated by the JKO scheme, and removing it severs training from any gradient-flow guarantee. This variational perspective further provides a general template for constructing novel drift operators, demonstrated with a Sinkhorn divergence drift.",
+      "published": "2026-03-10T17:30:35Z",
+      "updated": "2026-03-10T17:30:35Z",
+      "authors": [
+        "Erkan Turan",
+        "Maks Ovsjanikov"
+      ],
+      "categories": [
+        "cs.LG"
+      ],
+      "primary_category": "cs.LG"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09932v1",
+      "title": "Unsupervised Domain Adaptation with Target-Only Margin Disparity Discrepancy",
+      "summary": "In interventional radiology, Cone-Beam Computed Tomography (CBCT) is a helpful imaging modality that provides guidance to practicians during minimally invasive procedures. CBCT differs from traditional Computed Tomography (CT) due to its limited reconstructed field of view, specific artefacts, and the intra-arterial administration of contrast medium. While CT benefits from abundant publicly available annotated datasets, interventional CBCT data remain scarce and largely unannotated, with existing datasets focused primarily on radiotherapy applications. To address this limitation, we leverage a proprietary collection of unannotated interventional CBCT scans in conjunction with annotated CT data, employing domain adaptation techniques to bridge the modality gap and enhance liver segmentation performance on CBCT. We propose a novel unsupervised domain adaptation (UDA) framework based on the formalism of Margin Disparity Discrepancy (MDD), which improves target domain performance through a reformulation of the original MDD optimization framework. Experimental results on CT and CBCT datasets for liver segmentation demonstrate that our method achieves state-of-the-art performance in UDA, as well as in the few-shot setting.",
+      "published": "2026-03-10T17:27:43Z",
+      "updated": "2026-03-10T17:27:43Z",
+      "authors": [
+        "Gauthier Miralles",
+        "Lo\u00efc Le Folgoc",
+        "Vincent Jugnon",
+        "Pietro Gori"
+      ],
+      "categories": [
+        "cs.CV"
+      ],
+      "primary_category": "cs.CV"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09931v1",
+      "title": "Adaptive Clinical-Aware Latent Diffusion for Multimodal Brain Image Generation and Missing Modality Imputation",
+      "summary": "Multimodal neuroimaging provides complementary insights for Alzheimer's disease diagnosis, yet clinical datasets frequently suffer from missing modalities. We propose ACADiff, a framework that synthesizes missing brain imaging modalities through adaptive clinical-aware diffusion. ACADiff learns mappings between incomplete multimodal observations and target modalities by progressively denoising latent representations while attending to available imaging data and clinical metadata. The framework employs adaptive fusion that dynamically reconfigures based on input availability, coupled with semantic clinical guidance via GPT-4o-encoded prompts. Three specialized generators enable bidirectional synthesis among sMRI, FDG-PET, and AV45-PET. Evaluated on ADNI subjects, ACADiff achieves superior generation quality and maintains robust diagnostic performance even under extreme 80\\% missing scenarios, outperforming all existing baselines. To promote reproducibility, code is available at https://github.com/rongzhou7/ACADiff",
+      "published": "2026-03-10T17:26:45Z",
+      "updated": "2026-03-10T17:26:45Z",
+      "authors": [
+        "Rong Zhou",
+        "Houliang Zhou",
+        "Yao Su",
+        "Brian Y. Chen",
+        "Yu Zhang",
+        "Lifang He",
+        "Alzheimer's Disease Neuroimaging Initiative"
+      ],
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "primary_category": "cs.CV"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09930v1",
+      "title": "Fine-grained Motion Retrieval via Joint-Angle Motion Images and Token-Patch Late Interaction",
+      "summary": "Text-motion retrieval aims to learn a semantically aligned latent space between natural language descriptions and 3D human motion skeleton sequences, enabling bidirectional search across the two modalities. Most existing methods use a dual-encoder framework that compresses motion and text into global embeddings, discarding fine-grained local correspondences, and thus reducing accuracy. Additionally, these global-embedding methods offer limited interpretability of the retrieval results. To overcome these limitations, we propose an interpretable, joint-angle-based motion representation that maps joint-level local features into a structured pseudo-image, compatible with pre-trained Vision Transformers. For text-to-motion retrieval, we employ MaxSim, a token-wise late interaction mechanism, and enhance it with Masked Language Modeling regularization to foster robust, interpretable text-motion alignment. Extensive experiments on HumanML3D and KIT-ML show that our method outperforms state-of-the-art text-motion retrieval approaches while offering interpretable fine-grained correspondences between text and motion. The code is available in the supplementary material.",
+      "published": "2026-03-10T17:26:42Z",
+      "updated": "2026-03-10T17:26:42Z",
+      "authors": [
+        "Yao Zhang",
+        "Zhuchenyang Liu",
+        "Yanlan He",
+        "Thomas Ploetz",
+        "Yu Xiao"
+      ],
+      "categories": [
+        "cs.CV",
+        "cs.IR"
+      ],
+      "primary_category": "cs.CV"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09925v1",
+      "title": "On the Structural Failure of Chamfer Distance in 3D Shape Optimization",
+      "summary": "Chamfer distance is the standard training loss for point cloud reconstruction, completion, and generation, yet directly optimizing it can produce worse Chamfer values than not optimizing it at all. We show that this paradoxical failure is gradient-structural. The per-point Chamfer gradient creates a many-to-one collapse that is the unique attractor of the forward term and cannot be resolved by any local regularizer, including repulsion, smoothness, and density-aware re-weighting. We derive a necessary condition for collapse suppression: coupling must propagate beyond local neighborhoods. In a controlled 2D setting, shared-basis deformation suppresses collapse by providing global coupling; in 3D shape morphing, a differentiable MPM prior instantiates the same principle, consistently reducing the Chamfer gap across 20 directed pairs with a 2.5$\\times$ improvement on the topologically complex dragon. The presence or absence of non-local coupling determines whether Chamfer optimization succeeds or collapses. This provides a practical design criterion for any pipeline that optimizes point-level distance metrics.",
+      "published": "2026-03-10T17:21:23Z",
+      "updated": "2026-03-10T17:21:23Z",
+      "authors": [
+        "Chang-Yong Song",
+        "David Hyde"
+      ],
+      "categories": [
+        "cs.CV",
+        "cs.GR"
+      ],
+      "primary_category": "cs.CV"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09923v1",
+      "title": "OptEMA: Adaptive Exponential Moving Average for Stochastic Optimization with Zero-Noise Optimality",
+      "summary": "The Exponential Moving Average (EMA) is a cornerstone of widely used optimizers such as Adam. However, existing theoretical analyses of Adam-style methods have notable limitations: their guarantees can remain suboptimal in the zero-noise regime, rely on restrictive boundedness conditions (e.g., bounded gradients or objective gaps), use constant or open-loop stepsizes, or require prior knowledge of Lipschitz constants. To overcome these bottlenecks, we introduce OptEMA and analyze two novel variants: OptEMA-M, which applies an adaptive, decreasing EMA coefficient to the first-order moment with a fixed second-order decay, and OptEMA-V, which swaps these roles. Crucially, OptEMA is closed-loop and Lipschitz-free in the sense that its effective stepsizes are trajectory-dependent and do not require the Lipschitz constant for parameterization. Under standard stochastic gradient descent (SGD) assumptions, namely smoothness, a lower-bounded objective, and unbiased gradients with bounded variance, we establish rigorous convergence guarantees. Both variants achieve a noise-adaptive convergence rate of $\\widetilde{\\mathcal{O}}(T^{-1/2}+\u03c3^{1/2} T^{-1/4})$ for the average gradient norm, where $\u03c3$ is the noise level. In particular, in the zero-noise regime where $\u03c3=0$, our bounds reduce to the nearly optimal deterministic rate $\\widetilde{\\mathcal{O}}(T^{-1/2})$ without manual hyperparameter retuning.",
+      "published": "2026-03-10T17:19:54Z",
+      "updated": "2026-03-10T17:19:54Z",
+      "authors": [
+        "Ganzhao Yuan"
+      ],
+      "categories": [
+        "cs.LG",
+        "math.NA",
+        "math.OC"
+      ],
+      "primary_category": "cs.LG"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09921v1",
+      "title": "WikiCLIP: An Efficient Contrastive Baseline for Open-domain Visual Entity Recognition",
+      "summary": "Open-domain visual entity recognition (VER) seeks to associate images with entities in encyclopedic knowledge bases such as Wikipedia. Recent generative methods tailored for VER demonstrate strong performance but incur high computational costs, limiting their scalability and practical deployment. In this work, we revisit the contrastive paradigm for VER and introduce WikiCLIP, a simple yet effective framework that establishes a strong and efficient baseline for open-domain VER. WikiCLIP leverages large language model embeddings as knowledge-rich entity representations and enhances them with a Vision-Guided Knowledge Adaptor (VGKA) that aligns textual semantics with visual cues at the patch level. To further encourage fine-grained discrimination, a Hard Negative Synthesis Mechanism generates visually similar but semantically distinct negatives during training. Experimental results on popular open-domain VER benchmarks, such as OVEN, demonstrate that WikiCLIP significantly outperforms strong baselines. Specifically, WikiCLIP achieves a 16% improvement on the challenging OVEN unseen set, while reducing inference latency by nearly 100 times compared with the leading generative model, AutoVER. The project page is available at https://artanic30.github.io/project_pages/WikiCLIP/",
+      "published": "2026-03-10T17:18:53Z",
+      "updated": "2026-03-10T17:18:53Z",
+      "authors": [
+        "Shan Ning",
+        "Longtian Qiu",
+        "Jiaxuan Sun",
+        "Xuming He"
+      ],
+      "categories": [
+        "cs.CV"
+      ],
+      "primary_category": "cs.CV"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09916v1",
+      "title": "AI-Enabled Data-driven Intelligence for Spectrum Demand Estimation",
+      "summary": "Accurately forecasting spectrum demand is a key component for efficient spectrum resource allocation and management. With the rapid growth in demand for wireless services, mobile network operators and regulators face increasing challenges in ensuring adequate spectrum availability. This paper presents a data-driven approach leveraging artificial intelligence (AI) and machine learning (ML) to estimate and manage spectrum demand. The approach uses multiple proxies of spectrum demand, drawing from site license data and derived from crowdsourced data. These proxies are validated against real-world mobile network traffic data to ensure reliability, achieving an R$^2$ value of 0.89 for an enhanced proxy. The proposed ML models are tested and validated across five major Canadian cities, demonstrating their generalizability and robustness. These contributions assist spectrum regulators in dynamic spectrum planning, enabling better resource allocation and policy adjustments to meet future network demands.",
+      "published": "2026-03-10T17:11:36Z",
+      "updated": "2026-03-10T17:11:36Z",
+      "authors": [
+        "Colin Brown",
+        "Mohamad Alkadamani",
+        "Halim Yanikomeroglu"
+      ],
+      "categories": [
+        "eess.SY",
+        "cs.AI"
+      ],
+      "primary_category": "cs.AI"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09909v1",
+      "title": "MedMASLab: A Unified Orchestration Framework for Benchmarking Multimodal Medical Multi-Agent Systems",
+      "summary": "While Multi-Agent Systems (MAS) show potential for complex clinical decision support, the field remains hindered by architectural fragmentation and the lack of standardized multimodal integration. Current medical MAS research suffers from non-uniform data ingestion pipelines, inconsistent visual-reasoning evaluation, and a lack of cross-specialty benchmarking. To address these challenges, we present MedMASLab, a unified framework and benchmarking platform for multimodal medical multi-agent systems. MedMASLab introduces: (1) A standardized multimodal agent communication protocol that enables seamless integration of 11 heterogeneous MAS architectures across 24 medical modalities. (2) An automated clinical reasoning evaluator, a zero-shot semantic evaluation paradigm that overcomes the limitations of lexical string-matching by leveraging large vision-language models to verify diagnostic logic and visual grounding. (3) The most extensive benchmark to date, spanning 11 organ systems and 473 diseases, standardizing data from 11 clinical benchmarks. Our systematic evaluation reveals a critical domain-specific performance gap: while MAS improves reasoning depth, current architectures exhibit significant fragility when transitioning between specialized medical sub-domains. We provide a rigorous ablation of interaction mechanisms and cost-performance trade-offs, establishing a new technical baseline for future autonomous clinical systems. The source code and data is publicly available at: https://github.com/NUS-Project/MedMASLab/",
+      "published": "2026-03-10T17:03:11Z",
+      "updated": "2026-03-10T17:03:11Z",
+      "authors": [
+        "Yunhang Qian",
+        "Xiaobin Hu",
+        "Jiaquan Yu",
+        "Siyang Xin",
+        "Xiaokun Chen",
+        "Jiangning Zhang",
+        "Peng-Tao Jiang",
+        "Jiawei Liu",
+        "Hongwei Bran Li"
+      ],
+      "categories": [
+        "cs.AI"
+      ],
+      "primary_category": "cs.AI"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09906v1",
+      "title": "Thinking to Recall: How Reasoning Unlocks Parametric Knowledge in LLMs",
+      "summary": "While reasoning in LLMs plays a natural role in math, code generation, and multi-hop factual questions, its effect on simple, single-hop factual questions remains unclear. Such questions do not require step-by-step logical decomposition, making the utility of reasoning highly counterintuitive. Nevertheless, we find that enabling reasoning substantially expands the capability boundary of the model's parametric knowledge recall, unlocking correct answers that are otherwise effectively unreachable. Why does reasoning aid parametric knowledge recall when there are no complex reasoning steps to be done? To answer this, we design a series of hypothesis-driven controlled experiments, and identify two key driving mechanisms: (1) a computational buffer effect, where the model uses the generated reasoning tokens to perform latent computation independent of their semantic content; and (2) factual priming, where generating topically related facts acts as a semantic bridge that facilitates correct answer retrieval. Importantly, this latter generative self-retrieval mechanism carries inherent risks: we demonstrate that hallucinating intermediate facts during reasoning increases the likelihood of hallucinations in the final answer. Finally, we show that our insights can be harnessed to directly improve model accuracy by prioritizing reasoning trajectories that contain hallucination-free factual statements.",
+      "published": "2026-03-10T16:59:20Z",
+      "updated": "2026-03-10T16:59:20Z",
+      "authors": [
+        "Zorik Gekhman",
+        "Roee Aharoni",
+        "Eran Ofek",
+        "Mor Geva",
+        "Roi Reichart",
+        "Jonathan Herzig"
+      ],
+      "categories": [
+        "cs.CL"
+      ],
+      "primary_category": "cs.CL"
+    },
+    {
+      "id": "http://arxiv.org/abs/2603.09896v1",
+      "title": "Stepping VLMs onto the Court: Benchmarking Spatial Intelligence in Sports",
+      "summary": "Sports have long attracted broad attention as they push the limits of human physical and cognitive capabilities. Amid growing interest in spatial intelligence for vision-language models (VLMs), sports provide a natural testbed for understanding high-intensity human motion and dynamic object interactions. To this end, we present CourtSI, the first large-scale spatial intelligence dataset tailored to sports scenarios. CourtSI contains over 1M QA pairs, organized under a holistic taxonomy that systematically covers spatial counting, distance measurement, localization, and relational reasoning, across representative net sports including badminton, tennis, and table tennis. Leveraging well-defined court geometry as metric anchors, we develop a semi-automatic data engine to reconstruct sports scenes, enabling scalable curation of CourtSI. In addition, we introduce CourtSI-Bench, a high-quality evaluation benchmark comprising 3,686 QA pairs with rigorous human verification. We evaluate 25 proprietary and open-source VLMs on CourtSI-Bench, revealing a remaining human-AI performance gap and limited generalization from existing spatial intelligence benchmarks. These findings indicate that sports scenarios expose limitations in spatial intelligence capabilities captured by existing benchmarks. Further, fine-tuning Qwen3-VL-8B on CourtSI improves accuracy on CourtSI-Bench by 23.5 percentage points. The adapted model also generalizes effectively to CourtSI-Ext, an evaluation set built on a similar but unseen sport, and demonstrates enhanced spatial-aware commentary generation. Together, these findings demonstrate that CourtSI provides a scalable pathway toward advancing spatial intelligence of VLMs in sports.",
+      "published": "2026-03-10T16:50:32Z",
+      "updated": "2026-03-10T16:50:32Z",
+      "authors": [
+        "Yuchen Yang",
+        "Yuqing Shao",
+        "Duxiu Huang",
+        "Linfeng Dong",
+        "Yifei Liu",
+        "Suixin Tang",
+        "Xiang Zhou",
+        "Yuanyuan Gao",
+        "Wei Wang",
+        "Yue Zhou",
+        "Xue Yang",
+        "Yanfeng Wang",
+        "Xiao Sun",
+        "Zhihang Zhong"
+      ],
+      "categories": [
+        "cs.CV"
+      ],
+      "primary_category": "cs.CV"
+    }
+  ]
+}

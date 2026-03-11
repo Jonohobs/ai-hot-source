@@ -1,0 +1,18 @@
+# Never publish private skill variants
+skills/*-private/
+skills/**/private-*/
+skills/**/internal-*/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# SQLite
+*.db
+*.db-wal
+*.db-shm

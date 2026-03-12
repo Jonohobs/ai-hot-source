@@ -18,9 +18,9 @@ It is not a mirror of the source content.
 
 ## Where to click first
 
-- [data/index.json](./data/index.json): quick list of the current datasets
-- [data/arxiv_cs_ai_recent/latest.json](./data/arxiv_cs_ai_recent/latest.json): recent AI/CS papers from arXiv
-- [data/huggingface_trending_models/latest.json](./data/huggingface_trending_models/latest.json): popular public Hugging Face models
+- [data/index.md](./data/index.md): quick list of the current datasets
+- [data/arxiv_cs_ai_recent/latest.md](./data/arxiv_cs_ai_recent/latest.md): recent AI/CS papers from arXiv
+- [data/huggingface_trending_models/latest.md](./data/huggingface_trending_models/latest.md): popular public Hugging Face models
 
 ## Is it safe to browse?
 

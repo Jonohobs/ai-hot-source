@@ -17,8 +17,8 @@ You do not need to run any code to use this repo.
 If you just want to explore:
 
 - start with [START_HERE.md](./START_HERE.md)
-- open [data/index.json](./data/index.json) to see the latest source list
-- click through to the source snapshots you want to read
+- open [data/index.md](./data/index.md) to see the latest source list
+- click through to the text snapshots you want to read
 
 The `src/` folder is only there to generate and update the data.
 
@@ -28,16 +28,8 @@ The `src/` folder is only there to generate and update the data.
 - `huggingface_trending_models`: popular public Hugging Face models with core metadata.
 
 Outputs land in `data/<source>/latest.json`.
-`data/index.json` provides a quick top-level catalog of the latest snapshots.
-
-## Why this shape
-
-- Public metadata only.
-- Index, not mirror.
-- Cheap to run on GitHub Actions.
-- Easy to inspect and diff in git.
-- Safe enough to link from a community server without shipping opaque binaries or heavy infra.
-- Unofficial by design: useful to OpenClaw users without implying endorsement or ownership by OpenClaw maintainers.
+`data/index.md` provides a quick browseable catalog of the latest snapshots.
+`data/index.json` remains available for tools and scripts.
 
 ## Quick start
 
@@ -82,7 +74,9 @@ Typical record fields should look like:
 
 Top-level files:
 
-- `data/index.json`: one-line-per-source summary for quick consumption.
+- `data/index.md`: browseable summary for people reading on GitHub.
+- `data/index.json`: machine-friendly summary for tools.
+- `data/<source>/latest.md`: human-readable snapshot for each source.
 - `data/<source>/latest.json`: full current snapshot for that source.
 
 ## Automation

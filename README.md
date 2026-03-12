@@ -97,12 +97,14 @@ Candidates should pass the `COMPLIANCE.md` checklist first. In practice that mea
 
 ## Contribute a Source
 
+Issues, suggestions, and source additions are welcome.
+
 If you know a source that belongs here, open an issue or PR with:
 
 - what it is
 - why it is worth including
 - the source URL
-- how you would collect the metadata
+- how you would collect or research the metadata
 
 The best additions are easy to browse, genuinely useful, and a good fit for `COMPLIANCE.md`.
 

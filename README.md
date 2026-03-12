@@ -2,9 +2,9 @@
 
 Useful public metadata for builders.
 
-This is an unofficial, community-maintained project for OpenClaw builders and adjacent agent tooling communities. It collects small, regularly updated snapshots of public AI and computer-useful sources.
+New here? Start with [START_HERE.md](./START_HERE.md).
 
-This project is an index and discovery layer, not a content mirror. The goal is to provide useful blurbs and metadata that point back to the original source.
+This is an unofficial, community-maintained project for OpenClaw builders and adjacent agent tooling communities. It collects small, regularly updated snapshots of public AI and computer-useful sources.
 
 Compliance matters here. The project should prefer official APIs and public metadata, not brittle or adversarial scraping. Read `COMPLIANCE.md` before adding sources.
 
@@ -17,29 +17,24 @@ You do not need to run any code to use this repo.
 If you just want to explore:
 
 - start with [START_HERE.md](./START_HERE.md)
-- open [data/index.json](./data/index.json) to see the latest source list
-- click through to the source snapshots you want to read
+- open [data/index.md](./data/index.md) to see the latest source list
+- click through to the text snapshots you want to read
 
 The `src/` folder is only there to generate and update the data.
 
 ## V1 scope
 
-- `arxiv_cs_ai_recent`: recent papers from arXiv categories commonly useful for AI/computer-use work.
-- `huggingface_trending_models`: popular public Hugging Face models with core metadata.
+- Recent AI/CS papers from arXiv
+- Popular public Hugging Face models
+- Curated YouTube videos with lightweight public metadata and links back to the original videos
 
 Outputs land in `data/<source>/latest.json`.
-`data/index.json` provides a quick top-level catalog of the latest snapshots.
+`data/index.md` provides a quick browseable catalog of the latest snapshots.
+`data/index.json` remains available for tools and scripts.
 
-## Why this shape
+## Update the data
 
-- Public metadata only.
-- Index, not mirror.
-- Cheap to run on GitHub Actions.
-- Easy to inspect and diff in git.
-- Safe enough to link from a community server without shipping opaque binaries or heavy infra.
-- Unofficial by design: useful to OpenClaw users without implying endorsement or ownership by OpenClaw maintainers.
-
-## Quick start
+Only needed if you want to refresh the snapshots or add new sources.
 
 ```bash
 python -m community_scrapes --list
@@ -82,7 +77,9 @@ Typical record fields should look like:
 
 Top-level files:
 
-- `data/index.json`: one-line-per-source summary for quick consumption.
+- `data/index.md`: browseable summary for people reading on GitHub.
+- `data/index.json`: machine-friendly summary for tools.
+- `data/<source>/latest.md`: human-readable snapshot for each source.
 - `data/<source>/latest.json`: full current snapshot for that source.
 
 ## Automation
@@ -98,16 +95,8 @@ Top-level files:
 
 Candidates should pass the `COMPLIANCE.md` checklist first. In practice that means official feeds and public metadata are preferred; login-gated communities and full-content scraping are not.
 
-## OpenClaw fit
+## OpenClaw context
 
-Based on the public context available on March 11, 2026, the OpenClaw ecosystem appears to reward community-maintained resources more than centrally owned maintenance work. That makes this repo a good fit if it stays simple, useful, consistently updated, and clearly unofficial.
-
-One concrete public signal: the maintainer response on `openclaw/community#10` was effectively "we won't own this, but we'd promote a community-maintained version." That points toward a lightweight external repo with steady updates, not a heavy platform.
-
-Public OpenClaw repo/community signals also point in a similar direction:
-
-- The main repo describes OpenClaw as a personal AI assistant and points builders toward Discord, docs, and ecosystem tools.
-- `CONTRIBUTING.md` says small fixes can go straight to PRs, but new features should usually be discussed first.
-- `CONTRIBUTING.md` points skill contributions to ClawHub, which suggests external community resources are normal as long as they are clear about scope and ownership.
+This project is independent and unofficial. It is meant to be useful to OpenClaw builders without implying endorsement or ownership by the OpenClaw maintainers.
 
 Maintained by Jonathan Hobman / DTR Labs Ltd.

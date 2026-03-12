@@ -20,6 +20,7 @@ def run() -> dict:
             {
                 "id": item.get("id"),
                 "author": item.get("author"),
+                "url": f"https://huggingface.co/{item.get('id')}" if item.get("id") else None,
                 "pipeline_tag": item.get("pipeline_tag"),
                 "last_modified": item.get("lastModified"),
                 "downloads": item.get("downloads"),

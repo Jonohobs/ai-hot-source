@@ -1,0 +1,17 @@
+{
+  "source": "youtube_watch_videos",
+  "generated_at": "2026-03-12T21:43:59.417978+00:00",
+  "record_count": 1,
+  "records": [
+    {
+      "id": "Xn-gtHDsaPY",
+      "url": "https://www.youtube.com/watch?v=Xn-gtHDsaPY",
+      "title": "7 new open source AI tools you need right now\u2026",
+      "author": "Fireship",
+      "author_url": "https://www.youtube.com/@Fireship",
+      "provider_name": "YouTube",
+      "thumbnail_url": "https://i.ytimg.com/vi/Xn-gtHDsaPY/hqdefault.jpg",
+      "notes": "Seed video added manually."
+    }
+  ]
+}

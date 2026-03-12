@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
-from .sources import SOURCES
+from .sources import SOURCES, Source
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -33,6 +33,69 @@ def write_snapshot(output_root: Path, snapshot: dict) -> Path:
     return output_path
 
 
+def _truncate(text: str, limit: int = 220) -> str:
+    normalized = " ".join(text.split())
+    if len(normalized) <= limit:
+        return normalized
+    return normalized[: limit - 3].rstrip() + "..."
+
+
+def render_snapshot_markdown(snapshot: dict, source: Source) -> str:
+    lines = [
+        f"# {source.title}",
+        "",
+        f"Source id: `{snapshot['source']}`",
+        f"Generated at: `{snapshot['generated_at']}`",
+        f"Records: `{snapshot['record_count']}`",
+        "",
+    ]
+
+    for index, record in enumerate(snapshot["records"], start=1):
+        title = record.get("title") or record.get("id") or f"Record {index}"
+        lines.append(f"## {index}. {title}")
+        lines.append("")
+
+        if record.get("url"):
+            lines.append(f"Source: {record['url']}")
+        elif record.get("id", "").startswith("http"):
+            lines.append(f"Source: {record['id']}")
+
+        if record.get("author"):
+            lines.append(f"Author: {record['author']}")
+        if record.get("authors"):
+            lines.append(f"Authors: {', '.join(record['authors'])}")
+        if record.get("published"):
+            lines.append(f"Published: {record['published']}")
+        if record.get("last_modified"):
+            lines.append(f"Last modified: {record['last_modified']}")
+        if record.get("pipeline_tag"):
+            lines.append(f"Type: {record['pipeline_tag']}")
+        if record.get("downloads") is not None:
+            lines.append(f"Downloads: {record['downloads']}")
+        if record.get("likes") is not None:
+            lines.append(f"Likes: {record['likes']}")
+        if record.get("primary_category"):
+            lines.append(f"Primary category: {record['primary_category']}")
+        if record.get("categories"):
+            lines.append(f"Categories: {', '.join(record['categories'])}")
+        if record.get("tags"):
+            lines.append(f"Tags: {', '.join(record['tags'][:12])}")
+        if record.get("summary"):
+            lines.append(f"Summary: {_truncate(record['summary'])}")
+
+        lines.append("")
+
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def write_snapshot_markdown(output_root: Path, snapshot: dict, source: Source) -> Path:
+    output_dir = output_root / snapshot["source"]
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output_path = output_dir / "latest.md"
+    output_path.write_text(render_snapshot_markdown(snapshot, source), encoding="utf-8")
+    return output_path
+
+
 def write_index(output_root: Path, snapshots: list[dict]) -> Path:
     index = {
         "generated_at": max(snapshot["generated_at"] for snapshot in snapshots),
@@ -40,9 +103,11 @@ def write_index(output_root: Path, snapshots: list[dict]) -> Path:
         "sources": [
             {
                 "source": snapshot["source"],
+                "title": SOURCES[snapshot["source"]].title,
                 "record_count": snapshot["record_count"],
                 "generated_at": snapshot["generated_at"],
                 "path": f"{snapshot['source']}/latest.json",
+                "browse_path": f"{snapshot['source']}/latest.md",
             }
             for snapshot in snapshots
         ],
@@ -52,13 +117,40 @@ def write_index(output_root: Path, snapshots: list[dict]) -> Path:
     return output_path
 
 
+def write_index_markdown(output_root: Path, snapshots: list[dict]) -> Path:
+    lines = [
+        "# Data Index",
+        "",
+        "Browseable snapshot links for the current public metadata sources.",
+        "",
+    ]
+
+    for snapshot in snapshots:
+        lines.extend(
+            [
+                f"## {SOURCES[snapshot['source']].title}",
+                "",
+                f"Source id: `{snapshot['source']}`",
+                f"- Records: `{snapshot['record_count']}`",
+                f"- Generated at: `{snapshot['generated_at']}`",
+                f"- Browse: [{snapshot['source']}/latest.md](./{snapshot['source']}/latest.md)",
+                f"- JSON: [{snapshot['source']}/latest.json](./{snapshot['source']}/latest.json)",
+                "",
+            ]
+        )
+
+    output_path = output_root / "index.md"
+    output_path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+    return output_path
+
+
 def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
 
     if args.list:
         for source_id, source in SOURCES.items():
-            print(f"{source_id}\t{source.description}")
+            print(f"{source_id}\t{source.title}\t{source.description}")
         return 0
 
     requested = args.sources or []
@@ -75,12 +167,17 @@ def main() -> int:
     output_root = Path(args.output_root)
     snapshots: list[dict] = []
     for source_id in requested:
-        snapshot = SOURCES[source_id].run()
+        source = SOURCES[source_id]
+        snapshot = source.run()
         snapshots.append(snapshot)
         output_path = write_snapshot(output_root, snapshot)
+        markdown_path = write_snapshot_markdown(output_root, snapshot, source)
         print(f"Wrote {source_id} -> {output_path}")
+        print(f"Wrote {source_id} browse view -> {markdown_path}")
     index_path = write_index(output_root, snapshots)
+    index_markdown_path = write_index_markdown(output_root, snapshots)
     print(f"Wrote index -> {index_path}")
+    print(f"Wrote browse index -> {index_markdown_path}")
     return 0
 
 

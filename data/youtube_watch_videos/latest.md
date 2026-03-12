@@ -1,6 +1,7 @@
-# youtube_watch_videos
+# Curated YouTube videos
 
-Generated at: `2026-03-12T21:28:10.953654+00:00`
+Source id: `youtube_watch_videos`
+Generated at: `2026-03-12T21:43:59.417978+00:00`
 Records: `1`
 
 ## 1. 7 new open source AI tools you need right now…

@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
-from .sources import SOURCES
+from .sources import SOURCES, Source
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -40,10 +40,11 @@ def _truncate(text: str, limit: int = 220) -> str:
     return normalized[: limit - 3].rstrip() + "..."
 
 
-def render_snapshot_markdown(snapshot: dict) -> str:
+def render_snapshot_markdown(snapshot: dict, source: Source) -> str:
     lines = [
-        f"# {snapshot['source']}",
+        f"# {source.title}",
         "",
+        f"Source id: `{snapshot['source']}`",
         f"Generated at: `{snapshot['generated_at']}`",
         f"Records: `{snapshot['record_count']}`",
         "",
@@ -87,11 +88,11 @@ def render_snapshot_markdown(snapshot: dict) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
-def write_snapshot_markdown(output_root: Path, snapshot: dict) -> Path:
+def write_snapshot_markdown(output_root: Path, snapshot: dict, source: Source) -> Path:
     output_dir = output_root / snapshot["source"]
     output_dir.mkdir(parents=True, exist_ok=True)
     output_path = output_dir / "latest.md"
-    output_path.write_text(render_snapshot_markdown(snapshot), encoding="utf-8")
+    output_path.write_text(render_snapshot_markdown(snapshot, source), encoding="utf-8")
     return output_path
 
 
@@ -102,6 +103,7 @@ def write_index(output_root: Path, snapshots: list[dict]) -> Path:
         "sources": [
             {
                 "source": snapshot["source"],
+                "title": SOURCES[snapshot["source"]].title,
                 "record_count": snapshot["record_count"],
                 "generated_at": snapshot["generated_at"],
                 "path": f"{snapshot['source']}/latest.json",
@@ -126,8 +128,9 @@ def write_index_markdown(output_root: Path, snapshots: list[dict]) -> Path:
     for snapshot in snapshots:
         lines.extend(
             [
-                f"## {snapshot['source']}",
+                f"## {SOURCES[snapshot['source']].title}",
                 "",
+                f"Source id: `{snapshot['source']}`",
                 f"- Records: `{snapshot['record_count']}`",
                 f"- Generated at: `{snapshot['generated_at']}`",
                 f"- Browse: [{snapshot['source']}/latest.md](./{snapshot['source']}/latest.md)",
@@ -147,7 +150,7 @@ def main() -> int:
 
     if args.list:
         for source_id, source in SOURCES.items():
-            print(f"{source_id}\t{source.description}")
+            print(f"{source_id}\t{source.title}\t{source.description}")
         return 0
 
     requested = args.sources or []
@@ -164,10 +167,11 @@ def main() -> int:
     output_root = Path(args.output_root)
     snapshots: list[dict] = []
     for source_id in requested:
-        snapshot = SOURCES[source_id].run()
+        source = SOURCES[source_id]
+        snapshot = source.run()
         snapshots.append(snapshot)
         output_path = write_snapshot(output_root, snapshot)
-        markdown_path = write_snapshot_markdown(output_root, snapshot)
+        markdown_path = write_snapshot_markdown(output_root, snapshot, source)
         print(f"Wrote {source_id} -> {output_path}")
         print(f"Wrote {source_id} browse view -> {markdown_path}")
     index_path = write_index(output_root, snapshots)

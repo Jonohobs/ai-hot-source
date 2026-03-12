@@ -2,6 +2,8 @@
 
 Useful public metadata for builders.
 
+New here? Start with [START_HERE.md](./START_HERE.md).
+
 This is an unofficial, community-maintained project for OpenClaw builders and adjacent agent tooling communities. It collects small, regularly updated snapshots of public AI and computer-useful sources.
 
 This project is an index and discovery layer, not a content mirror. The goal is to provide useful blurbs and metadata that point back to the original source.
@@ -24,15 +26,17 @@ The `src/` folder is only there to generate and update the data.
 
 ## V1 scope
 
-- `arxiv_cs_ai_recent`: recent papers from arXiv categories commonly useful for AI/computer-use work.
-- `huggingface_trending_models`: popular public Hugging Face models with core metadata.
-- `youtube_watch_videos`: curated YouTube videos with lightweight public metadata and links back to the original videos.
+- Recent AI/CS papers from arXiv
+- Popular public Hugging Face models
+- Curated YouTube videos with lightweight public metadata and links back to the original videos
 
 Outputs land in `data/<source>/latest.json`.
 `data/index.md` provides a quick browseable catalog of the latest snapshots.
 `data/index.json` remains available for tools and scripts.
 
-## Quick start
+## Update the data
+
+Only needed if you want to refresh the snapshots or add new sources.
 
 ```bash
 python -m community_scrapes --list
@@ -93,16 +97,8 @@ Top-level files:
 
 Candidates should pass the `COMPLIANCE.md` checklist first. In practice that means official feeds and public metadata are preferred; login-gated communities and full-content scraping are not.
 
-## OpenClaw fit
+## OpenClaw context
 
-Based on the public context available on March 11, 2026, the OpenClaw ecosystem appears to reward community-maintained resources more than centrally owned maintenance work. That makes this repo a good fit if it stays simple, useful, consistently updated, and clearly unofficial.
-
-One concrete public signal: the maintainer response on `openclaw/community#10` was effectively "we won't own this, but we'd promote a community-maintained version." That points toward a lightweight external repo with steady updates, not a heavy platform.
-
-Public OpenClaw repo/community signals also point in a similar direction:
-
-- The main repo describes OpenClaw as a personal AI assistant and points builders toward Discord, docs, and ecosystem tools.
-- `CONTRIBUTING.md` says small fixes can go straight to PRs, but new features should usually be discussed first.
-- `CONTRIBUTING.md` points skill contributions to ClawHub, which suggests external community resources are normal as long as they are clear about scope and ownership.
+This project is independent and unofficial. It is meant to be useful to OpenClaw builders without implying endorsement or ownership by the OpenClaw maintainers.
 
 Maintained by Jonathan Hobman / DTR Labs Ltd.

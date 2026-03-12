@@ -1,6 +1,7 @@
-# huggingface_trending_models
+# Popular public Hugging Face models
 
-Generated at: `2026-03-12T21:28:10.896047+00:00`
+Source id: `huggingface_trending_models`
+Generated at: `2026-03-12T21:43:59.355743+00:00`
 Records: `30`
 
 ## 1. sentence-transformers/all-MiniLM-L6-v2

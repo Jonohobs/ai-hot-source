@@ -18,8 +18,8 @@ It is not a mirror of the source content.
 
 ## Where to click first
 
-- [data/index.md](./data/index.md): quick list of the current datasets
-- [data/arxiv_cs_ai_recent/latest.md](./data/arxiv_cs_ai_recent/latest.md): recent AI/CS papers from arXiv
+- [data/index.md](./data/index.md): browse the current source list
+- [data/arxiv_cs_ai_recent/latest.md](./data/arxiv_cs_ai_recent/latest.md): recent AI and computer science papers from arXiv
 - [data/huggingface_trending_models/latest.md](./data/huggingface_trending_models/latest.md): popular public Hugging Face models
 - [data/youtube_watch_videos/latest.md](./data/youtube_watch_videos/latest.md): curated YouTube videos worth checking
 
@@ -27,7 +27,7 @@ It is not a mirror of the source content.
 
 Yes. You can read the files directly on GitHub without running the code in this repo.
 
-The code in `src/` is only used to generate and refresh the snapshots.
+The project files that generate and refresh the snapshots are separate from the browseable data.
 
 ## Who is this for?
 
@@ -36,6 +36,9 @@ The code in `src/` is only used to generate and refresh the snapshots.
 - non-technical visitors who just want a readable index
 - technical users who want reusable metadata feeds
 
-## If you are technical
+## Reference notes
 
-The code can be used as a starting point for collecting public metadata in a conservative, compliance-aware way. Each new source should still be reviewed on its own terms.
+- The browseable files in this repo are the Markdown files under `data/`.
+- JSON files are also available for tools and scripts.
+- The source code that generates the snapshots lives under `src/`.
+- If you are technical, the code can be used as a starting point for collecting public metadata in a conservative, compliance-aware way. Each new source should still be reviewed on its own terms.

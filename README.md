@@ -95,18 +95,16 @@ Top-level files:
 
 Candidates should pass the `COMPLIANCE.md` checklist first. In practice that means official feeds and public metadata are preferred; login-gated communities and full-content scraping are not.
 
-## Contributing
+## Contribute a Source
 
-Suggestions and pull requests are welcome.
-
-If you have a useful source to add, open an issue or PR with:
+If you know a source that belongs here, open an issue or PR with:
 
 - what it is
-- why it is useful
-- the canonical source URL
-- the access method you would use
+- why it is worth including
+- the source URL
+- how you would collect the metadata
 
-Good additions are easy to browse, clearly useful, and a good fit for `COMPLIANCE.md`.
+The best additions are easy to browse, genuinely useful, and a good fit for `COMPLIANCE.md`.
 
 ## Project context
 

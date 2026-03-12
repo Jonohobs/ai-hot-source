@@ -21,6 +21,7 @@ It is not a mirror of the source content.
 - [data/index.md](./data/index.md): quick list of the current datasets
 - [data/arxiv_cs_ai_recent/latest.md](./data/arxiv_cs_ai_recent/latest.md): recent AI/CS papers from arXiv
 - [data/huggingface_trending_models/latest.md](./data/huggingface_trending_models/latest.md): popular public Hugging Face models
+- [data/youtube_watch_videos/latest.md](./data/youtube_watch_videos/latest.md): curated YouTube videos worth checking
 
 ## Is it safe to browse?
 

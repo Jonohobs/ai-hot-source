@@ -26,6 +26,7 @@ The `src/` folder is only there to generate and update the data.
 
 - `arxiv_cs_ai_recent`: recent papers from arXiv categories commonly useful for AI/computer-use work.
 - `huggingface_trending_models`: popular public Hugging Face models with core metadata.
+- `youtube_watch_videos`: curated YouTube videos with lightweight public metadata and links back to the original videos.
 
 Outputs land in `data/<source>/latest.json`.
 `data/index.md` provides a quick browseable catalog of the latest snapshots.

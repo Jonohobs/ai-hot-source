@@ -5,6 +5,7 @@ from typing import Callable
 
 from .arxiv import run as run_arxiv
 from .huggingface import run as run_huggingface
+from .youtube import run as run_youtube
 
 
 @dataclass(frozen=True)
@@ -24,5 +25,10 @@ SOURCES = {
         id="huggingface_trending_models",
         description="Popular public Hugging Face model metadata.",
         run=run_huggingface,
+    ),
+    "youtube_watch_videos": Source(
+        id="youtube_watch_videos",
+        description="Curated YouTube video metadata from public oEmbed responses.",
+        run=run_youtube,
     ),
 }

@@ -23,7 +23,7 @@ Working public name: `AI Hot Source`
 
 ## Suggested repo description
 
-Useful public metadata feeds for OpenClaw builders and adjacent agent tooling communities.
+Useful public metadata feeds for open source builders and adjacent agent tooling communities.
 
 ## Suggested first DM
 

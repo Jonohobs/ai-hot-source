@@ -4,7 +4,7 @@ Useful public metadata for builders.
 
 New here? Start with [START_HERE.md](./START_HERE.md).
 
-This is an unofficial, community-maintained project for OpenClaw builders and adjacent agent tooling communities. It collects small, regularly updated snapshots of public AI and computer-useful sources.
+This is an unofficial, community-maintained project for open source builders and adjacent agent tooling communities. It collects small, regularly updated snapshots of public AI and computer-useful sources.
 
 Compliance matters here. The project should prefer official APIs and public metadata, not brittle or adversarial scraping. Read `COMPLIANCE.md` before adding sources.
 
@@ -95,8 +95,8 @@ Top-level files:
 
 Candidates should pass the `COMPLIANCE.md` checklist first. In practice that means official feeds and public metadata are preferred; login-gated communities and full-content scraping are not.
 
-## OpenClaw context
+## Project context
 
-This project is independent and unofficial. It is meant to be useful to OpenClaw builders without implying endorsement or ownership by the OpenClaw maintainers.
+This project is independent and unofficial. It is meant to be useful to open source builders without implying endorsement or ownership by any upstream project or maintainer.
 
 Maintained by Jonathan Hobman / DTR Labs Ltd.

@@ -14,8 +14,6 @@ Think of it as a browseable index:
 - useful metadata
 - links back to the original source
 
-It is not a mirror of the source content.
-
 ## Where to click first
 
 - [data/index.md](./data/index.md): browse the current source list
@@ -41,4 +39,3 @@ The project files that generate and refresh the snapshots are separate from the 
 - The browseable files in this repo are the Markdown files under `data/`.
 - JSON files are also available for tools and scripts.
 - The source code that generates the snapshots lives under `src/`.
-- If you are technical, the code can be used as a starting point for collecting public metadata in a conservative, compliance-aware way. Each new source should still be reviewed on its own terms.

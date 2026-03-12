@@ -6,8 +6,6 @@ New here? Start with [START_HERE.md](./START_HERE.md).
 
 This is an unofficial, community-maintained project for OpenClaw builders and adjacent agent tooling communities. It collects small, regularly updated snapshots of public AI and computer-useful sources.
 
-This project is an index and discovery layer, not a content mirror. The goal is to provide useful blurbs and metadata that point back to the original source.
-
 Compliance matters here. The project should prefer official APIs and public metadata, not brittle or adversarial scraping. Read `COMPLIANCE.md` before adding sources.
 
 Code in this repo is MIT licensed. Upstream data and source content remain subject to source-specific terms.

@@ -1,16 +1,26 @@
-# AI Hot Sauce Community Scrapes
+# AI Hot Source
 
-Lightweight, regularly updated datasets for AI and computer-useful public sources.
+Useful public metadata for builders.
 
-This is an unofficial, community-maintained repo for OpenClaw builders and adjacent agent tooling communities. It focuses on practical metadata feeds that are easy to plug into agents, dashboards, and local tooling. The emphasis is on structured, timestamped outputs rather than raw dumps.
-
-DTR Labs Ltd
+This is an unofficial, community-maintained project for OpenClaw builders and adjacent agent tooling communities. It collects small, regularly updated snapshots of public AI and computer-useful sources.
 
 This project is an index and discovery layer, not a content mirror. The goal is to provide useful blurbs and metadata that point back to the original source.
 
 Compliance matters here. The project should prefer official APIs and public metadata, not brittle or adversarial scraping. Read `COMPLIANCE.md` before adding sources.
 
 Code in this repo is MIT licensed. Upstream data and source content remain subject to source-specific terms.
+
+## Just browsing?
+
+You do not need to run any code to use this repo.
+
+If you just want to explore:
+
+- start with [START_HERE.md](./START_HERE.md)
+- open [data/index.json](./data/index.json) to see the latest source list
+- click through to the source snapshots you want to read
+
+The `src/` folder is only there to generate and update the data.
 
 ## V1 scope
 
@@ -28,10 +38,6 @@ Outputs land in `data/<source>/latest.json`.
 - Easy to inspect and diff in git.
 - Safe enough to link from a community server without shipping opaque binaries or heavy infra.
 - Unofficial by design: useful to OpenClaw users without implying endorsement or ownership by OpenClaw maintainers.
-
-## Tagline
-
-Spicy public metadata for builders.
 
 ## Quick start
 
@@ -81,11 +87,7 @@ Top-level files:
 
 ## Automation
 
-`.github/workflows/update-data.yml` runs the scrapers on a schedule and can commit refreshed outputs back to the repo.
-
-## Release
-
-`RELEASE.md` contains a simple v1 send checklist plus suggested DM copy for the OpenClaw mod.
+`.github/workflows/update-data.yml` refreshes the data on a schedule and can commit updated snapshots back to the repo.
 
 ## Next candidates
 
@@ -107,3 +109,5 @@ Public OpenClaw repo/community signals also point in a similar direction:
 - The main repo describes OpenClaw as a personal AI assistant and points builders toward Discord, docs, and ecosystem tools.
 - `CONTRIBUTING.md` says small fixes can go straight to PRs, but new features should usually be discussed first.
 - `CONTRIBUTING.md` points skill contributions to ClawHub, which suggests external community resources are normal as long as they are clear about scope and ownership.
+
+Maintained by Jonathan Hobman / DTR Labs Ltd.

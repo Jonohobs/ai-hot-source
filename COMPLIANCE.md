@@ -11,7 +11,7 @@ This repo is intended to stay on the conservative side of scraping and data coll
 5. Do not scrape private communities, logged-in surfaces, or anything that reasonably expects membership-only access.
 6. Check site terms before adding a new source. If the terms are unclear, do not automate it until reviewed.
 7. Keep request volume low and send a clear user agent.
-8. Remove a source quickly if an operator objects or changes access rules.
+8. Revisit a source if its access rules, terms, or practical fit appear to have changed.
 
 ## Current v1 sources
 

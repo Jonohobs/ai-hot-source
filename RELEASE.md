@@ -4,7 +4,7 @@
 
 A small public repo of AI/computer-useful datasets built from low-risk public metadata sources.
 
-Working public name: `AI Hot Sauce Community Scrapes`
+Working public name: `AI Hot Source`
 
 ## Why it is worth sending
 
@@ -23,7 +23,7 @@ Working public name: `AI Hot Sauce Community Scrapes`
 
 ## Suggested repo description
 
-Spicy public metadata feeds for OpenClaw builders and adjacent agent tooling communities.
+Useful public metadata feeds for OpenClaw builders and adjacent agent tooling communities.
 
 ## Suggested first DM
 
@@ -33,6 +33,6 @@ Started with a conservative setup: public metadata only, explicit compliance not
 
 ## Suggested first post blurb
 
-Started `AI Hot Sauce Community Scrapes`, a small community-maintained repo for AI/computer-useful public data.
+Started `AI Hot Source`, a small community-maintained project for AI/computer-useful public data.
 
 Goal is simple: structured, regularly updated metadata feeds that are easy to plug into agents and tools, without crossing into sketchy scraping.

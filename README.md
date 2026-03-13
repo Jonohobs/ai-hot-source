@@ -26,11 +26,14 @@ The `src/` folder is only there to generate and update the data.
 
 - Recent AI/CS papers from arXiv
 - Popular public Hugging Face models
+- Curated GitHub AI repositories
 - Curated YouTube videos with lightweight public metadata and links back to the original videos
 
 Outputs land in `data/<source>/latest.json`.
 `data/index.md` provides a quick browseable catalog of the latest snapshots.
 `data/index.json` remains available for tools and scripts.
+
+For a private upstream and public downstream workflow, see [PRIVATE_PUBLIC_PIPELINE.md](./PRIVATE_PUBLIC_PIPELINE.md).
 
 ## Update the data
 
@@ -40,6 +43,7 @@ Only needed if you want to refresh the snapshots or add new sources.
 python -m community_scrapes --list
 python -m community_scrapes --source arxiv_cs_ai_recent
 python -m community_scrapes --all
+python -m community_scrapes --all --output-root private_data --public-root data
 ```
 
 If Python cannot find the package before installation, run with:

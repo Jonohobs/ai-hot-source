@@ -1,6 +1,6 @@
 {
   "source": "huggingface_trending_models",
-  "generated_at": "2026-03-12T21:43:59.355743+00:00",
+  "generated_at": "2026-03-13T00:35:11.269417+00:00",
   "record_count": 30,
   "records": [
     {
@@ -641,7 +641,7 @@
       "pipeline_tag": "voice-activity-detection",
       "last_modified": "2024-05-10T19:35:46.000Z",
       "downloads": 14595518,
-      "likes": 839,
+      "likes": 840,
       "private": false,
       "gated": "auto",
       "tags": [

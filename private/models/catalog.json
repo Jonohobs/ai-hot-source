@@ -1,0 +1,141 @@
+{
+  "generated_at": "2026-03-12T23:59:00Z",
+  "version": 1,
+  "models": [
+    {
+      "id": "gpt-4.1-mini",
+      "provider": "openai",
+      "access": "hosted",
+      "modalities": ["text", "vision"],
+      "context_window": 1000000,
+      "supports_tools": true,
+      "estimated_cost_tier": "low",
+      "competency": {
+        "planning": 8,
+        "coding": 8,
+        "refactoring": 8,
+        "summarization": 8,
+        "classification": 7
+      },
+      "safety": {
+        "trust_level": 8,
+        "approved_for_sensitive": true,
+        "notes": "Good default hosted workhorse when cost matters."
+      },
+      "ops": {
+        "latency_tier": "fast",
+        "local_available": false,
+        "status": "approved"
+      },
+      "tags": ["hosted", "general", "tools", "fast"]
+    },
+    {
+      "id": "o4-mini",
+      "provider": "openai",
+      "access": "hosted",
+      "modalities": ["text"],
+      "context_window": 200000,
+      "supports_tools": true,
+      "estimated_cost_tier": "medium",
+      "competency": {
+        "planning": 9,
+        "coding": 8,
+        "refactoring": 7,
+        "summarization": 7,
+        "classification": 6
+      },
+      "safety": {
+        "trust_level": 8,
+        "approved_for_sensitive": true,
+        "notes": "Reasoning-focused model for harder tasks."
+      },
+      "ops": {
+        "latency_tier": "medium",
+        "local_available": false,
+        "status": "approved"
+      },
+      "tags": ["hosted", "reasoning", "tools"]
+    },
+    {
+      "id": "phi4-mini",
+      "provider": "ollama",
+      "access": "local",
+      "modalities": ["text"],
+      "context_window": 128000,
+      "supports_tools": false,
+      "estimated_cost_tier": "free",
+      "competency": {
+        "planning": 4,
+        "coding": 5,
+        "refactoring": 4,
+        "summarization": 6,
+        "classification": 7
+      },
+      "safety": {
+        "trust_level": 9,
+        "approved_for_sensitive": true,
+        "notes": "Good local cheap worker for lightweight tasks."
+      },
+      "ops": {
+        "latency_tier": "fast",
+        "local_available": true,
+        "status": "approved"
+      },
+      "tags": ["local", "cheap", "fast"]
+    },
+    {
+      "id": "llama3.2",
+      "provider": "ollama",
+      "access": "local",
+      "modalities": ["text"],
+      "context_window": 128000,
+      "supports_tools": false,
+      "estimated_cost_tier": "free",
+      "competency": {
+        "planning": 5,
+        "coding": 5,
+        "refactoring": 5,
+        "summarization": 6,
+        "classification": 7
+      },
+      "safety": {
+        "trust_level": 9,
+        "approved_for_sensitive": true,
+        "notes": "Solid general local utility model."
+      },
+      "ops": {
+        "latency_tier": "fast",
+        "local_available": true,
+        "status": "approved"
+      },
+      "tags": ["local", "general"]
+    },
+    {
+      "id": "qwen2.5-7b-instruct",
+      "provider": "huggingface/ollama",
+      "access": "local-only",
+      "modalities": ["text"],
+      "context_window": 32768,
+      "supports_tools": false,
+      "estimated_cost_tier": "free",
+      "competency": {
+        "planning": 6,
+        "coding": 6,
+        "refactoring": 6,
+        "summarization": 6,
+        "classification": 7
+      },
+      "safety": {
+        "trust_level": 5,
+        "approved_for_sensitive": false,
+        "notes": "Allowed for local experimentation only; do not use for sensitive tasks."
+      },
+      "ops": {
+        "latency_tier": "medium",
+        "local_available": true,
+        "status": "experimental"
+      },
+      "tags": ["local", "experimental"]
+    }
+  ]
+}

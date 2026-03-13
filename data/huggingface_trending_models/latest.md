@@ -1,7 +1,7 @@
 # Popular public Hugging Face models
 
 Source id: `huggingface_trending_models`
-Generated at: `2026-03-12T21:43:59.355743+00:00`
+Generated at: `2026-03-13T00:35:11.269417+00:00`
 Records: `30`
 
 ## 1. sentence-transformers/all-MiniLM-L6-v2
@@ -168,7 +168,7 @@ Author: pyannote
 Last modified: 2024-05-10T19:35:46.000Z
 Type: voice-activity-detection
 Downloads: 14595518
-Likes: 839
+Likes: 840
 Tags: pyannote-audio, pytorch, pyannote, pyannote-audio-model, audio, voice, speech, speaker, speaker-diarization, speaker-change-detection, speaker-segmentation, voice-activity-detection
 
 ## 18. cross-encoder/ms-marco-MiniLM-L6-v2

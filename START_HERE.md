@@ -19,6 +19,7 @@ Think of it as a browseable index:
 - [data/index.md](./data/index.md): browse the current source list
 - [data/arxiv_cs_ai_recent/latest.md](./data/arxiv_cs_ai_recent/latest.md): recent AI and computer science papers from arXiv
 - [data/huggingface_trending_models/latest.md](./data/huggingface_trending_models/latest.md): popular public Hugging Face models
+- [data/github_curated_ai_repos/latest.md](./data/github_curated_ai_repos/latest.md): curated GitHub repositories worth checking
 - [data/youtube_watch_videos/latest.md](./data/youtube_watch_videos/latest.md): curated YouTube videos worth checking
 
 ## Is it safe to browse?

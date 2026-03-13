@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "default_preferences": {
+    "prefer_local_for_sensitive": true,
+    "prefer_cheapest_for_bulk": true,
+    "require_approved_for_sensitive": true
+  },
+  "task_routes": [
+    {
+      "task": "bulk_classification",
+      "preferred_models": ["phi4-mini", "llama3.2", "gpt-4.1-mini"],
+      "notes": "Use local first for cheap high-volume categorization and filtering."
+    },
+    {
+      "task": "summarization",
+      "preferred_models": ["phi4-mini", "llama3.2", "gpt-4.1-mini"],
+      "notes": "Use local for first-pass summaries, hosted for final polished summary when needed."
+    },
+    {
+      "task": "planning",
+      "preferred_models": ["o4-mini", "gpt-4.1-mini"],
+      "notes": "Use stronger hosted reasoning models for project planning and architecture."
+    },
+    {
+      "task": "coding",
+      "preferred_models": ["gpt-4.1-mini", "o4-mini", "llama3.2"],
+      "notes": "Hosted first for important implementation tasks; local for lightweight support."
+    },
+    {
+      "task": "sensitive_reasoning",
+      "preferred_models": ["gpt-4.1-mini", "o4-mini", "phi4-mini"],
+      "notes": "Only approved models. Experimental models blocked."
+    },
+    {
+      "task": "experimental_local",
+      "preferred_models": ["qwen2.5-7b-instruct", "llama3.2", "phi4-mini"],
+      "notes": "Use only for local-only experiments and non-sensitive work."
+    }
+  ]
+}

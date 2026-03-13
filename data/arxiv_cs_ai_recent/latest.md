@@ -1,7 +1,7 @@
 # Recent AI/CS papers from arXiv
 
 Source id: `arxiv_cs_ai_recent`
-Generated at: `2026-03-12T21:43:59.187759+00:00`
+Generated at: `2026-03-13T00:35:11.131932+00:00`
 Records: `30`
 
 ## 1. COMIC: Agentic Sketch Comedy Generation

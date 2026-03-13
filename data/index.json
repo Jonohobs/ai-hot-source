@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-03-12T21:43:59.417978+00:00",
-  "source_count": 3,
+  "generated_at": "2026-03-13T00:35:11.879044+00:00",
+  "source_count": 4,
   "sources": [
     {
       "source": "arxiv_cs_ai_recent",
       "title": "Recent AI/CS papers from arXiv",
       "record_count": 30,
-      "generated_at": "2026-03-12T21:43:59.187759+00:00",
+      "generated_at": "2026-03-13T00:35:11.131932+00:00",
       "path": "arxiv_cs_ai_recent/latest.json",
       "browse_path": "arxiv_cs_ai_recent/latest.md"
     },
@@ -14,15 +14,23 @@
       "source": "huggingface_trending_models",
       "title": "Popular public Hugging Face models",
       "record_count": 30,
-      "generated_at": "2026-03-12T21:43:59.355743+00:00",
+      "generated_at": "2026-03-13T00:35:11.269417+00:00",
       "path": "huggingface_trending_models/latest.json",
       "browse_path": "huggingface_trending_models/latest.md"
+    },
+    {
+      "source": "github_curated_ai_repos",
+      "title": "Curated GitHub AI repositories",
+      "record_count": 3,
+      "generated_at": "2026-03-13T00:35:11.831809+00:00",
+      "path": "github_curated_ai_repos/latest.json",
+      "browse_path": "github_curated_ai_repos/latest.md"
     },
     {
       "source": "youtube_watch_videos",
       "title": "Curated YouTube videos",
       "record_count": 1,
-      "generated_at": "2026-03-12T21:43:59.417978+00:00",
+      "generated_at": "2026-03-13T00:35:11.879044+00:00",
       "path": "youtube_watch_videos/latest.json",
       "browse_path": "youtube_watch_videos/latest.md"
     }

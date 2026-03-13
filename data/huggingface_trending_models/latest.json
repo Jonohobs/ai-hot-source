@@ -1,6 +1,6 @@
 {
   "source": "huggingface_trending_models",
-  "generated_at": "2026-03-13T00:35:11.269417+00:00",
+  "generated_at": "2026-03-13T02:51:53.665232+00:00",
   "record_count": 30,
   "records": [
     {
@@ -785,7 +785,7 @@
       "pipeline_tag": "text-generation",
       "last_modified": "2025-07-26T03:46:27.000Z",
       "downloads": 12248624,
-      "likes": 1133,
+      "likes": 1134,
       "private": false,
       "gated": false,
       "tags": [
@@ -880,7 +880,7 @@
       "pipeline_tag": "text-generation",
       "last_modified": "2024-02-19T10:57:45.000Z",
       "downloads": 10503929,
-      "likes": 3124,
+      "likes": 3125,
       "private": false,
       "gated": false,
       "tags": [

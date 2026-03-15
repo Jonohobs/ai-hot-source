@@ -1,6 +1,6 @@
 {
   "source": "huggingface_trending_models",
-  "generated_at": "2026-03-14T13:14:46.426992+00:00",
+  "generated_at": "2026-03-15T03:30:43.862451+00:00",
   "record_count": 30,
   "records": [
     {
@@ -10,7 +10,7 @@
       "pipeline_tag": "sentence-similarity",
       "last_modified": "2025-03-06T13:37:44.000Z",
       "downloads": 205677817,
-      "likes": 4574,
+      "likes": 4575,
       "private": false,
       "gated": false,
       "tags": [
@@ -67,7 +67,7 @@
       "pipeline_tag": "fill-mask",
       "last_modified": "2024-02-19T11:06:12.000Z",
       "downloads": 70212030,
-      "likes": 2585,
+      "likes": 2586,
       "private": false,
       "gated": false,
       "tags": [
@@ -99,7 +99,7 @@
       "pipeline_tag": null,
       "last_modified": "2024-02-29T10:20:20.000Z",
       "downloads": 51275969,
-      "likes": 84,
+      "likes": 85,
       "private": false,
       "gated": false,
       "tags": [
@@ -147,7 +147,7 @@
       "pipeline_tag": "sentence-similarity",
       "last_modified": "2025-08-19T10:14:25.000Z",
       "downloads": 28588402,
-      "likes": 1255,
+      "likes": 1256,
       "private": false,
       "gated": false,
       "tags": [
@@ -333,7 +333,7 @@
       "pipeline_tag": "audio-classification",
       "last_modified": "2026-01-12T00:41:49.000Z",
       "downloads": 22533922,
-      "likes": 60,
+      "likes": 61,
       "private": false,
       "gated": false,
       "tags": [
@@ -390,7 +390,7 @@
       "pipeline_tag": "fill-mask",
       "last_modified": "2024-02-19T12:48:21.000Z",
       "downloads": 20553567,
-      "likes": 795,
+      "likes": 796,
       "private": false,
       "gated": false,
       "tags": [
@@ -511,7 +511,7 @@
       "pipeline_tag": "zero-shot-image-classification",
       "last_modified": "2024-02-29T09:45:55.000Z",
       "downloads": 19130273,
-      "likes": 878,
+      "likes": 879,
       "private": false,
       "gated": false,
       "tags": [
@@ -701,7 +701,7 @@
       "pipeline_tag": "automatic-speech-recognition",
       "last_modified": "2024-05-10T19:43:23.000Z",
       "downloads": 12849260,
-      "likes": 1639,
+      "likes": 1640,
       "private": false,
       "gated": "auto",
       "tags": [
@@ -808,7 +808,7 @@
       "pipeline_tag": "text-generation",
       "last_modified": "2025-07-26T03:46:27.000Z",
       "downloads": 12187334,
-      "likes": 1135,
+      "likes": 1134,
       "private": false,
       "gated": false,
       "tags": [
@@ -937,7 +937,7 @@
       "pipeline_tag": null,
       "last_modified": "2025-12-09T09:02:14.000Z",
       "downloads": 10124005,
-      "likes": 614,
+      "likes": 615,
       "private": false,
       "gated": false,
       "tags": [
@@ -971,7 +971,7 @@
       "pipeline_tag": "text-to-speech",
       "last_modified": "2025-04-10T18:12:48.000Z",
       "downloads": 8745661,
-      "likes": 5821,
+      "likes": 5823,
       "private": false,
       "gated": false,
       "tags": [

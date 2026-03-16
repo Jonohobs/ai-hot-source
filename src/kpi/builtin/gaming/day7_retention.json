@@ -1,0 +1,37 @@
+{
+  "id": "b8c9d0e1-8004-4000-8000-000000000004",
+  "slug": "day7_retention",
+  "name": "Day 7 Retention",
+  "description": "Percentage of new users who return 7 days after their first session. Indicates whether core gameplay loop sustains interest.",
+  "domain": "gaming",
+  "subdomain": "retention",
+  "tags": ["retention", "mid-term"],
+  "data_type": "percentage",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "(users_returning_day7 / new_users) * 100",
+    "variables": {
+      "users_returning_day7": "Users who returned on day 7",
+      "new_users": "New users on the install/signup day"
+    },
+    "unit": "%",
+    "example": {
+      "users_returning_day7": 150,
+      "new_users": 1000,
+      "result": 15.0
+    }
+  },
+  "benchmark": {
+    "poor": 5.0,
+    "acceptable": 10.0,
+    "good": 18.0,
+    "excellent": 30.0,
+    "source": "GameAnalytics / Adjust",
+    "industry": "mobile gaming"
+  },
+  "aliases": ["D7 retention", "week 1 retention"],
+  "related_kpis": ["day1_retention", "day30_retention", "dau_mau_ratio", "average_session_length"],
+  "data_sources": ["game_analytics", "product_analytics"],
+  "cadence": "weekly",
+  "is_custom": false
+}

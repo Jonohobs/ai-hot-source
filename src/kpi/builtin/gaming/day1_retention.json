@@ -1,0 +1,37 @@
+{
+  "id": "b8c9d0e1-8003-4000-8000-000000000003",
+  "slug": "day1_retention",
+  "name": "Day 1 Retention",
+  "description": "Percentage of new users who return the day after their first session. The most critical early retention signal for games.",
+  "domain": "gaming",
+  "subdomain": "retention",
+  "tags": ["retention", "onboarding", "early"],
+  "data_type": "percentage",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "(users_returning_day1 / new_users) * 100",
+    "variables": {
+      "users_returning_day1": "Users who returned the next day",
+      "new_users": "New users on the install/signup day"
+    },
+    "unit": "%",
+    "example": {
+      "users_returning_day1": 400,
+      "new_users": 1000,
+      "result": 40.0
+    }
+  },
+  "benchmark": {
+    "poor": 20.0,
+    "acceptable": 30.0,
+    "good": 40.0,
+    "excellent": 55.0,
+    "source": "GameAnalytics / Adjust",
+    "industry": "mobile gaming"
+  },
+  "aliases": ["D1 retention", "next day retention"],
+  "related_kpis": ["day7_retention", "day30_retention", "activation_rate", "dau_mau_ratio"],
+  "data_sources": ["game_analytics", "product_analytics"],
+  "cadence": "daily",
+  "is_custom": false
+}

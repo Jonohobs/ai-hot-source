@@ -1,0 +1,34 @@
+{
+  "id": "e5f6a7b8-5004-4000-8000-000000000004",
+  "slug": "pipeline_velocity",
+  "name": "Pipeline Velocity",
+  "description": "Speed at which deals move through the sales pipeline, measured as potential revenue per day. Combines volume, win rate, deal size, and cycle length.",
+  "domain": "sales",
+  "subdomain": "pipeline",
+  "tags": ["pipeline", "revenue", "speed", "compound"],
+  "data_type": "currency",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "(opportunities * average_deal_value * win_rate_decimal) / sales_cycle_days",
+    "variables": {
+      "opportunities": "Number of qualified opportunities",
+      "average_deal_value": "Average deal value in currency",
+      "win_rate_decimal": "Win rate as a decimal (e.g. 0.25)",
+      "sales_cycle_days": "Average sales cycle in days"
+    },
+    "unit": "USD/day",
+    "example": {
+      "opportunities": 100,
+      "average_deal_value": 20000,
+      "win_rate_decimal": 0.25,
+      "sales_cycle_days": 60,
+      "result": 8333.33
+    }
+  },
+  "benchmark": null,
+  "aliases": ["sales velocity", "pipeline speed"],
+  "related_kpis": ["win_rate", "average_deal_size", "sales_cycle_length", "quota_attainment"],
+  "data_sources": ["crm"],
+  "cadence": "monthly",
+  "is_custom": false
+}

@@ -1,0 +1,25 @@
+{
+  "id": "e5f6a7b8-5003-4000-8000-000000000003",
+  "slug": "sales_cycle_length",
+  "name": "Sales Cycle Length",
+  "description": "Average number of days from first contact to closed deal. Shorter cycles indicate efficient sales processes.",
+  "domain": "sales",
+  "subdomain": "pipeline",
+  "tags": ["pipeline", "efficiency", "speed"],
+  "data_type": "duration",
+  "direction": "lower_is_better",
+  "formula": null,
+  "benchmark": {
+    "poor": 180,
+    "acceptable": 90,
+    "good": 45,
+    "excellent": 21,
+    "source": "Salesforce / HubSpot",
+    "industry": "B2B SaaS"
+  },
+  "aliases": ["deal cycle", "time to close", "average sales cycle"],
+  "related_kpis": ["win_rate", "pipeline_velocity", "average_deal_size"],
+  "data_sources": ["crm"],
+  "cadence": "monthly",
+  "is_custom": false
+}

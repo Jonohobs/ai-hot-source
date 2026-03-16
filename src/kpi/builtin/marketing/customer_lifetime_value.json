@@ -1,0 +1,37 @@
+{
+  "id": "a1b2c3d4-1007-4000-8000-000000000007",
+  "slug": "customer_lifetime_value",
+  "name": "Customer Lifetime Value",
+  "description": "Total predicted revenue a customer will generate over their entire relationship with the business.",
+  "domain": "marketing",
+  "subdomain": "retention",
+  "tags": ["retention", "revenue", "unit-economics", "growth"],
+  "data_type": "currency",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "average_revenue_per_customer * average_customer_lifespan",
+    "variables": {
+      "average_revenue_per_customer": "Average revenue per customer per period",
+      "average_customer_lifespan": "Average number of periods a customer remains active"
+    },
+    "unit": "USD",
+    "example": {
+      "average_revenue_per_customer": 100,
+      "average_customer_lifespan": 24,
+      "result": 2400
+    }
+  },
+  "benchmark": {
+    "poor": 500,
+    "acceptable": 1500,
+    "good": 5000,
+    "excellent": 15000,
+    "source": "ProfitWell / industry averages",
+    "industry": "SaaS"
+  },
+  "aliases": ["CLV", "LTV", "CLTV", "lifetime value"],
+  "related_kpis": ["customer_acquisition_cost", "ltv_cac_ratio", "churn_rate", "arpu", "net_revenue_retention"],
+  "data_sources": ["crm", "billing", "analytics"],
+  "cadence": "quarterly",
+  "is_custom": false
+}

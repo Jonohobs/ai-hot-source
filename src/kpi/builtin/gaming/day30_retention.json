@@ -1,0 +1,37 @@
+{
+  "id": "b8c9d0e1-8005-4000-8000-000000000005",
+  "slug": "day30_retention",
+  "name": "Day 30 Retention",
+  "description": "Percentage of new users who return 30 days after their first session. Long-term retention validates endgame content and monetization viability.",
+  "domain": "gaming",
+  "subdomain": "retention",
+  "tags": ["retention", "long-term"],
+  "data_type": "percentage",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "(users_returning_day30 / new_users) * 100",
+    "variables": {
+      "users_returning_day30": "Users who returned on day 30",
+      "new_users": "New users on the install/signup day"
+    },
+    "unit": "%",
+    "example": {
+      "users_returning_day30": 50,
+      "new_users": 1000,
+      "result": 5.0
+    }
+  },
+  "benchmark": {
+    "poor": 1.0,
+    "acceptable": 3.0,
+    "good": 7.0,
+    "excellent": 15.0,
+    "source": "GameAnalytics / Adjust",
+    "industry": "mobile gaming"
+  },
+  "aliases": ["D30 retention", "month 1 retention"],
+  "related_kpis": ["day1_retention", "day7_retention", "churn_rate", "customer_lifetime_value"],
+  "data_sources": ["game_analytics", "product_analytics"],
+  "cadence": "monthly",
+  "is_custom": false
+}

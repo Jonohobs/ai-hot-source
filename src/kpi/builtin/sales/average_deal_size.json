@@ -1,0 +1,30 @@
+{
+  "id": "e5f6a7b8-5002-4000-8000-000000000002",
+  "slug": "average_deal_size",
+  "name": "Average Deal Size",
+  "description": "Average revenue value of closed-won deals. Reflects market positioning and sales strategy effectiveness.",
+  "domain": "sales",
+  "subdomain": "conversion",
+  "tags": ["revenue", "deals", "pricing"],
+  "data_type": "currency",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "total_deal_revenue / number_of_deals",
+    "variables": {
+      "total_deal_revenue": "Total revenue from closed deals",
+      "number_of_deals": "Number of closed-won deals"
+    },
+    "unit": "USD",
+    "example": {
+      "total_deal_revenue": 500000,
+      "number_of_deals": 25,
+      "result": 20000
+    }
+  },
+  "benchmark": null,
+  "aliases": ["ADS", "average contract value", "ACV"],
+  "related_kpis": ["win_rate", "pipeline_velocity", "monthly_recurring_revenue", "annual_recurring_revenue"],
+  "data_sources": ["crm"],
+  "cadence": "monthly",
+  "is_custom": false
+}

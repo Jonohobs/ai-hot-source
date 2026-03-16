@@ -1,0 +1,37 @@
+{
+  "id": "b2c3d4e5-2002-4000-8000-000000000002",
+  "slug": "net_profit_margin",
+  "name": "Net Profit Margin",
+  "description": "Percentage of revenue remaining as profit after all expenses, taxes, and costs are deducted.",
+  "domain": "finance",
+  "subdomain": "profitability",
+  "tags": ["profitability", "margin", "bottom-line"],
+  "data_type": "percentage",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "(net_income / revenue) * 100",
+    "variables": {
+      "net_income": "Net income after all expenses",
+      "revenue": "Total revenue"
+    },
+    "unit": "%",
+    "example": {
+      "net_income": 200000,
+      "revenue": 1000000,
+      "result": 20.0
+    }
+  },
+  "benchmark": {
+    "poor": -10.0,
+    "acceptable": 5.0,
+    "good": 15.0,
+    "excellent": 25.0,
+    "source": "NYU Stern / industry averages",
+    "industry": "cross-industry"
+  },
+  "aliases": ["net margin", "profit margin", "NPM"],
+  "related_kpis": ["gross_margin", "operating_expense_ratio", "burn_rate"],
+  "data_sources": ["accounting", "erp"],
+  "cadence": "monthly",
+  "is_custom": false
+}

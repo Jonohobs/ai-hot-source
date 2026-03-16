@@ -1,0 +1,37 @@
+{
+  "id": "b8c9d0e1-8002-4000-8000-000000000002",
+  "slug": "arpdau",
+  "name": "Average Revenue Per Daily Active User",
+  "description": "Average revenue generated per daily active user. Primary monetization metric for free-to-play games.",
+  "domain": "gaming",
+  "subdomain": "monetization",
+  "tags": ["monetization", "revenue", "f2p"],
+  "data_type": "currency",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "daily_revenue / daily_active_users",
+    "variables": {
+      "daily_revenue": "Total revenue on a given day",
+      "daily_active_users": "Number of daily active users"
+    },
+    "unit": "USD",
+    "example": {
+      "daily_revenue": 5000,
+      "daily_active_users": 50000,
+      "result": 0.10
+    }
+  },
+  "benchmark": {
+    "poor": 0.01,
+    "acceptable": 0.05,
+    "good": 0.15,
+    "excellent": 0.50,
+    "source": "GameAnalytics / Sensor Tower",
+    "industry": "mobile gaming"
+  },
+  "aliases": ["ARPDAU", "revenue per DAU"],
+  "related_kpis": ["daily_active_users", "dau_mau_ratio", "arpu", "customer_lifetime_value"],
+  "data_sources": ["game_analytics", "billing"],
+  "cadence": "daily",
+  "is_custom": false
+}

@@ -1,0 +1,37 @@
+{
+  "id": "b8c9d0e1-8001-4000-8000-000000000001",
+  "slug": "dau_mau_ratio",
+  "name": "DAU/MAU Ratio (Stickiness)",
+  "description": "Ratio of daily active users to monthly active users. Measures how frequently monthly users return daily. Higher is stickier.",
+  "domain": "gaming",
+  "subdomain": "engagement",
+  "tags": ["engagement", "stickiness", "retention"],
+  "data_type": "ratio",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "daily_active_users / monthly_active_users",
+    "variables": {
+      "daily_active_users": "DAU on a given day",
+      "monthly_active_users": "MAU for the containing month"
+    },
+    "unit": null,
+    "example": {
+      "daily_active_users": 15000,
+      "monthly_active_users": 50000,
+      "result": 0.3
+    }
+  },
+  "benchmark": {
+    "poor": 0.1,
+    "acceptable": 0.2,
+    "good": 0.3,
+    "excellent": 0.5,
+    "source": "GameAnalytics / Sequoia",
+    "industry": "gaming"
+  },
+  "aliases": ["stickiness", "DAU/MAU", "engagement ratio"],
+  "related_kpis": ["daily_active_users", "monthly_active_users", "day1_retention", "day7_retention", "average_session_length"],
+  "data_sources": ["game_analytics", "product_analytics"],
+  "cadence": "daily",
+  "is_custom": false
+}

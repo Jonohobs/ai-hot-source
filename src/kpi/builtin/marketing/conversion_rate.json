@@ -1,0 +1,37 @@
+{
+  "id": "a1b2c3d4-1003-4000-8000-000000000003",
+  "slug": "conversion_rate",
+  "name": "Conversion Rate",
+  "description": "Percentage of visitors or leads who complete a desired action, such as signing up, purchasing, or subscribing.",
+  "domain": "marketing",
+  "subdomain": "acquisition",
+  "tags": ["conversion", "funnel", "optimization"],
+  "data_type": "percentage",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "(conversions / total_visitors) * 100",
+    "variables": {
+      "conversions": "Number of completed desired actions",
+      "total_visitors": "Total number of visitors or leads"
+    },
+    "unit": "%",
+    "example": {
+      "conversions": 150,
+      "total_visitors": 5000,
+      "result": 3.0
+    }
+  },
+  "benchmark": {
+    "poor": 1.0,
+    "acceptable": 2.5,
+    "good": 5.0,
+    "excellent": 10.0,
+    "source": "WordStream / Unbounce",
+    "industry": "cross-industry"
+  },
+  "aliases": ["CVR", "conversion %"],
+  "related_kpis": ["click_through_rate", "cost_per_lead", "customer_acquisition_cost", "activation_rate"],
+  "data_sources": ["analytics", "crm", "marketing_automation"],
+  "cadence": "weekly",
+  "is_custom": false
+}

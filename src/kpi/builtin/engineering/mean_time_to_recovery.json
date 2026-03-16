@@ -1,0 +1,25 @@
+{
+  "id": "c3d4e5f6-3004-4000-8000-000000000004",
+  "slug": "mean_time_to_recovery",
+  "name": "Mean Time to Recovery",
+  "description": "Average time to restore service after a production incident. One of the four DORA metrics measuring reliability.",
+  "domain": "engineering",
+  "subdomain": "dora",
+  "tags": ["dora", "devops", "reliability", "incident"],
+  "data_type": "duration",
+  "direction": "lower_is_better",
+  "formula": null,
+  "benchmark": {
+    "poor": 1440,
+    "acceptable": 360,
+    "good": 60,
+    "excellent": 10,
+    "source": "DORA State of DevOps Report",
+    "industry": "software"
+  },
+  "aliases": ["MTTR", "recovery time", "time to restore"],
+  "related_kpis": ["deployment_frequency", "lead_time_for_changes", "change_failure_rate", "resolution_time"],
+  "data_sources": ["incident_management", "monitoring"],
+  "cadence": "weekly",
+  "is_custom": false
+}

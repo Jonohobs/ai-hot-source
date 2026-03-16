@@ -1,0 +1,37 @@
+{
+  "id": "e5f6a7b8-5001-4000-8000-000000000001",
+  "slug": "win_rate",
+  "name": "Win Rate",
+  "description": "Percentage of sales opportunities that result in a closed deal. Key indicator of sales team effectiveness.",
+  "domain": "sales",
+  "subdomain": "conversion",
+  "tags": ["conversion", "deals", "effectiveness"],
+  "data_type": "percentage",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "(won_deals / total_opportunities) * 100",
+    "variables": {
+      "won_deals": "Number of deals closed-won",
+      "total_opportunities": "Total qualified opportunities"
+    },
+    "unit": "%",
+    "example": {
+      "won_deals": 30,
+      "total_opportunities": 100,
+      "result": 30.0
+    }
+  },
+  "benchmark": {
+    "poor": 10.0,
+    "acceptable": 20.0,
+    "good": 30.0,
+    "excellent": 50.0,
+    "source": "Gartner / HubSpot",
+    "industry": "B2B SaaS"
+  },
+  "aliases": ["close rate", "deal win rate"],
+  "related_kpis": ["average_deal_size", "sales_cycle_length", "pipeline_velocity", "quota_attainment"],
+  "data_sources": ["crm"],
+  "cadence": "monthly",
+  "is_custom": false
+}

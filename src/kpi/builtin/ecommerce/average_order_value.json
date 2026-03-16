@@ -1,0 +1,37 @@
+{
+  "id": "a7b8c9d0-7002-4000-8000-000000000002",
+  "slug": "average_order_value",
+  "name": "Average Order Value",
+  "description": "Average revenue per transaction. Increasing AOV is a primary lever for revenue growth without increasing traffic.",
+  "domain": "ecommerce",
+  "subdomain": "aov",
+  "tags": ["revenue", "pricing", "upsell"],
+  "data_type": "currency",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "total_revenue / number_of_orders",
+    "variables": {
+      "total_revenue": "Total revenue from orders",
+      "number_of_orders": "Total number of orders"
+    },
+    "unit": "USD",
+    "example": {
+      "total_revenue": 150000,
+      "number_of_orders": 2000,
+      "result": 75
+    }
+  },
+  "benchmark": {
+    "poor": 30,
+    "acceptable": 50,
+    "good": 85,
+    "excellent": 150,
+    "source": "Shopify / industry averages",
+    "industry": "ecommerce"
+  },
+  "aliases": ["AOV", "avg order value"],
+  "related_kpis": ["cart_abandonment_rate", "customer_repeat_rate", "conversion_rate", "return_on_ad_spend"],
+  "data_sources": ["ecommerce_platform"],
+  "cadence": "weekly",
+  "is_custom": false
+}

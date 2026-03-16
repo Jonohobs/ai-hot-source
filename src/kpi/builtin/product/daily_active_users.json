@@ -1,0 +1,18 @@
+{
+  "id": "d4e5f6a7-4001-4000-8000-000000000001",
+  "slug": "daily_active_users",
+  "name": "Daily Active Users",
+  "description": "Number of unique users who engage with the product in a single day. Core engagement metric for consumer and SaaS products.",
+  "domain": "product",
+  "subdomain": "engagement",
+  "tags": ["engagement", "users", "growth"],
+  "data_type": "integer",
+  "direction": "higher_is_better",
+  "formula": null,
+  "benchmark": null,
+  "aliases": ["DAU", "daily actives"],
+  "related_kpis": ["monthly_active_users", "dau_mau_ratio", "session_duration", "activation_rate"],
+  "data_sources": ["analytics", "product_analytics"],
+  "cadence": "daily",
+  "is_custom": false
+}

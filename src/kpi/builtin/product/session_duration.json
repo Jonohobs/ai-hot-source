@@ -1,0 +1,25 @@
+{
+  "id": "d4e5f6a7-4005-4000-8000-000000000005",
+  "slug": "session_duration",
+  "name": "Session Duration",
+  "description": "Average time a user spends in a single session within the product. Indicates depth of engagement.",
+  "domain": "product",
+  "subdomain": "engagement",
+  "tags": ["engagement", "time", "ux"],
+  "data_type": "duration",
+  "direction": "higher_is_better",
+  "formula": null,
+  "benchmark": {
+    "poor": 1.0,
+    "acceptable": 3.0,
+    "good": 7.0,
+    "excellent": 15.0,
+    "source": "Mixpanel benchmarks",
+    "industry": "SaaS"
+  },
+  "aliases": ["avg session length", "time in app", "session length"],
+  "related_kpis": ["daily_active_users", "feature_adoption_rate", "average_session_length"],
+  "data_sources": ["product_analytics", "analytics"],
+  "cadence": "weekly",
+  "is_custom": false
+}

@@ -1,0 +1,37 @@
+{
+  "id": "a1b2c3d4-1005-4000-8000-000000000005",
+  "slug": "return_on_ad_spend",
+  "name": "Return on Ad Spend",
+  "description": "Revenue generated for every dollar spent on advertising. Measures the effectiveness of advertising campaigns.",
+  "domain": "marketing",
+  "subdomain": "acquisition",
+  "tags": ["advertising", "roi", "revenue"],
+  "data_type": "ratio",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "revenue_from_ads / ad_spend",
+    "variables": {
+      "revenue_from_ads": "Revenue attributed to advertising",
+      "ad_spend": "Total advertising spend"
+    },
+    "unit": "x",
+    "example": {
+      "revenue_from_ads": 50000,
+      "ad_spend": 10000,
+      "result": 5.0
+    }
+  },
+  "benchmark": {
+    "poor": 1.0,
+    "acceptable": 2.0,
+    "good": 4.0,
+    "excellent": 8.0,
+    "source": "Google / Meta benchmarks",
+    "industry": "ecommerce"
+  },
+  "aliases": ["ROAS", "ad return"],
+  "related_kpis": ["customer_acquisition_cost", "click_through_rate", "conversion_rate", "gross_margin"],
+  "data_sources": ["ad_platforms", "analytics", "ecommerce_platform"],
+  "cadence": "weekly",
+  "is_custom": false
+}

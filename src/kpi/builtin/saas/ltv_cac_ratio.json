@@ -1,0 +1,37 @@
+{
+  "id": "f6a7b8c9-6005-4000-8000-000000000005",
+  "slug": "ltv_cac_ratio",
+  "name": "LTV:CAC Ratio",
+  "description": "Ratio of customer lifetime value to customer acquisition cost. Measures the return on customer acquisition investment.",
+  "domain": "saas",
+  "subdomain": "monetization",
+  "tags": ["unit-economics", "efficiency", "growth"],
+  "data_type": "ratio",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "customer_lifetime_value / customer_acquisition_cost",
+    "variables": {
+      "customer_lifetime_value": "Average customer lifetime value",
+      "customer_acquisition_cost": "Average customer acquisition cost"
+    },
+    "unit": "x",
+    "example": {
+      "customer_lifetime_value": 3000,
+      "customer_acquisition_cost": 1000,
+      "result": 3.0
+    }
+  },
+  "benchmark": {
+    "poor": 1.0,
+    "acceptable": 2.0,
+    "good": 3.0,
+    "excellent": 5.0,
+    "source": "Bessemer / SaaS Capital",
+    "industry": "SaaS"
+  },
+  "aliases": ["LTV/CAC", "CLV/CAC", "lifetime value to CAC"],
+  "related_kpis": ["customer_lifetime_value", "customer_acquisition_cost", "churn_rate", "arpu"],
+  "data_sources": ["crm", "billing", "accounting"],
+  "cadence": "quarterly",
+  "is_custom": false
+}

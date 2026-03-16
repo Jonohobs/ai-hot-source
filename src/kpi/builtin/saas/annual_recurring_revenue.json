@@ -1,0 +1,28 @@
+{
+  "id": "f6a7b8c9-6002-4000-8000-000000000002",
+  "slug": "annual_recurring_revenue",
+  "name": "Annual Recurring Revenue",
+  "description": "Annualized value of recurring subscription revenue. Standard metric for enterprise SaaS valuation and planning.",
+  "domain": "saas",
+  "subdomain": "growth",
+  "tags": ["revenue", "subscription", "growth", "valuation"],
+  "data_type": "currency",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "monthly_recurring_revenue * 12",
+    "variables": {
+      "monthly_recurring_revenue": "Current MRR"
+    },
+    "unit": "USD",
+    "example": {
+      "monthly_recurring_revenue": 100000,
+      "result": 1200000
+    }
+  },
+  "benchmark": null,
+  "aliases": ["ARR"],
+  "related_kpis": ["monthly_recurring_revenue", "revenue_growth_rate", "net_revenue_retention"],
+  "data_sources": ["billing", "subscription_management"],
+  "cadence": "monthly",
+  "is_custom": false
+}

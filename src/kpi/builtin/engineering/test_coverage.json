@@ -1,0 +1,37 @@
+{
+  "id": "c3d4e5f6-3005-4000-8000-000000000005",
+  "slug": "test_coverage",
+  "name": "Test Coverage",
+  "description": "Percentage of codebase covered by automated tests. Indicates test thoroughness and confidence in code changes.",
+  "domain": "engineering",
+  "subdomain": "quality",
+  "tags": ["quality", "testing", "automation"],
+  "data_type": "percentage",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "(lines_tested / total_lines) * 100",
+    "variables": {
+      "lines_tested": "Lines of code exercised by tests",
+      "total_lines": "Total lines of code"
+    },
+    "unit": "%",
+    "example": {
+      "lines_tested": 7500,
+      "total_lines": 10000,
+      "result": 75.0
+    }
+  },
+  "benchmark": {
+    "poor": 20.0,
+    "acceptable": 50.0,
+    "good": 80.0,
+    "excellent": 95.0,
+    "source": "industry consensus",
+    "industry": "software"
+  },
+  "aliases": ["code coverage", "coverage %"],
+  "related_kpis": ["change_failure_rate", "bug_escape_rate"],
+  "data_sources": ["ci_cd", "testing_tools"],
+  "cadence": "weekly",
+  "is_custom": false
+}

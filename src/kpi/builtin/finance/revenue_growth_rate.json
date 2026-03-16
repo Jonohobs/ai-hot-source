@@ -1,0 +1,37 @@
+{
+  "id": "b2c3d4e5-2005-4000-8000-000000000005",
+  "slug": "revenue_growth_rate",
+  "name": "Revenue Growth Rate",
+  "description": "Percentage increase in revenue compared to a previous period. Core indicator of business momentum.",
+  "domain": "finance",
+  "subdomain": "revenue",
+  "tags": ["growth", "revenue", "momentum"],
+  "data_type": "percentage",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "((current_revenue - previous_revenue) / previous_revenue) * 100",
+    "variables": {
+      "current_revenue": "Revenue in the current period",
+      "previous_revenue": "Revenue in the previous comparable period"
+    },
+    "unit": "%",
+    "example": {
+      "current_revenue": 120000,
+      "previous_revenue": 100000,
+      "result": 20.0
+    }
+  },
+  "benchmark": {
+    "poor": 5.0,
+    "acceptable": 15.0,
+    "good": 30.0,
+    "excellent": 100.0,
+    "source": "SaaS Capital MRR survey",
+    "industry": "SaaS"
+  },
+  "aliases": ["MoM growth", "YoY growth", "revenue growth"],
+  "related_kpis": ["monthly_recurring_revenue", "annual_recurring_revenue", "gross_margin", "net_profit_margin"],
+  "data_sources": ["accounting", "billing", "erp"],
+  "cadence": "monthly",
+  "is_custom": false
+}

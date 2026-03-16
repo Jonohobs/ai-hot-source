@@ -1,0 +1,37 @@
+{
+  "id": "b2c3d4e5-2001-4000-8000-000000000001",
+  "slug": "gross_margin",
+  "name": "Gross Margin",
+  "description": "Percentage of revenue remaining after deducting cost of goods sold. Indicates pricing power and production efficiency.",
+  "domain": "finance",
+  "subdomain": "profitability",
+  "tags": ["profitability", "margin", "revenue"],
+  "data_type": "percentage",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "((revenue - cogs) / revenue) * 100",
+    "variables": {
+      "revenue": "Total revenue",
+      "cogs": "Cost of goods sold"
+    },
+    "unit": "%",
+    "example": {
+      "revenue": 1000000,
+      "cogs": 350000,
+      "result": 65.0
+    }
+  },
+  "benchmark": {
+    "poor": 30.0,
+    "acceptable": 50.0,
+    "good": 70.0,
+    "excellent": 85.0,
+    "source": "SaaS Capital / KeyBanc",
+    "industry": "SaaS"
+  },
+  "aliases": ["gross profit margin", "GPM"],
+  "related_kpis": ["net_profit_margin", "operating_expense_ratio", "revenue_growth_rate"],
+  "data_sources": ["accounting", "erp"],
+  "cadence": "monthly",
+  "is_custom": false
+}

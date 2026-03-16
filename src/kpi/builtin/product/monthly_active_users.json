@@ -1,0 +1,18 @@
+{
+  "id": "d4e5f6a7-4002-4000-8000-000000000002",
+  "slug": "monthly_active_users",
+  "name": "Monthly Active Users",
+  "description": "Number of unique users who engage with the product within a 30-day window. Primary scale metric for product growth.",
+  "domain": "product",
+  "subdomain": "engagement",
+  "tags": ["engagement", "users", "growth", "scale"],
+  "data_type": "integer",
+  "direction": "higher_is_better",
+  "formula": null,
+  "benchmark": null,
+  "aliases": ["MAU", "monthly actives"],
+  "related_kpis": ["daily_active_users", "dau_mau_ratio", "activation_rate", "churn_rate"],
+  "data_sources": ["analytics", "product_analytics"],
+  "cadence": "monthly",
+  "is_custom": false
+}

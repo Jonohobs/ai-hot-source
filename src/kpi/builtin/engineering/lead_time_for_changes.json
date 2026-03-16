@@ -1,0 +1,25 @@
+{
+  "id": "c3d4e5f6-3002-4000-8000-000000000002",
+  "slug": "lead_time_for_changes",
+  "name": "Lead Time for Changes",
+  "description": "Time from code commit to code running in production. One of the four DORA metrics measuring delivery speed.",
+  "domain": "engineering",
+  "subdomain": "dora",
+  "tags": ["dora", "devops", "delivery", "speed"],
+  "data_type": "duration",
+  "direction": "lower_is_better",
+  "formula": null,
+  "benchmark": {
+    "poor": 4320,
+    "acceptable": 1440,
+    "good": 60,
+    "excellent": 10,
+    "source": "DORA State of DevOps Report",
+    "industry": "software"
+  },
+  "aliases": ["lead time", "LTFC", "commit to deploy time"],
+  "related_kpis": ["deployment_frequency", "change_failure_rate", "mean_time_to_recovery"],
+  "data_sources": ["ci_cd", "version_control"],
+  "cadence": "weekly",
+  "is_custom": false
+}

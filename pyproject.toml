@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Scoring-based multi-model router with circuit breakers, quality gates, and session persistence"
 requires-python = ">=3.11"
 license = "MIT"
-dependencies = []
+dependencies = ["pydantic>=2.0"]
 
 [project.optional-dependencies]
 openai = ["openai>=1.0"]
@@ -15,6 +15,7 @@ dev = ["pytest", "pyyaml"]
 
 [project.scripts]
 sauce = "sauce:main"
+kpi = "src.kpi.cli:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

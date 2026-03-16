@@ -1,0 +1,37 @@
+{
+  "id": "c9d0e1f2-9005-4000-8000-000000000005",
+  "slug": "first_contact_resolution_rate",
+  "name": "First Contact Resolution Rate",
+  "description": "Percentage of support tickets resolved in a single interaction without follow-up. Higher FCR reduces costs and increases satisfaction.",
+  "domain": "support",
+  "subdomain": "quality",
+  "tags": ["quality", "efficiency", "resolution"],
+  "data_type": "percentage",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "(tickets_resolved_first_contact / total_tickets) * 100",
+    "variables": {
+      "tickets_resolved_first_contact": "Tickets resolved in first interaction",
+      "total_tickets": "Total tickets in the period"
+    },
+    "unit": "%",
+    "example": {
+      "tickets_resolved_first_contact": 650,
+      "total_tickets": 1000,
+      "result": 65.0
+    }
+  },
+  "benchmark": {
+    "poor": 40.0,
+    "acceptable": 55.0,
+    "good": 70.0,
+    "excellent": 85.0,
+    "source": "MetricNet / HDI",
+    "industry": "cross-industry"
+  },
+  "aliases": ["FCR", "first touch resolution", "one-touch resolution"],
+  "related_kpis": ["resolution_time", "customer_satisfaction_score", "ticket_volume"],
+  "data_sources": ["helpdesk", "ticketing"],
+  "cadence": "weekly",
+  "is_custom": false
+}

@@ -1,0 +1,37 @@
+{
+  "id": "a7b8c9d0-7003-4000-8000-000000000003",
+  "slug": "return_rate",
+  "name": "Return Rate",
+  "description": "Percentage of sold items returned by customers. High rates indicate product quality, sizing, or expectation mismatches.",
+  "domain": "ecommerce",
+  "subdomain": "fulfillment",
+  "tags": ["fulfillment", "quality", "returns"],
+  "data_type": "percentage",
+  "direction": "lower_is_better",
+  "formula": {
+    "expression": "(returned_orders / total_orders) * 100",
+    "variables": {
+      "returned_orders": "Number of orders returned",
+      "total_orders": "Total orders shipped"
+    },
+    "unit": "%",
+    "example": {
+      "returned_orders": 80,
+      "total_orders": 1000,
+      "result": 8.0
+    }
+  },
+  "benchmark": {
+    "poor": 30.0,
+    "acceptable": 15.0,
+    "good": 8.0,
+    "excellent": 3.0,
+    "source": "NRF / Narvar",
+    "industry": "ecommerce"
+  },
+  "aliases": ["product return rate", "refund rate"],
+  "related_kpis": ["customer_satisfaction_score", "average_order_value", "gross_margin"],
+  "data_sources": ["ecommerce_platform", "warehouse_management"],
+  "cadence": "monthly",
+  "is_custom": false
+}

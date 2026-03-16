@@ -1,0 +1,39 @@
+{
+  "id": "b2c3d4e5-2003-4000-8000-000000000003",
+  "slug": "burn_rate",
+  "name": "Burn Rate",
+  "description": "Rate at which a company spends its cash reserves, typically measured monthly. Critical for startups tracking runway.",
+  "domain": "finance",
+  "subdomain": "cost",
+  "tags": ["startup", "cash", "cost", "runway"],
+  "data_type": "currency",
+  "direction": "lower_is_better",
+  "formula": {
+    "expression": "(starting_cash - ending_cash) / number_of_months",
+    "variables": {
+      "starting_cash": "Cash balance at start of period",
+      "ending_cash": "Cash balance at end of period",
+      "number_of_months": "Number of months in the period"
+    },
+    "unit": "USD/month",
+    "example": {
+      "starting_cash": 1000000,
+      "ending_cash": 700000,
+      "number_of_months": 3,
+      "result": 100000
+    }
+  },
+  "benchmark": {
+    "poor": null,
+    "acceptable": null,
+    "good": null,
+    "excellent": null,
+    "source": "Context-dependent on stage and funding",
+    "industry": "startup"
+  },
+  "aliases": ["cash burn", "monthly burn", "net burn"],
+  "related_kpis": ["runway_months", "net_profit_margin", "operating_expense_ratio", "revenue_growth_rate"],
+  "data_sources": ["accounting", "banking"],
+  "cadence": "monthly",
+  "is_custom": false
+}

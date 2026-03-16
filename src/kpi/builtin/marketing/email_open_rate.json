@@ -1,0 +1,37 @@
+{
+  "id": "a1b2c3d4-1006-4000-8000-000000000006",
+  "slug": "email_open_rate",
+  "name": "Email Open Rate",
+  "description": "Percentage of delivered emails that are opened by recipients. Key indicator of email subject line effectiveness and list health.",
+  "domain": "marketing",
+  "subdomain": "retention",
+  "tags": ["email", "engagement", "retention"],
+  "data_type": "percentage",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "(emails_opened / emails_delivered) * 100",
+    "variables": {
+      "emails_opened": "Number of unique email opens",
+      "emails_delivered": "Number of emails successfully delivered"
+    },
+    "unit": "%",
+    "example": {
+      "emails_opened": 2500,
+      "emails_delivered": 10000,
+      "result": 25.0
+    }
+  },
+  "benchmark": {
+    "poor": 10.0,
+    "acceptable": 18.0,
+    "good": 25.0,
+    "excellent": 35.0,
+    "source": "Mailchimp / Campaign Monitor",
+    "industry": "cross-industry"
+  },
+  "aliases": ["open rate", "email OR"],
+  "related_kpis": ["click_through_rate", "conversion_rate"],
+  "data_sources": ["email_marketing"],
+  "cadence": "weekly",
+  "is_custom": false
+}

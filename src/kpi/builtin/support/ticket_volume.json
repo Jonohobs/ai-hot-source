@@ -1,0 +1,18 @@
+{
+  "id": "c9d0e1f2-9004-4000-8000-000000000004",
+  "slug": "ticket_volume",
+  "name": "Ticket Volume",
+  "description": "Total number of support tickets created in a given period. Used for capacity planning and identifying product issues.",
+  "domain": "support",
+  "subdomain": "volume",
+  "tags": ["volume", "capacity", "workload"],
+  "data_type": "integer",
+  "direction": "lower_is_better",
+  "formula": null,
+  "benchmark": null,
+  "aliases": ["support tickets", "case volume", "inquiry volume"],
+  "related_kpis": ["first_response_time", "resolution_time", "daily_active_users"],
+  "data_sources": ["helpdesk", "ticketing"],
+  "cadence": "weekly",
+  "is_custom": false
+}

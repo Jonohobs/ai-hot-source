@@ -1,0 +1,37 @@
+{
+  "id": "d4e5f6a7-4003-4000-8000-000000000003",
+  "slug": "activation_rate",
+  "name": "Activation Rate",
+  "description": "Percentage of new users who complete a key onboarding action that correlates with long-term retention.",
+  "domain": "product",
+  "subdomain": "activation",
+  "tags": ["activation", "onboarding", "conversion"],
+  "data_type": "percentage",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "(activated_users / new_signups) * 100",
+    "variables": {
+      "activated_users": "Users who completed the activation milestone",
+      "new_signups": "Total new signups in the period"
+    },
+    "unit": "%",
+    "example": {
+      "activated_users": 350,
+      "new_signups": 1000,
+      "result": 35.0
+    }
+  },
+  "benchmark": {
+    "poor": 15.0,
+    "acceptable": 25.0,
+    "good": 40.0,
+    "excellent": 60.0,
+    "source": "Mixpanel / ProductLed benchmarks",
+    "industry": "SaaS"
+  },
+  "aliases": ["setup rate", "onboarding completion rate"],
+  "related_kpis": ["conversion_rate", "daily_active_users", "feature_adoption_rate", "day1_retention"],
+  "data_sources": ["product_analytics", "analytics"],
+  "cadence": "weekly",
+  "is_custom": false
+}

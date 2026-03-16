@@ -1,0 +1,41 @@
+{
+  "id": "f6a7b8c9-6004-4000-8000-000000000004",
+  "slug": "net_revenue_retention",
+  "name": "Net Revenue Retention",
+  "description": "Percentage of recurring revenue retained from existing customers after accounting for churn, downgrades, and expansions. Above 100% means existing customers grow revenue.",
+  "domain": "saas",
+  "subdomain": "retention",
+  "tags": ["retention", "expansion", "revenue", "health"],
+  "data_type": "percentage",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "((starting_mrr + expansion - contraction - churn) / starting_mrr) * 100",
+    "variables": {
+      "starting_mrr": "MRR at start of period",
+      "expansion": "Revenue gained from upsells/cross-sells",
+      "contraction": "Revenue lost from downgrades",
+      "churn": "Revenue lost from cancellations"
+    },
+    "unit": "%",
+    "example": {
+      "starting_mrr": 100000,
+      "expansion": 15000,
+      "contraction": 3000,
+      "churn": 5000,
+      "result": 107.0
+    }
+  },
+  "benchmark": {
+    "poor": 80.0,
+    "acceptable": 95.0,
+    "good": 110.0,
+    "excellent": 130.0,
+    "source": "OpenView / SaaS Capital",
+    "industry": "SaaS"
+  },
+  "aliases": ["NRR", "net dollar retention", "NDR"],
+  "related_kpis": ["churn_rate", "monthly_recurring_revenue", "customer_lifetime_value", "arpu"],
+  "data_sources": ["billing", "subscription_management"],
+  "cadence": "monthly",
+  "is_custom": false
+}

@@ -1,0 +1,37 @@
+{
+  "id": "a7b8c9d0-7005-4000-8000-000000000005",
+  "slug": "customer_repeat_rate",
+  "name": "Customer Repeat Rate",
+  "description": "Percentage of customers who make more than one purchase. Measures loyalty and product-market fit for ecommerce.",
+  "domain": "ecommerce",
+  "subdomain": "conversion",
+  "tags": ["retention", "loyalty", "repeat"],
+  "data_type": "percentage",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "(repeat_customers / total_customers) * 100",
+    "variables": {
+      "repeat_customers": "Customers with more than one purchase",
+      "total_customers": "Total unique customers"
+    },
+    "unit": "%",
+    "example": {
+      "repeat_customers": 600,
+      "total_customers": 2000,
+      "result": 30.0
+    }
+  },
+  "benchmark": {
+    "poor": 10.0,
+    "acceptable": 20.0,
+    "good": 30.0,
+    "excellent": 50.0,
+    "source": "Shopify / Smile.io",
+    "industry": "ecommerce"
+  },
+  "aliases": ["repeat purchase rate", "returning customer rate"],
+  "related_kpis": ["customer_lifetime_value", "average_order_value", "churn_rate", "nps_score"],
+  "data_sources": ["ecommerce_platform", "crm"],
+  "cadence": "monthly",
+  "is_custom": false
+}

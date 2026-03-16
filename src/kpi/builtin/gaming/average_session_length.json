@@ -1,0 +1,25 @@
+{
+  "id": "b8c9d0e1-8006-4000-8000-000000000006",
+  "slug": "average_session_length",
+  "name": "Average Session Length",
+  "description": "Average duration of a single play session. Indicates engagement depth and whether content pacing keeps players invested.",
+  "domain": "gaming",
+  "subdomain": "engagement",
+  "tags": ["engagement", "time", "session"],
+  "data_type": "duration",
+  "direction": "higher_is_better",
+  "formula": null,
+  "benchmark": {
+    "poor": 2.0,
+    "acceptable": 5.0,
+    "good": 12.0,
+    "excellent": 25.0,
+    "source": "GameAnalytics",
+    "industry": "mobile gaming"
+  },
+  "aliases": ["session length", "play time per session", "avg session time"],
+  "related_kpis": ["dau_mau_ratio", "day1_retention", "session_duration"],
+  "data_sources": ["game_analytics"],
+  "cadence": "daily",
+  "is_custom": false
+}

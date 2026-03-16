@@ -1,0 +1,30 @@
+{
+  "id": "f6a7b8c9-6006-4000-8000-000000000006",
+  "slug": "arpu",
+  "name": "Average Revenue Per User",
+  "description": "Average revenue generated per active user or account in a given period. Key pricing and monetization health metric.",
+  "domain": "saas",
+  "subdomain": "monetization",
+  "tags": ["monetization", "revenue", "pricing"],
+  "data_type": "currency",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "total_revenue / active_users",
+    "variables": {
+      "total_revenue": "Total revenue in the period",
+      "active_users": "Number of active users or accounts"
+    },
+    "unit": "USD",
+    "example": {
+      "total_revenue": 100000,
+      "active_users": 2000,
+      "result": 50
+    }
+  },
+  "benchmark": null,
+  "aliases": ["ARPU", "revenue per user", "ARPA"],
+  "related_kpis": ["monthly_recurring_revenue", "customer_lifetime_value", "net_revenue_retention", "arpdau"],
+  "data_sources": ["billing", "analytics"],
+  "cadence": "monthly",
+  "is_custom": false
+}

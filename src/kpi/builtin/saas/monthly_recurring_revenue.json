@@ -1,0 +1,25 @@
+{
+  "id": "f6a7b8c9-6001-4000-8000-000000000001",
+  "slug": "monthly_recurring_revenue",
+  "name": "Monthly Recurring Revenue",
+  "description": "Predictable monthly revenue from active subscriptions. The fundamental growth metric for subscription businesses.",
+  "domain": "saas",
+  "subdomain": "growth",
+  "tags": ["revenue", "subscription", "growth", "core"],
+  "data_type": "currency",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "sum(active_subscription_values)",
+    "variables": {
+      "active_subscription_values": "Monthly value of each active subscription"
+    },
+    "unit": "USD",
+    "example": null
+  },
+  "benchmark": null,
+  "aliases": ["MRR"],
+  "related_kpis": ["annual_recurring_revenue", "revenue_growth_rate", "churn_rate", "net_revenue_retention", "arpu"],
+  "data_sources": ["billing", "subscription_management"],
+  "cadence": "monthly",
+  "is_custom": false
+}

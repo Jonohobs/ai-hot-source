@@ -1,0 +1,25 @@
+{
+  "id": "d4e5f6a7-4006-4000-8000-000000000006",
+  "slug": "nps_score",
+  "name": "Net Promoter Score",
+  "description": "Measures customer loyalty by asking how likely users are to recommend the product. Score ranges from -100 to 100.",
+  "domain": "product",
+  "subdomain": "engagement",
+  "tags": ["satisfaction", "loyalty", "survey"],
+  "data_type": "score",
+  "direction": "higher_is_better",
+  "formula": null,
+  "benchmark": {
+    "poor": -10,
+    "acceptable": 20,
+    "good": 50,
+    "excellent": 70,
+    "source": "Bain & Company / Delighted",
+    "industry": "SaaS"
+  },
+  "aliases": ["NPS", "promoter score"],
+  "related_kpis": ["customer_satisfaction_score", "churn_rate", "customer_lifetime_value"],
+  "data_sources": ["survey_tools", "product_analytics"],
+  "cadence": "quarterly",
+  "is_custom": false
+}

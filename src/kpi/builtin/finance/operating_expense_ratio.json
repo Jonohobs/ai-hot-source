@@ -1,0 +1,37 @@
+{
+  "id": "b2c3d4e5-2006-4000-8000-000000000006",
+  "slug": "operating_expense_ratio",
+  "name": "Operating Expense Ratio",
+  "description": "Operating expenses as a percentage of revenue. Measures operational efficiency and overhead burden.",
+  "domain": "finance",
+  "subdomain": "cost",
+  "tags": ["cost", "efficiency", "operations"],
+  "data_type": "percentage",
+  "direction": "lower_is_better",
+  "formula": {
+    "expression": "(operating_expenses / revenue) * 100",
+    "variables": {
+      "operating_expenses": "Total operating expenses",
+      "revenue": "Total revenue"
+    },
+    "unit": "%",
+    "example": {
+      "operating_expenses": 400000,
+      "revenue": 1000000,
+      "result": 40.0
+    }
+  },
+  "benchmark": {
+    "poor": 80.0,
+    "acceptable": 60.0,
+    "good": 40.0,
+    "excellent": 25.0,
+    "source": "industry averages",
+    "industry": "cross-industry"
+  },
+  "aliases": ["OER", "opex ratio", "operating ratio"],
+  "related_kpis": ["gross_margin", "net_profit_margin", "burn_rate"],
+  "data_sources": ["accounting", "erp"],
+  "cadence": "monthly",
+  "is_custom": false
+}

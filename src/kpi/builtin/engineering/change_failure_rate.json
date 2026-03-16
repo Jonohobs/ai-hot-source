@@ -1,0 +1,37 @@
+{
+  "id": "c3d4e5f6-3003-4000-8000-000000000003",
+  "slug": "change_failure_rate",
+  "name": "Change Failure Rate",
+  "description": "Percentage of deployments that result in a failure requiring remediation. One of the four DORA metrics measuring quality.",
+  "domain": "engineering",
+  "subdomain": "dora",
+  "tags": ["dora", "devops", "quality", "reliability"],
+  "data_type": "percentage",
+  "direction": "lower_is_better",
+  "formula": {
+    "expression": "(failed_deployments / total_deployments) * 100",
+    "variables": {
+      "failed_deployments": "Number of deployments causing failures",
+      "total_deployments": "Total number of deployments"
+    },
+    "unit": "%",
+    "example": {
+      "failed_deployments": 3,
+      "total_deployments": 100,
+      "result": 3.0
+    }
+  },
+  "benchmark": {
+    "poor": 46.0,
+    "acceptable": 30.0,
+    "good": 15.0,
+    "excellent": 5.0,
+    "source": "DORA State of DevOps Report",
+    "industry": "software"
+  },
+  "aliases": ["CFR", "failure rate"],
+  "related_kpis": ["deployment_frequency", "lead_time_for_changes", "mean_time_to_recovery", "bug_escape_rate", "test_coverage"],
+  "data_sources": ["ci_cd", "incident_management"],
+  "cadence": "weekly",
+  "is_custom": false
+}

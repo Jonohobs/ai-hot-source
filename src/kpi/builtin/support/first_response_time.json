@@ -1,0 +1,25 @@
+{
+  "id": "c9d0e1f2-9001-4000-8000-000000000001",
+  "slug": "first_response_time",
+  "name": "First Response Time",
+  "description": "Average time from when a customer submits a support request to when they receive the first human response.",
+  "domain": "support",
+  "subdomain": "efficiency",
+  "tags": ["speed", "responsiveness", "sla"],
+  "data_type": "duration",
+  "direction": "lower_is_better",
+  "formula": null,
+  "benchmark": {
+    "poor": 1440,
+    "acceptable": 240,
+    "good": 60,
+    "excellent": 15,
+    "source": "Zendesk / Intercom benchmarks",
+    "industry": "SaaS"
+  },
+  "aliases": ["FRT", "initial response time", "time to first reply"],
+  "related_kpis": ["resolution_time", "customer_satisfaction_score", "ticket_volume"],
+  "data_sources": ["helpdesk", "ticketing"],
+  "cadence": "weekly",
+  "is_custom": false
+}

@@ -1,0 +1,39 @@
+{
+  "id": "a1b2c3d4-1001-4000-8000-000000000001",
+  "slug": "customer_acquisition_cost",
+  "name": "Customer Acquisition Cost",
+  "description": "Total cost of acquiring a new customer, including all marketing and sales expenses divided by the number of new customers acquired in a given period.",
+  "domain": "marketing",
+  "subdomain": "acquisition",
+  "tags": ["acquisition", "cost", "unit-economics", "growth"],
+  "data_type": "currency",
+  "direction": "lower_is_better",
+  "formula": {
+    "expression": "(marketing_spend + sales_spend) / new_customers",
+    "variables": {
+      "marketing_spend": "Total marketing spend in the period",
+      "sales_spend": "Total sales spend in the period",
+      "new_customers": "Number of new customers acquired"
+    },
+    "unit": "USD",
+    "example": {
+      "marketing_spend": 50000,
+      "sales_spend": 30000,
+      "new_customers": 200,
+      "result": 400
+    }
+  },
+  "benchmark": {
+    "poor": 500,
+    "acceptable": 300,
+    "good": 150,
+    "excellent": 50,
+    "source": "ProfitWell / industry averages",
+    "industry": "SaaS"
+  },
+  "aliases": ["CAC", "cost of acquisition", "acquisition cost"],
+  "related_kpis": ["customer_lifetime_value", "ltv_cac_ratio", "cost_per_lead", "return_on_ad_spend"],
+  "data_sources": ["accounting", "crm", "ad_platforms"],
+  "cadence": "monthly",
+  "is_custom": false
+}

@@ -1,0 +1,37 @@
+{
+  "id": "a1b2c3d4-1002-4000-8000-000000000002",
+  "slug": "cost_per_lead",
+  "name": "Cost Per Lead",
+  "description": "Average cost incurred to generate a single qualified lead through marketing efforts.",
+  "domain": "marketing",
+  "subdomain": "acquisition",
+  "tags": ["acquisition", "cost", "lead-generation"],
+  "data_type": "currency",
+  "direction": "lower_is_better",
+  "formula": {
+    "expression": "total_marketing_spend / total_leads_generated",
+    "variables": {
+      "total_marketing_spend": "Total marketing spend in the period",
+      "total_leads_generated": "Number of leads generated"
+    },
+    "unit": "USD",
+    "example": {
+      "total_marketing_spend": 10000,
+      "total_leads_generated": 500,
+      "result": 20
+    }
+  },
+  "benchmark": {
+    "poor": 200,
+    "acceptable": 100,
+    "good": 50,
+    "excellent": 15,
+    "source": "HubSpot benchmarks",
+    "industry": "B2B SaaS"
+  },
+  "aliases": ["CPL", "lead cost"],
+  "related_kpis": ["customer_acquisition_cost", "conversion_rate", "click_through_rate"],
+  "data_sources": ["ad_platforms", "crm", "marketing_automation"],
+  "cadence": "monthly",
+  "is_custom": false
+}

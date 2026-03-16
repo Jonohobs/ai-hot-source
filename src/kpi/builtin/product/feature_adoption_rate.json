@@ -1,0 +1,37 @@
+{
+  "id": "d4e5f6a7-4004-4000-8000-000000000004",
+  "slug": "feature_adoption_rate",
+  "name": "Feature Adoption Rate",
+  "description": "Percentage of active users who use a specific feature. Measures how well new features resonate with the user base.",
+  "domain": "product",
+  "subdomain": "adoption",
+  "tags": ["adoption", "features", "engagement"],
+  "data_type": "percentage",
+  "direction": "higher_is_better",
+  "formula": {
+    "expression": "(feature_users / active_users) * 100",
+    "variables": {
+      "feature_users": "Users who used the feature",
+      "active_users": "Total active users in the period"
+    },
+    "unit": "%",
+    "example": {
+      "feature_users": 800,
+      "active_users": 5000,
+      "result": 16.0
+    }
+  },
+  "benchmark": {
+    "poor": 5.0,
+    "acceptable": 15.0,
+    "good": 30.0,
+    "excellent": 50.0,
+    "source": "Pendo / industry averages",
+    "industry": "SaaS"
+  },
+  "aliases": ["adoption rate", "feature usage rate"],
+  "related_kpis": ["activation_rate", "daily_active_users", "session_duration"],
+  "data_sources": ["product_analytics"],
+  "cadence": "weekly",
+  "is_custom": false
+}

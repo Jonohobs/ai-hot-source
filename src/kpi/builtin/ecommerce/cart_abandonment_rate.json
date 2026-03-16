@@ -1,0 +1,37 @@
+{
+  "id": "a7b8c9d0-7001-4000-8000-000000000001",
+  "slug": "cart_abandonment_rate",
+  "name": "Cart Abandonment Rate",
+  "description": "Percentage of shopping carts created but not converted to a completed purchase. A key friction indicator in the checkout funnel.",
+  "domain": "ecommerce",
+  "subdomain": "conversion",
+  "tags": ["conversion", "checkout", "friction"],
+  "data_type": "percentage",
+  "direction": "lower_is_better",
+  "formula": {
+    "expression": "((carts_created - completed_purchases) / carts_created) * 100",
+    "variables": {
+      "carts_created": "Total shopping carts created",
+      "completed_purchases": "Number of completed purchases"
+    },
+    "unit": "%",
+    "example": {
+      "carts_created": 1000,
+      "completed_purchases": 300,
+      "result": 70.0
+    }
+  },
+  "benchmark": {
+    "poor": 85.0,
+    "acceptable": 75.0,
+    "good": 65.0,
+    "excellent": 50.0,
+    "source": "Baymard Institute",
+    "industry": "ecommerce"
+  },
+  "aliases": ["abandonment rate", "cart drop-off"],
+  "related_kpis": ["conversion_rate", "average_order_value", "customer_repeat_rate"],
+  "data_sources": ["ecommerce_platform", "analytics"],
+  "cadence": "weekly",
+  "is_custom": false
+}

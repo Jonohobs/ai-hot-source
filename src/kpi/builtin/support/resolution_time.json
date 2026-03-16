@@ -1,0 +1,25 @@
+{
+  "id": "c9d0e1f2-9002-4000-8000-000000000002",
+  "slug": "resolution_time",
+  "name": "Resolution Time",
+  "description": "Average time from ticket creation to full resolution. Measures overall support efficiency.",
+  "domain": "support",
+  "subdomain": "efficiency",
+  "tags": ["efficiency", "speed", "resolution"],
+  "data_type": "duration",
+  "direction": "lower_is_better",
+  "formula": null,
+  "benchmark": {
+    "poor": 4320,
+    "acceptable": 1440,
+    "good": 480,
+    "excellent": 120,
+    "source": "Zendesk benchmarks",
+    "industry": "SaaS"
+  },
+  "aliases": ["TTR", "time to resolution", "mean resolution time"],
+  "related_kpis": ["first_response_time", "customer_satisfaction_score", "first_contact_resolution_rate", "mean_time_to_recovery"],
+  "data_sources": ["helpdesk", "ticketing"],
+  "cadence": "weekly",
+  "is_custom": false
+}

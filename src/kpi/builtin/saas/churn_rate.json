@@ -1,0 +1,37 @@
+{
+  "id": "f6a7b8c9-6003-4000-8000-000000000003",
+  "slug": "churn_rate",
+  "name": "Churn Rate",
+  "description": "Percentage of customers or revenue lost in a given period. The inverse of retention and a critical SaaS health metric.",
+  "domain": "saas",
+  "subdomain": "retention",
+  "tags": ["retention", "churn", "health"],
+  "data_type": "percentage",
+  "direction": "lower_is_better",
+  "formula": {
+    "expression": "(churned_customers / starting_customers) * 100",
+    "variables": {
+      "churned_customers": "Customers lost in the period",
+      "starting_customers": "Customers at the start of the period"
+    },
+    "unit": "%",
+    "example": {
+      "churned_customers": 5,
+      "starting_customers": 200,
+      "result": 2.5
+    }
+  },
+  "benchmark": {
+    "poor": 8.0,
+    "acceptable": 5.0,
+    "good": 2.0,
+    "excellent": 0.5,
+    "source": "ProfitWell / Recurly",
+    "industry": "SaaS"
+  },
+  "aliases": ["customer churn", "attrition rate", "logo churn"],
+  "related_kpis": ["net_revenue_retention", "customer_lifetime_value", "monthly_recurring_revenue", "nps_score"],
+  "data_sources": ["billing", "subscription_management", "crm"],
+  "cadence": "monthly",
+  "is_custom": false
+}

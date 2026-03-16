@@ -1,6 +1,6 @@
 {
   "source": "huggingface_trending_models",
-  "generated_at": "2026-03-15T13:16:32.600514+00:00",
+  "generated_at": "2026-03-16T03:33:18.213328+00:00",
   "record_count": 30,
   "records": [
     {
@@ -10,7 +10,7 @@
       "pipeline_tag": "sentence-similarity",
       "last_modified": "2025-03-06T13:37:44.000Z",
       "downloads": 205055121,
-      "likes": 4576,
+      "likes": 4580,
       "private": false,
       "gated": false,
       "tags": [
@@ -330,7 +330,7 @@
       "pipeline_tag": "text-generation",
       "last_modified": "2025-01-12T02:10:10.000Z",
       "downloads": 22813513,
-      "likes": 1134,
+      "likes": 1136,
       "private": false,
       "gated": false,
       "tags": [
@@ -555,7 +555,7 @@
       "pipeline_tag": "time-series-forecasting",
       "last_modified": "2026-01-06T09:44:02.000Z",
       "downloads": 18147726,
-      "likes": 199,
+      "likes": 200,
       "private": false,
       "gated": false,
       "tags": [
@@ -582,7 +582,7 @@
       "pipeline_tag": "sentence-similarity",
       "last_modified": "2024-07-03T14:50:10.000Z",
       "downloads": 17211418,
-      "likes": 2830,
+      "likes": 2834,
       "private": false,
       "gated": false,
       "tags": [
@@ -727,7 +727,7 @@
       "pipeline_tag": "automatic-speech-recognition",
       "last_modified": "2024-05-10T19:43:23.000Z",
       "downloads": 12610278,
-      "likes": 1643,
+      "likes": 1644,
       "private": false,
       "gated": "auto",
       "tags": [
@@ -836,7 +836,7 @@
       "pipeline_tag": "text-generation",
       "last_modified": "2025-07-26T03:46:27.000Z",
       "downloads": 12155633,
-      "likes": 1134,
+      "likes": 1135,
       "private": false,
       "gated": false,
       "tags": [
@@ -937,7 +937,7 @@
       "pipeline_tag": null,
       "last_modified": "2025-12-09T09:02:14.000Z",
       "downloads": 10160793,
-      "likes": 615,
+      "likes": 617,
       "private": false,
       "gated": false,
       "tags": [
@@ -953,7 +953,7 @@
       "pipeline_tag": null,
       "last_modified": "2026-02-25T20:21:50.000Z",
       "downloads": 10127114,
-      "likes": 2173,
+      "likes": 2174,
       "private": false,
       "gated": false,
       "tags": [

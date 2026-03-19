@@ -1,6 +1,6 @@
 {
   "source": "huggingface_trending_models",
-  "generated_at": "2026-03-18T13:53:35.637208+00:00",
+  "generated_at": "2026-03-19T03:20:07.109015+00:00",
   "record_count": 30,
   "records": [
     {
@@ -10,7 +10,7 @@
       "pipeline_tag": "sentence-similarity",
       "last_modified": "2025-03-06T13:37:44.000Z",
       "downloads": 207727584,
-      "likes": 4586,
+      "likes": 4589,
       "private": false,
       "gated": false,
       "tags": [
@@ -228,7 +228,7 @@
       "pipeline_tag": "sentence-similarity",
       "last_modified": "2026-01-28T10:02:26.000Z",
       "downloads": 24492025,
-      "likes": 1162,
+      "likes": 1163,
       "private": false,
       "gated": false,
       "tags": [
@@ -390,7 +390,7 @@
       "pipeline_tag": "fill-mask",
       "last_modified": "2024-02-19T12:48:21.000Z",
       "downloads": 20141699,
-      "likes": 798,
+      "likes": 799,
       "private": false,
       "gated": false,
       "tags": [
@@ -582,7 +582,7 @@
       "pipeline_tag": "sentence-similarity",
       "last_modified": "2024-07-03T14:50:10.000Z",
       "downloads": 17167465,
-      "likes": 2832,
+      "likes": 2835,
       "private": false,
       "gated": false,
       "tags": [
@@ -697,7 +697,7 @@
       "pipeline_tag": "voice-activity-detection",
       "last_modified": "2024-05-10T19:35:46.000Z",
       "downloads": 14045682,
-      "likes": 848,
+      "likes": 849,
       "private": false,
       "gated": "auto",
       "tags": [
@@ -785,7 +785,7 @@
       "pipeline_tag": "text-generation",
       "last_modified": "2025-07-26T03:46:27.000Z",
       "downloads": 12667540,
-      "likes": 1140,
+      "likes": 1141,
       "private": false,
       "gated": false,
       "tags": [
@@ -837,7 +837,7 @@
       "pipeline_tag": "automatic-speech-recognition",
       "last_modified": "2024-05-10T19:43:23.000Z",
       "downloads": 12501576,
-      "likes": 1656,
+      "likes": 1657,
       "private": false,
       "gated": "auto",
       "tags": [
@@ -962,7 +962,7 @@
       "pipeline_tag": null,
       "last_modified": "2025-12-09T09:02:14.000Z",
       "downloads": 10396668,
-      "likes": 626,
+      "likes": 627,
       "private": false,
       "gated": false,
       "tags": [
@@ -978,7 +978,7 @@
       "pipeline_tag": null,
       "last_modified": "2026-02-25T20:21:50.000Z",
       "downloads": 10269645,
-      "likes": 2181,
+      "likes": 2182,
       "private": false,
       "gated": false,
       "tags": [

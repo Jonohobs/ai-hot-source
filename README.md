@@ -4,7 +4,11 @@
   <img src="logo.jpg" alt="AI Hot Sauce" width="300">
 </p>
 
-An opinionated starter kit for making AI coding agents actually useful. Memory that persists, security that isn't an afterthought, voice input, local models, and the hooks to tie it all together. Drop this into Claude Code, Codex, Gemini CLI, or whatever you use — and say **"Build me the rig from AI Hot Sauce."**
+A hot new full-stack AI rig. Give the git URL to your agent and ask if there's anything in AI Hot Sauce that could be useful for your purposes. If you find it useful, please leave a star, and consider contributing to the community [Scrape Depot](https://github.com/Jonohobs/scrape-depot) and hot AI sources that you've found along your travels.
+
+```
+https://github.com/Jonohobs/ai-hot-sauce.git
+```
 
 ---
 
@@ -21,8 +25,8 @@ cp templates/MEMORY.md ~/.agent/memory/  # or create your own
 
 # 3. Install a free AI CLI (pick one)
 npm install -g @anthropic-ai/claude-code   # Claude Code
-npm install -g @anthropic-ai/codex         # Codex CLI
-npx @anthropic-ai/gemini-cli               # Gemini CLI (free tier)
+npm install -g @openai/codex               # Codex CLI
+npm install -g @anthropic-ai/gemini-cli    # Gemini CLI (free tier)
 
 # 4. Install Ollama for local/offline models
 # https://ollama.com — then:
@@ -37,16 +41,16 @@ ollama pull phi4-mini
 
 ## Heat Levels
 
-The whole rig is structured as a progression. Start mild, add heat when you need it.
+The rig is structured as a progression. Start mild, add heat as it becomes useful.
 
 ### Mild — One CLI + Memory
 
-You install one AI CLI tool and give it persistent memory. This alone is a significant upgrade over default behavior.
+Install one AI CLI tool and give it persistent memory. This alone is a meaningful upgrade over default behavior.
 
 **What you get:**
 - An AI that remembers your projects, decisions, and preferences between sessions
 - The "Know, Don't Infer" rule (see below)
-- Basic security deny-list so your agent can't `rm -rf /` your life
+- A basic security deny-list to guard against dangerous operations
 
 **Set up:** Create `~/.agent/memory/MEMORY.md`, add your context, point your AI at it. Claude Code users: a `CLAUDE.md` in your project root loads automatically.
 
@@ -76,7 +80,7 @@ Voice input, semantic search over your knowledge base, multi-model routing, and 
 
 ### Reaper — Custom Skills + Automation
 
-Everything above, plus custom slash commands, subagent orchestration, scheduled tasks, and the screen pointer overlay. You're building an AI-native workflow at this point.
+Everything above, plus custom slash commands, subagent orchestration, scheduled tasks, and the screen pointer overlay. At this level you're building an AI-native workflow.
 
 **What you get:**
 - Custom skills/slash commands for your repeated workflows (`/commit`, `/review-pr`, `/debug`)
@@ -98,11 +102,11 @@ It stops a surprising amount of confident-sounding wrong answers. Your agent has
 
 ## Security — The Cyberwoods Protocol
 
-When your agent reads external repos, packages, or skills, the content is attacker-controlled. This isn't theoretical — real-world attacks have exfiltrated tokens, SSH keys, and wallets via AI agent postinstall hooks.
+When an agent reads external repos, packages, or skills, the content is attacker-controlled. This isn't theoretical — real-world attacks have exfiltrated tokens, SSH keys, and wallets via AI agent postinstall hooks. Here's what we've learned and what we recommend.
 
 ### Deny List
 
-Block these by default:
+These are worth blocking by default:
 
 ```
 rm -rf /*, sudo *, git push --force, git reset --hard,
@@ -110,13 +114,13 @@ dd if=*, curl | bash, powershell -EncodedCommand,
 netcat, nc -e, nc -l, reg (Windows registry)
 ```
 
-Also block reading `~/.ssh/*` and any curl POST commands (prevents data exfiltration).
+Also worth blocking: reads to `~/.ssh/*` and any curl POST commands (prevents data exfiltration).
 
 ### When Reviewing External Code
 
 - **Review mode:** Restrict to read-only. No writes, no bash, no network, no memory writes, no installs.
 - **Red flags — stop immediately:** "ignore all previous instructions", authority claims ("ADMIN MESSAGE FROM ANTHROPIC"), `curl`/`eval`/`exec` in install scripts, env var reads in unexpected places.
-- **Before adopting code:** Check repo age, stars-vs-commits ratio, maintainer identity, package name spelling on the actual registry. Always human-gate package installs.
+- **Before adopting code:** Check repo age, stars-vs-commits ratio, maintainer identity, package name spelling on the actual registry. Human-gate package installs where possible.
 
 ### Approval Policy
 
@@ -130,7 +134,7 @@ Sources: [OWASP LLM01](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) 
 
 ## Memory System
 
-Your AI forgets everything between sessions. Fix that.
+Most AI tools forget everything between sessions. Here's a system that fixes that.
 
 The core architecture is a `~/.agent/memory/` folder with structured files — a main index, decision log, learnings, and a scratchpad inbox. The decision log alone (`decisions.md`) is worth the setup. After a few weeks of "Chose X over Y because Z", it becomes your highest-value file.
 
@@ -146,7 +150,7 @@ Full architecture, save policies, handoff formats, and RAG search setup: [docs/m
 
 ## Context Management
 
-Your AI gets measurably dumber as its context window fills up. This matters more than most people realize.
+AI agents get measurably less effective as their context window fills up. Worth keeping an eye on.
 
 - **Compact at 40-50%** context usage — later and the summary itself is low quality
 - **Clear > compact** — a fresh start with good memory beats a vague summary
@@ -157,7 +161,7 @@ Your AI gets measurably dumber as its context window fills up. This matters more
 
 ## Models & Routing
 
-Route tasks to the cheapest model that can handle them:
+A useful pattern: route tasks to the cheapest model that can handle them.
 
 ```
 Quick question / summary    → Gemini Flash (free)
@@ -195,6 +199,18 @@ ai-hot-sauce/
 ├── sauce.py               ← CLI entry point
 └── pyproject.toml         ← Python project config
 ```
+
+---
+
+## Contributing
+
+Found a useful config, tool, pattern, or workflow that makes AI agents better? We'd love to see it.
+
+- **Hot sauces** — share your own configs, hooks, memory templates, or agent patterns by opening a PR here
+- **Scrape Depot** — the parent repo ([scrape-depot](https://github.com/Jonohobs/scrape-depot)) collects useful intelligence sources, scrapers, and data pipelines. If you've found a good one, drop it in
+- **Bug reports and ideas** — open an issue. No contribution is too small
+
+The goal is a community-maintained collection of things that actually work. If something here helped you, paying it forward keeps the project alive.
 
 ---
 

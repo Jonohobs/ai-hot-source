@@ -177,7 +177,13 @@ class HotSauceDB:
     def get_turns(self, session_id: str, limit: int = 50) -> list[dict]:
         conn = self._connect()
         rows = conn.execute(
-            "SELECT * FROM turns WHERE session_id = ? ORDER BY created_at ASC LIMIT ?",
+            """SELECT * FROM (
+                   SELECT * FROM turns
+                   WHERE session_id = ?
+                   ORDER BY created_at DESC
+                   LIMIT ?
+               )
+               ORDER BY created_at ASC""",
             (session_id, limit),
         ).fetchall()
         return [dict(r) for r in rows]

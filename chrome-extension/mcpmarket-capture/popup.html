@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MCP Market Capture</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 12px;
+      min-width: 280px;
+    }
+    button {
+      width: 100%;
+      margin: 6px 0;
+      padding: 8px;
+    }
+    #status {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #333;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <button id="capture">Capture Current Page</button>
+  <button id="export">Export Captured JSON</button>
+  <button id="clear">Clear Current Page Data</button>
+  <div id="status">Waiting for page data.</div>
+  <script src="popup.js"></script>
+</body>
+</html>

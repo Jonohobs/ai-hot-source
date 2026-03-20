@@ -1,0 +1,20 @@
+[
+  {
+    "source": "mcpmarket",
+    "source_url": "https://mcpmarket.com/server/firecrawl",
+    "slug": "firecrawl",
+    "title": "Firecrawl",
+    "description": "Structured scraping for AI agents.",
+    "categories": ["Web Scraping & Data Collection"],
+    "tags": ["official"],
+    "website_url": "https://firecrawl.dev",
+    "github_url": "https://github.com/firecrawl/firecrawl",
+    "pricing": null,
+    "verified": true,
+    "capture_method": "network",
+    "captured_at": "2026-03-14T19:45:00+00:00",
+    "raw": {
+      "source": "fixture"
+    }
+  }
+]

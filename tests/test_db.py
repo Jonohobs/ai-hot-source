@@ -27,6 +27,16 @@ class TestHotSauceDB(unittest.TestCase):
         self.assertEqual(turns[0]["role"], "user")
         self.assertEqual(turns[1]["model"], "test-model")
 
+    def test_get_turns_returns_most_recent_window_in_order(self):
+        sid = self.db.create_session()
+        for i in range(60):
+            self.db.log_turn(sid, "user", f"msg-{i}")
+
+        turns = self.db.get_turns(sid, limit=5)
+
+        self.assertEqual(len(turns), 5)
+        self.assertEqual([t["content"] for t in turns], [f"msg-{i}" for i in range(55, 60)])
+
     def test_health_logging(self):
         self.db.log_health("test-model", "test", True, 150.0)
         self.db.log_health("test-model", "test", True, 200.0)

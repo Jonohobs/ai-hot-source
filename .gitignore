@@ -11,8 +11,16 @@ __pycache__/
 dist/
 build/
 .pytest_cache/
+.cache/
+tmp-*.jsonl
 
 # SQLite
 *.db
 *.db-wal
 *.db-shm
+
+# Local eval stack state
+llm-eval-power-stack/.env
+llm-eval-power-stack/.promptfoo/
+llm-eval-power-stack/.promptfoo-home/
+llm-eval-power-stack/runs/

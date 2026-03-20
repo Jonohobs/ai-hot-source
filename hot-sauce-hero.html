@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Hot Sauce — Distilled Knowledge</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #050505; }
+  canvas { display: block; width: 100%; height: 100%; }
+
+  #overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; z-index: 10;
+  }
+
+  #overlay h1 {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: clamp(3rem, 8vw, 7rem); font-weight: 800;
+    letter-spacing: -0.02em; line-height: 1;
+    background: linear-gradient(135deg, #ff4400 0%, #ff8800 40%, #ffd700 70%, #ff4400 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; color: transparent;
+    animation: shimmer 4s ease-in-out infinite;
+    text-shadow: none; filter: drop-shadow(0 0 40px rgba(255,100,0,0.3));
+    margin-bottom: 0.3em;
+  }
+
+  #overlay p {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: clamp(0.9rem, 2vw, 1.4rem); font-weight: 300;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(255, 180, 100, 0.7);
+    text-shadow: 0 0 20px rgba(255,100,0,0.2);
+  }
+
+  #overlay .sub {
+    margin-top: 2em; font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+    letter-spacing: 0.15em; color: rgba(255,150,80,0.35);
+  }
+
+  @keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* Vignette */
+  #vignette {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 5;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.7) 100%);
+  }
+
+  /* Scanline texture */
+  #scanlines {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 6; opacity: 0.03;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px);
+  }
+</style>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://esm.sh/three@0.170.0",
+    "three/addons/": "https://esm.sh/three@0.170.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+
+<div id="vignette"></div>
+<div id="scanlines"></div>
+<div id="overlay">
+  <h1>AI Hot Sauce</h1>
+  <p>Distilled. Labelled. Ready to use.</p>
+  <p class="sub">curated knowledge collection</p>
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+
+// ── Setup ──────────────────────────────────────────
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.2;
+document.body.prepend(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x050505);
+scene.fog = new THREE.FogExp2(0x050505, 0.06);
+
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+camera.position.set(0, 1.5, 7);
+camera.lookAt(0, 0.8, 0);
+
+// ── Mouse tracking ─────────────────────────────────
+const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+window.addEventListener('mousemove', (e) => {
+  mouse.tx = (e.clientX / window.innerWidth - 0.5) * 2;
+  mouse.ty = (e.clientY / window.innerHeight - 0.5) * 2;
+});
+
+// ── Resize ─────────────────────────────────────────
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// ── Fire/Lava Shader Material ──────────────────────
+function createFireMaterial(hueShift = 0.0) {
+  return new THREE.ShaderMaterial({
+    uniforms: {
+      uTime: { value: 0 },
+      uHueShift: { value: hueShift },
+      uMouse: { value: new THREE.Vector2(0, 0) },
+    },
+    vertexShader: `
+      varying vec2 vUv;
+      varying vec3 vPosition;
+      varying vec3 vNormal;
+      void main() {
+        vUv = uv;
+        vPosition = position;
+        vNormal = normalize(normalMatrix * normal);
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform float uTime;
+      uniform float uHueShift;
+      uniform vec2 uMouse;
+      varying vec2 vUv;
+      varying vec3 vPosition;
+      varying vec3 vNormal;
+
+      // Simplex-ish noise
+      vec3 mod289(vec3 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
+      vec4 mod289(vec4 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
+      vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
+      vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+
+      float snoise(vec3 v) {
+        const vec2 C = vec2(1.0/6.0, 1.0/3.0);
+        const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+        vec3 i = floor(v + dot(v, C.yyy));
+        vec3 x0 = v - i + dot(i, C.xxx);
+        vec3 g = step(x0.yzx, x0.xyz);
+        vec3 l = 1.0 - g;
+        vec3 i1 = min(g.xyz, l.zxy);
+        vec3 i2 = max(g.xyz, l.zxy);
+        vec3 x1 = x0 - i1 + C.xxx;
+        vec3 x2 = x0 - i2 + C.yyy;
+        vec3 x3 = x0 - D.yyy;
+        i = mod289(i);
+        vec4 p = permute(permute(permute(
+          i.z + vec4(0.0, i1.z, i2.z, 1.0))
+          + i.y + vec4(0.0, i1.y, i2.y, 1.0))
+          + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+        float n_ = 0.142857142857;
+        vec3 ns = n_ * D.wyz - D.xzx;
+        vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+        vec4 x_ = floor(j * ns.z);
+        vec4 y_ = floor(j - 7.0 * x_);
+        vec4 x = x_ * ns.x + ns.yyyy;
+        vec4 y = y_ * ns.x + ns.yyyy;
+        vec4 h = 1.0 - abs(x) - abs(y);
+        vec4 b0 = vec4(x.xy, y.xy);
+        vec4 b1 = vec4(x.zw, y.zw);
+        vec4 s0 = floor(b0)*2.0 + 1.0;
+        vec4 s1 = floor(b1)*2.0 + 1.0;
+        vec4 sh = -step(h, vec4(0.0));
+        vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy;
+        vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
+        vec3 p0 = vec3(a0.xy, h.x);
+        vec3 p1 = vec3(a0.zw, h.y);
+        vec3 p2 = vec3(a1.xy, h.z);
+        vec3 p3 = vec3(a1.zw, h.w);
+        vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
+        p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+        vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+        m = m * m;
+        return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+      }
+
+      float fbm(vec3 p) {
+        float f = 0.0;
+        f += 0.5000 * snoise(p); p *= 2.01;
+        f += 0.2500 * snoise(p); p *= 2.02;
+        f += 0.1250 * snoise(p); p *= 2.03;
+        f += 0.0625 * snoise(p);
+        return f;
+      }
+
+      vec3 hsv2rgb(vec3 c) {
+        vec4 K = vec4(1.0, 2.0/3.0, 1.0/3.0, 3.0);
+        vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+        return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+      }
+
+      void main() {
+        vec2 uv = vUv;
+        float t = uTime * 0.6;
+
+        // Fire noise — rises upward
+        vec3 noiseCoord = vec3(uv * 3.0, t * 0.8);
+        noiseCoord.y -= t * 1.5; // upward flow
+        float n = fbm(noiseCoord);
+        float n2 = fbm(noiseCoord * 1.5 + vec3(5.0, 3.0, t * 0.3));
+
+        // Intensity — hotter at bottom
+        float gradient = 1.0 - uv.y;
+        float fire = n * 0.5 + 0.5;
+        fire *= gradient * 1.5;
+        fire = clamp(fire, 0.0, 1.0);
+
+        // Color ramp: deep red → orange → gold → white core
+        float hue = 0.02 + uHueShift + fire * 0.08;
+        float sat = 1.0 - fire * 0.3;
+        float val = fire * 1.8;
+
+        vec3 col = hsv2rgb(vec3(hue, sat, val));
+
+        // Add hot white core
+        float core = smoothstep(0.6, 1.0, fire);
+        col = mix(col, vec3(1.0, 0.95, 0.8), core * 0.6);
+
+        // Fresnel glow
+        float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 2.0);
+        col += vec3(1.0, 0.3, 0.05) * fresnel * 0.4;
+
+        // Subtle lava bubbles
+        float bubbles = smoothstep(0.3, 0.5, snoise(vec3(uv * 8.0, t * 0.5))) * gradient;
+        col += vec3(1.0, 0.6, 0.1) * bubbles * 0.3;
+
+        // Rim darkening
+        float edge = smoothstep(0.0, 0.3, uv.x) * smoothstep(1.0, 0.7, uv.x);
+        col *= 0.3 + edge * 0.7;
+
+        gl_FragColor = vec4(col, 1.0);
+      }
+    `,
+  });
+}
+
+// ── Glass Cap Material ─────────────────────────────
+function createCapMaterial() {
+  return new THREE.MeshStandardMaterial({
+    color: 0x111111,
+    metalness: 0.9,
+    roughness: 0.15,
+    envMapIntensity: 2.0,
+  });
+}
+
+// ── Label Material ─────────────────────────────────
+function createLabelMaterial(labelColor) {
+  return new THREE.MeshStandardMaterial({
+    color: labelColor,
+    metalness: 0.3,
+    roughness: 0.4,
+    emissive: labelColor,
+    emissiveIntensity: 0.15,
+  });
+}
+
+// ── Build a Bottle ─────────────────────────────────
+function createBottle(hueShift, labelColor, height = 2.0) {
+  const group = new THREE.Group();
+
+  const bodyRadius = 0.3;
+  const bodyHeight = height;
+  const neckRadius = 0.15;
+  const neckHeight = 0.5;
+  const capHeight = 0.2;
+
+  // Body — fire shader
+  const bodyGeo = new THREE.CylinderGeometry(bodyRadius, bodyRadius * 0.95, bodyHeight, 32, 32, true);
+  const bodyMat = createFireMaterial(hueShift);
+  const body = new THREE.Mesh(bodyGeo, bodyMat);
+  body.position.y = bodyHeight / 2;
+  group.add(body);
+
+  // Bottom cap
+  const bottomGeo = new THREE.CircleGeometry(bodyRadius * 0.95, 32);
+  const bottomMat = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.8, roughness: 0.2 });
+  const bottom = new THREE.Mesh(bottomGeo, bottomMat);
+  bottom.rotation.x = -Math.PI / 2;
+  bottom.position.y = 0.01;
+  group.add(bottom);
+
+  // Neck taper
+  const taperGeo = new THREE.CylinderGeometry(neckRadius, bodyRadius, 0.3, 32);
+  const taperMat = createFireMaterial(hueShift + 0.02);
+  const taper = new THREE.Mesh(taperGeo, taperMat);
+  taper.position.y = bodyHeight + 0.15;
+  group.add(taper);
+
+  // Neck
+  const neckGeo = new THREE.CylinderGeometry(neckRadius, neckRadius, neckHeight, 32);
+  const neckMat = createFireMaterial(hueShift + 0.03);
+  const neck = new THREE.Mesh(neckGeo, neckMat);
+  neck.position.y = bodyHeight + 0.3 + neckHeight / 2;
+  group.add(neck);
+
+  // Cap
+  const capGeo = new THREE.CylinderGeometry(neckRadius * 1.1, neckRadius * 1.1, capHeight, 32);
+  const cap = new THREE.Mesh(capGeo, createCapMaterial());
+  cap.position.y = bodyHeight + 0.3 + neckHeight + capHeight / 2;
+  group.add(cap);
+
+  // Label band
+  const labelGeo = new THREE.CylinderGeometry(bodyRadius + 0.005, bodyRadius * 0.95 + 0.005, bodyHeight * 0.35, 32, 1, true);
+  const label = new THREE.Mesh(labelGeo, createLabelMaterial(labelColor));
+  label.position.y = bodyHeight * 0.45;
+  group.add(label);
+
+  // Gold trim rings on label
+  const trimGeo = new THREE.TorusGeometry(bodyRadius + 0.008, 0.008, 8, 32);
+  const trimMat = new THREE.MeshStandardMaterial({ color: 0xffd700, metalness: 1.0, roughness: 0.2, emissive: 0xffd700, emissiveIntensity: 0.3 });
+  const trimTop = new THREE.Mesh(trimGeo, trimMat);
+  trimTop.rotation.x = Math.PI / 2;
+  trimTop.position.y = bodyHeight * 0.45 + bodyHeight * 0.175;
+  group.add(trimTop);
+  const trimBottom = new THREE.Mesh(trimGeo, trimMat);
+  trimBottom.rotation.x = Math.PI / 2;
+  trimBottom.position.y = bodyHeight * 0.45 - bodyHeight * 0.175;
+  group.add(trimBottom);
+
+  // Store shader meshes for animation
+  group.userData.shaderMeshes = [body, taper, neck];
+  group.userData.capTop = bodyHeight + 0.3 + neckHeight + capHeight;
+
+  return group;
+}
+
+// ── Shelf ──────────────────────────────────────────
+function createShelf(width, y, z) {
+  const group = new THREE.Group();
+
+  // Shelf surface — glass-like
+  const shelfGeo = new THREE.BoxGeometry(width, 0.06, 1.0);
+  const shelfMat = new THREE.MeshStandardMaterial({
+    color: 0x0a0a0a,
+    metalness: 0.95,
+    roughness: 0.05,
+    transparent: true,
+    opacity: 0.8,
+  });
+  const shelf = new THREE.Mesh(shelfGeo, shelfMat);
+  shelf.position.set(0, y, z);
+  group.add(shelf);
+
+  // Shelf edge — neon strip
+  const edgeGeo = new THREE.BoxGeometry(width, 0.015, 0.015);
+  const edgeMat = new THREE.MeshStandardMaterial({
+    color: 0xff4400,
+    emissive: 0xff4400,
+    emissiveIntensity: 2.0,
+  });
+  const edge = new THREE.Mesh(edgeGeo, edgeMat);
+  edge.position.set(0, y - 0.025, z + 0.5);
+  group.add(edge);
+
+  // Under-shelf glow
+  const glowGeo = new THREE.PlaneGeometry(width, 0.8);
+  const glowMat = new THREE.MeshBasicMaterial({
+    color: 0xff2200,
+    transparent: true,
+    opacity: 0.08,
+    side: THREE.DoubleSide,
+  });
+  const glow = new THREE.Mesh(glowGeo, glowMat);
+  glow.rotation.x = -Math.PI / 2;
+  glow.position.set(0, y - 0.04, z);
+  group.add(glow);
+
+  return group;
+}
+
+// ── Particle System — Flames from bottle tops ──────
+class FlameParticles {
+  constructor(count, origins) {
+    this.count = count;
+    this.origins = origins;
+    const positions = new Float32Array(count * 3);
+    const velocities = new Float32Array(count * 3);
+    const lifetimes = new Float32Array(count);
+    const sizes = new Float32Array(count);
+
+    for (let i = 0; i < count; i++) {
+      this.resetParticle(i, positions, velocities, lifetimes, sizes, true);
+    }
+
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+    const mat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uPixelRatio: { value: renderer.getPixelRatio() },
+      },
+      vertexShader: `
+        attribute float size;
+        uniform float uPixelRatio;
+        varying float vAlpha;
+        void main() {
+          vec4 mvPos = modelViewMatrix * vec4(position, 1.0);
+          gl_PointSize = size * uPixelRatio * (200.0 / -mvPos.z);
+          gl_Position = projectionMatrix * mvPos;
+          // Fade based on height above origin
+          vAlpha = 1.0;
+        }
+      `,
+      fragmentShader: `
+        varying float vAlpha;
+        void main() {
+          float d = length(gl_PointCoord - 0.5) * 2.0;
+          if (d > 1.0) discard;
+          float alpha = (1.0 - d * d) * 0.7;
+          vec3 col = mix(vec3(1.0, 0.3, 0.0), vec3(1.0, 0.9, 0.3), 1.0 - d);
+          gl_FragColor = vec4(col, alpha * vAlpha);
+        }
+      `,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    this.mesh = new THREE.Points(geo, mat);
+    this.velocities = velocities;
+    this.lifetimes = lifetimes;
+    this.maxLifetimes = new Float32Array(count);
+    for (let i = 0; i < count; i++) this.maxLifetimes[i] = lifetimes[i];
+  }
+
+  resetParticle(i, positions, velocities, lifetimes, sizes, randomStart = false) {
+    const origin = this.origins[Math.floor(Math.random() * this.origins.length)];
+    positions[i * 3] = origin.x + (Math.random() - 0.5) * 0.1;
+    positions[i * 3 + 1] = origin.y;
+    positions[i * 3 + 2] = origin.z + (Math.random() - 0.5) * 0.1;
+
+    velocities[i * 3] = (Math.random() - 0.5) * 0.3;
+    velocities[i * 3 + 1] = 0.5 + Math.random() * 1.5;
+    velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.3;
+
+    const lt = 0.5 + Math.random() * 1.2;
+    lifetimes[i] = randomStart ? Math.random() * lt : lt;
+    this.maxLifetimes[i] = lt;
+    sizes[i] = 0.02 + Math.random() * 0.06;
+  }
+
+  update(dt) {
+    const pos = this.mesh.geometry.attributes.position.array;
+    const sz = this.mesh.geometry.attributes.size.array;
+
+    for (let i = 0; i < this.count; i++) {
+      this.lifetimes[i] -= dt;
+      if (this.lifetimes[i] <= 0) {
+        this.resetParticle(i, pos, this.velocities, this.lifetimes, sz, false);
+        continue;
+      }
+
+      const life = this.lifetimes[i] / this.maxLifetimes[i];
+
+      pos[i * 3] += this.velocities[i * 3] * dt;
+      pos[i * 3 + 1] += this.velocities[i * 3 + 1] * dt;
+      pos[i * 3 + 2] += this.velocities[i * 3 + 2] * dt;
+
+      // Turbulence
+      this.velocities[i * 3] += (Math.random() - 0.5) * 2.0 * dt;
+      this.velocities[i * 3 + 2] += (Math.random() - 0.5) * 2.0 * dt;
+
+      // Shrink as they die
+      sz[i] = (0.02 + Math.random() * 0.04) * life;
+    }
+
+    this.mesh.geometry.attributes.position.needsUpdate = true;
+    this.mesh.geometry.attributes.size.needsUpdate = true;
+    this.mesh.material.uniforms.uTime.value += dt;
+  }
+}
+
+// ── Build Scene ────────────────────────────────────
+const allShaderMeshes = [];
+const bottleOrigins = [];
+
+// Shelf configs: [y-position, z-position, bottles-config]
+const shelfConfigs = [
+  { y: -0.5, z: 0, bottles: [
+    { x: -2.2, hue: 0.0,  label: 0x881100, h: 2.0 },
+    { x: -1.1, hue: 0.03, label: 0xaa4400, h: 2.2 },
+    { x: 0.0,  hue: 0.05, label: 0x993300, h: 2.4 },
+    { x: 1.1,  hue: 0.02, label: 0xbb5500, h: 2.1 },
+    { x: 2.2,  hue: 0.04, label: 0x772200, h: 1.9 },
+  ]},
+  { y: 2.2, z: -0.8, bottles: [
+    { x: -1.6, hue: 0.06, label: 0xcc6600, h: 1.7 },
+    { x: -0.5, hue: 0.01, label: 0x662200, h: 1.9 },
+    { x: 0.6,  hue: 0.04, label: 0x884400, h: 1.8 },
+    { x: 1.7,  hue: 0.07, label: 0xaa2200, h: 1.7 },
+  ]},
+];
+
+shelfConfigs.forEach(cfg => {
+  const shelf = createShelf(7, cfg.y, cfg.z);
+  scene.add(shelf);
+
+  cfg.bottles.forEach(b => {
+    const bottle = createBottle(b.hue, b.label, b.h);
+    bottle.position.set(b.x, cfg.y + 0.03, cfg.z);
+    scene.add(bottle);
+    allShaderMeshes.push(...bottle.userData.shaderMeshes);
+    bottleOrigins.push(new THREE.Vector3(b.x, cfg.y + 0.03 + bottle.userData.capTop, cfg.z));
+  });
+});
+
+// ── Particles ──────────────────────────────────────
+const flames = new FlameParticles(600, bottleOrigins);
+scene.add(flames.mesh);
+
+// ── Background Ember Particles ─────────────────────
+const emberCount = 200;
+const emberGeo = new THREE.BufferGeometry();
+const emberPos = new Float32Array(emberCount * 3);
+const emberSz = new Float32Array(emberCount);
+const emberVel = new Float32Array(emberCount);
+for (let i = 0; i < emberCount; i++) {
+  emberPos[i * 3] = (Math.random() - 0.5) * 16;
+  emberPos[i * 3 + 1] = Math.random() * 10 - 2;
+  emberPos[i * 3 + 2] = (Math.random() - 0.5) * 8 - 2;
+  emberSz[i] = 0.01 + Math.random() * 0.03;
+  emberVel[i] = 0.1 + Math.random() * 0.3;
+}
+emberGeo.setAttribute('position', new THREE.BufferAttribute(emberPos, 3));
+emberGeo.setAttribute('size', new THREE.BufferAttribute(emberSz, 1));
+
+const emberMat = new THREE.ShaderMaterial({
+  vertexShader: `
+    attribute float size;
+    varying float vSize;
+    void main() {
+      vSize = size;
+      vec4 mvPos = modelViewMatrix * vec4(position, 1.0);
+      gl_PointSize = size * ${renderer.getPixelRatio().toFixed(1)} * (150.0 / -mvPos.z);
+      gl_Position = projectionMatrix * mvPos;
+    }
+  `,
+  fragmentShader: `
+    void main() {
+      float d = length(gl_PointCoord - 0.5) * 2.0;
+      if (d > 1.0) discard;
+      float alpha = (1.0 - d) * 0.5;
+      gl_FragColor = vec4(1.0, 0.4, 0.05, alpha);
+    }
+  `,
+  transparent: true,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+});
+const embers = new THREE.Points(emberGeo, emberMat);
+scene.add(embers);
+
+// ── Lighting ───────────────────────────────────────
+// Ambient — very dim
+scene.add(new THREE.AmbientLight(0x110500, 0.3));
+
+// Key neon lights
+const neonRed = new THREE.PointLight(0xff2200, 8, 12);
+neonRed.position.set(-3, 3.5, 3);
+scene.add(neonRed);
+
+const neonOrange = new THREE.PointLight(0xff6600, 6, 12);
+neonOrange.position.set(3, 2, 4);
+scene.add(neonOrange);
+
+const neonDeepRed = new THREE.PointLight(0xcc0000, 5, 10);
+neonDeepRed.position.set(0, 5, 1);
+scene.add(neonDeepRed);
+
+// Back fill — subtle blue-ish for contrast
+const backFill = new THREE.PointLight(0x220044, 2, 15);
+backFill.position.set(0, 1, -5);
+scene.add(backFill);
+
+// Rim lights
+const rimLeft = new THREE.SpotLight(0xff4400, 4, 15, Math.PI / 6, 0.5);
+rimLeft.position.set(-5, 3, 0);
+rimLeft.target.position.set(0, 1, 0);
+scene.add(rimLeft);
+scene.add(rimLeft.target);
+
+const rimRight = new THREE.SpotLight(0xff8800, 3, 15, Math.PI / 6, 0.5);
+rimRight.position.set(5, 2, 2);
+rimRight.target.position.set(0, 1, 0);
+scene.add(rimRight);
+scene.add(rimRight.target);
+
+// Under-shelf accent
+const underGlow1 = new THREE.PointLight(0xff3300, 3, 5);
+underGlow1.position.set(0, -0.3, 0.5);
+scene.add(underGlow1);
+
+const underGlow2 = new THREE.PointLight(0xff5500, 2, 5);
+underGlow2.position.set(0, 2.4, -0.3);
+scene.add(underGlow2);
+
+// ── Reflective Floor ───────────────────────────────
+const floorGeo = new THREE.PlaneGeometry(20, 10);
+const floorMat = new THREE.MeshStandardMaterial({
+  color: 0x050505,
+  metalness: 0.95,
+  roughness: 0.1,
+});
+const floor = new THREE.Mesh(floorGeo, floorMat);
+floor.rotation.x = -Math.PI / 2;
+floor.position.y = -0.55;
+scene.add(floor);
+
+// ── Back Wall ──────────────────────────────────────
+const wallGeo = new THREE.PlaneGeometry(20, 10);
+const wallMat = new THREE.MeshStandardMaterial({
+  color: 0x030303,
+  metalness: 0.5,
+  roughness: 0.8,
+});
+const wall = new THREE.Mesh(wallGeo, wallMat);
+wall.position.set(0, 2, -3);
+scene.add(wall);
+
+// ── Animation Loop ─────────────────────────────────
+const clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const dt = Math.min(clock.getDelta(), 0.05);
+  const elapsed = clock.getElapsedTime();
+
+  // Smooth mouse
+  mouse.x += (mouse.tx - mouse.x) * 0.05;
+  mouse.y += (mouse.ty - mouse.y) * 0.05;
+
+  // Camera parallax
+  camera.position.x = mouse.x * 1.2;
+  camera.position.y = 1.5 - mouse.y * 0.5;
+  camera.lookAt(0, 0.8, 0);
+
+  // Update fire shaders
+  allShaderMeshes.forEach(mesh => {
+    mesh.material.uniforms.uTime.value = elapsed;
+    mesh.material.uniforms.uMouse.value.set(mouse.x, mouse.y);
+  });
+
+  // Update flames
+  flames.update(dt);
+
+  // Update embers — drift upward
+  const ePos = embers.geometry.attributes.position.array;
+  for (let i = 0; i < emberCount; i++) {
+    ePos[i * 3 + 1] += emberVel[i] * dt;
+    ePos[i * 3] += Math.sin(elapsed + i) * 0.002;
+    if (ePos[i * 3 + 1] > 8) {
+      ePos[i * 3 + 1] = -2;
+      ePos[i * 3] = (Math.random() - 0.5) * 16;
+    }
+  }
+  embers.geometry.attributes.position.needsUpdate = true;
+
+  // Pulse neon lights
+  neonRed.intensity = 8 + Math.sin(elapsed * 2) * 1.5;
+  neonOrange.intensity = 6 + Math.sin(elapsed * 1.7 + 1) * 1.0;
+  neonDeepRed.intensity = 5 + Math.sin(elapsed * 2.3 + 2) * 0.8;
+
+  renderer.render(scene, camera);
+}
+
+animate();
+</script>
+</body>
+</html>

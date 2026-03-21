@@ -1,6 +1,6 @@
 {
   "source": "github_curated_ai_repos",
-  "generated_at": "2026-03-20T13:34:17.215380+00:00",
+  "generated_at": "2026-03-21T02:47:05.687254+00:00",
   "record_count": 3,
   "records": [
     {
@@ -38,8 +38,8 @@
       "url": "https://github.com/mahseema/awesome-ai-tools",
       "summary": "A curated list of Artificial Intelligence Top Tools",
       "author": "mahseema",
-      "stars": 4619,
-      "forks": 1148,
+      "stars": 4622,
+      "forks": 1150,
       "watchers": 78,
       "language": null,
       "topics": [
@@ -65,7 +65,7 @@
         "workflow"
       ],
       "license": "MIT",
-      "last_modified": "2026-03-20T10:31:41Z",
+      "last_modified": "2026-03-21T02:17:16Z",
       "created_at": "2023-08-25T21:51:55Z",
       "notes": "Curated AI tools list."
     },
@@ -75,13 +75,13 @@
       "url": "https://github.com/youssefHosni/Awesome-AI-Data-GitHub-Repos",
       "summary": "A collection of the most important Github repos for ML, AI & Data science practitioners ",
       "author": "youssefHosni",
-      "stars": 966,
-      "forks": 219,
+      "stars": 968,
+      "forks": 220,
       "watchers": 21,
       "language": null,
       "topics": [],
       "license": "MIT",
-      "last_modified": "2026-03-19T05:23:11Z",
+      "last_modified": "2026-03-21T01:54:03Z",
       "created_at": "2023-05-09T02:02:22Z",
       "notes": "AI data repository collection."
     }

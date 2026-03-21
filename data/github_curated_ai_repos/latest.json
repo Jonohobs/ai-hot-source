@@ -1,6 +1,6 @@
 {
   "source": "github_curated_ai_repos",
-  "generated_at": "2026-03-21T02:47:05.687254+00:00",
+  "generated_at": "2026-03-21T13:11:46.349069+00:00",
   "record_count": 3,
   "records": [
     {
@@ -9,7 +9,7 @@
       "url": "https://github.com/openbestof/awesome-ai",
       "summary": "A curated list of awesome AI tools, frameworks, api, software and resources.",
       "author": "openbestof",
-      "stars": 524,
+      "stars": 525,
       "forks": 66,
       "watchers": 9,
       "language": null,
@@ -28,7 +28,7 @@
         "llms"
       ],
       "license": null,
-      "last_modified": "2026-03-16T05:51:23Z",
+      "last_modified": "2026-03-21T05:51:46Z",
       "created_at": "2024-05-04T11:32:59Z",
       "notes": "Auto-ranked AI repository collection."
     },
@@ -38,8 +38,8 @@
       "url": "https://github.com/mahseema/awesome-ai-tools",
       "summary": "A curated list of Artificial Intelligence Top Tools",
       "author": "mahseema",
-      "stars": 4622,
-      "forks": 1150,
+      "stars": 4623,
+      "forks": 1151,
       "watchers": 78,
       "language": null,
       "topics": [
@@ -65,7 +65,7 @@
         "workflow"
       ],
       "license": "MIT",
-      "last_modified": "2026-03-21T02:17:16Z",
+      "last_modified": "2026-03-21T06:39:49Z",
       "created_at": "2023-08-25T21:51:55Z",
       "notes": "Curated AI tools list."
     },

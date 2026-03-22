@@ -5,7 +5,7 @@ import unittest
 from src.providers.base import ModelInfo, Provider, CompletionResult
 from src.routing.breaker import CircuitBreaker
 from src.routing.scorer import ScoringRouter, TaskProfile, classify_task
-from src.store.db import HotSauceDB
+from src.store.db import HotSourceDB
 
 
 class FakeProvider(Provider):
@@ -49,7 +49,7 @@ class TestClassifyTask(unittest.TestCase):
 
 class TestScoringRouter(unittest.TestCase):
     def setUp(self):
-        self.db = HotSauceDB(":memory:")
+        self.db = HotSourceDB(":memory:")
         self.breaker = CircuitBreaker(self.db)
 
         self.cheap = ModelInfo("cheap-fast", "fake", 128_000, 0.0, 0.0, tags=["fast", "cheap", "free"])

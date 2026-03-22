@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from ..providers.base import ModelInfo
-from ..store.db import HotSauceDB
+from ..store.db import HotSourceDB
 from .breaker import CircuitBreaker
 
 if TYPE_CHECKING:
@@ -125,7 +125,7 @@ def _latency_score(stats: dict) -> float:
 
 
 class ScoringRouter:
-    def __init__(self, db: HotSauceDB, providers: list[Provider], breaker: CircuitBreaker):
+    def __init__(self, db: HotSourceDB, providers: list[Provider], breaker: CircuitBreaker):
         self.db = db
         self.providers = {p.name: p for p in providers}
         self.breaker = breaker

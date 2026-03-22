@@ -1,4 +1,4 @@
-"""SQLite persistence layer for the Hot Sauce engine.
+"""SQLite persistence layer for the Hot Source engine.
 
 Stores sessions, turns, model health telemetry, circuit breaker state,
 and eval results. Local-first — no external dependencies.
@@ -12,7 +12,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
-DEFAULT_DB_PATH = Path.home() / ".agent" / "hotsauce.db"
+DEFAULT_DB_PATH = Path.home() / ".agent" / "hotsource.db"
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS sessions (
@@ -84,7 +84,7 @@ CREATE INDEX IF NOT EXISTS idx_eval_runs_case ON eval_runs(case_id);
 """
 
 
-class HotSauceDB:
+class HotSourceDB:
     def __init__(self, db_path: Path | str | None = None):
         self._in_memory = db_path == ":memory:"
         if not self._in_memory:

@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import time
 
-from ..store.db import HotSauceDB
+from ..store.db import HotSourceDB
 
 FAIL_THRESHOLD = 3
 COOLDOWN_SECONDS = 60.0
@@ -24,7 +24,7 @@ RECOVERY_SUCCESSES = 2
 
 
 class CircuitBreaker:
-    def __init__(self, db: HotSauceDB, fail_threshold: int = FAIL_THRESHOLD,
+    def __init__(self, db: HotSourceDB, fail_threshold: int = FAIL_THRESHOLD,
                  cooldown: float = COOLDOWN_SECONDS, recovery: int = RECOVERY_SUCCESSES):
         self.db = db
         self.fail_threshold = fail_threshold

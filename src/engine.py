@@ -1,4 +1,4 @@
-"""Hot Sauce Engine — the main orchestrator.
+"""Hot Source Engine — the main orchestrator.
 
 Wires together: providers → router → breaker → quality gate → persistence.
 This is what replaces "just a README".
@@ -14,14 +14,14 @@ from .providers.base import CompletionResult, Provider
 from .quality.gate import QualityGate, QualityVerdict
 from .routing.breaker import CircuitBreaker
 from .routing.scorer import ScoringRouter, TaskProfile, classify_task
-from .store.db import HotSauceDB
+from .store.db import HotSourceDB
 
-log = logging.getLogger("hotsauce")
+log = logging.getLogger("hotsource")
 
 MAX_RETRIES = 2  # retry once with same model, then fallback
 
 
-class HotSauceEngine:
+class HotSourceEngine:
     """Main entry point. Create one, call .chat()."""
 
     def __init__(
@@ -29,7 +29,7 @@ class HotSauceEngine:
         db_path: Path | str | None = None,
         providers: list[Provider] | None = None,
     ):
-        self.db = HotSauceDB(db_path)
+        self.db = HotSourceDB(db_path)
         self.gate = QualityGate()
 
         # Default to empty — user adds providers they have keys for

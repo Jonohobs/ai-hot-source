@@ -2,12 +2,12 @@
 
 import unittest
 
-from src.store.db import HotSauceDB
+from src.store.db import HotSourceDB
 
 
-class TestHotSauceDB(unittest.TestCase):
+class TestHotSourceDB(unittest.TestCase):
     def setUp(self):
-        self.db = HotSauceDB(":memory:")
+        self.db = HotSourceDB(":memory:")
 
     def tearDown(self):
         self.db.close()

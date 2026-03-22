@@ -1,13 +1,13 @@
-# AI Hot Sauce 🌶️
+# AI Hot Source 🌶️
 
 <p align="center">
-  <img src="logo.jpg" alt="AI Hot Sauce" width="300">
+  <img src="logo.jpg" alt="AI Hot Source" width="300">
 </p>
 
-A hot new full-stack AI rig. Give the git URL to your agent and ask if there's anything in AI Hot Sauce that could be useful for your purposes. If you find it useful, please leave a star, and consider contributing to the community [Scrape Depot](https://github.com/Jonohobs/scrape-depot) and hot AI sources that you've found along your travels.
+A full-stack AI rig. Copy the URL below into your agent's text box and ask if there's anything in here worth implementing for your setup. If you find it useful, please leave a star, and consider contributing to the community [Scrape Depot](https://github.com/Jonohobs/scrape-depot) and hot sources that you've found along your travels.
 
 ```
-https://github.com/Jonohobs/ai-hot-sauce.git
+https://github.com/Jonohobs/ai-hot-source.git
 ```
 
 ---
@@ -16,8 +16,8 @@ https://github.com/Jonohobs/ai-hot-sauce.git
 
 ```bash
 # 1. Clone it
-git clone https://github.com/Jonohobs/ai-hot-sauce.git
-cd ai-hot-sauce
+git clone https://github.com/Jonohobs/ai-hot-source.git
+cd ai-hot-source
 
 # 2. Set up your memory folder
 mkdir -p ~/.agent/memory
@@ -183,7 +183,7 @@ Full tool list, MCP servers, local model recommendations, and bonus tools: [docs
 ## Project Structure
 
 ```
-ai-hot-sauce/
+ai-hot-source/
 ├── README.md              ← You are here
 ├── docs/
 │   ├── voice-setup.md     ← Push-to-talk daemon setup
@@ -206,7 +206,7 @@ ai-hot-sauce/
 
 Found a useful config, tool, pattern, or workflow that makes AI agents better? We'd love to see it.
 
-- **Hot sauces** — share your own configs, hooks, memory templates, or agent patterns by opening a PR here
+- **Hot sources** — share your own configs, hooks, memory templates, or agent patterns by opening a PR here
 - **Scrape Depot** — the parent repo ([scrape-depot](https://github.com/Jonohobs/scrape-depot)) collects useful intelligence sources, scrapers, and data pipelines. If you've found a good one, drop it in
 - **Bug reports and ideas** — open an issue. No contribution is too small
 

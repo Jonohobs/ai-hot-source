@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""sauce.py — CLI entry point for the Hot Sauce engine.
+"""sauce.py — CLI entry point for the Hot Source engine.
 
 Usage:
   python sauce.py "explain this error"           # auto-route to best model
@@ -21,16 +21,16 @@ from pathlib import Path
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from src.engine import HotSauceEngine
+from src.engine import HotSourceEngine
 from src.mcpmarket.fetcher import CachedHttpClient
 from src.mcpmarket.parser import extract_server_links, parse_detail_page
 from src.mcpmarket.storage import MCPMarketArchive
 from src.routing.scorer import classify_task
 
 
-def _build_engine(db_path: str | None = None) -> HotSauceEngine:
+def _build_engine(db_path: str | None = None) -> HotSourceEngine:
     """Build engine with available providers based on env vars."""
-    engine = HotSauceEngine(db_path=db_path)
+    engine = HotSourceEngine(db_path=db_path)
 
     # Only add providers we have keys for
     if os.environ.get("OPENAI_API_KEY"):
@@ -148,7 +148,7 @@ def cmd_import_mcpmarket_capture(args):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Hot Sauce — AI model router + engine")
+    parser = argparse.ArgumentParser(description="Hot Source — AI model router + engine")
     parser.add_argument("--db", help="SQLite database path", default=None)
     sub = parser.add_subparsers(dest="command")
 

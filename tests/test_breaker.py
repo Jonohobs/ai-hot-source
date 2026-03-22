@@ -4,12 +4,12 @@ import time
 import unittest
 
 from src.routing.breaker import CircuitBreaker
-from src.store.db import HotSauceDB
+from src.store.db import HotSourceDB
 
 
 class TestCircuitBreaker(unittest.TestCase):
     def setUp(self):
-        self.db = HotSauceDB(":memory:")
+        self.db = HotSourceDB(":memory:")
         self.breaker = CircuitBreaker(self.db, fail_threshold=3, cooldown=0.5, recovery=2)
 
     def tearDown(self):

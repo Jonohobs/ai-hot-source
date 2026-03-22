@@ -13,7 +13,7 @@ class CachedHttpClient:
         cache_dir: Path | str | None = None,
         min_delay_seconds: float = 2.5,
         timeout_seconds: float = 20.0,
-        user_agent: str = "ai-hot-sauce-mcpmarket-scraper/0.1",
+        user_agent: str = "ai-hot-source-mcpmarket-scraper/0.1",
     ) -> None:
         self.cache_dir = Path(cache_dir) if cache_dir else None
         self.min_delay_seconds = min_delay_seconds

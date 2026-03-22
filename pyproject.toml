@@ -1,5 +1,5 @@
 [project]
-name = "ai-hot-sauce"
+name = "ai-hot-source"
 version = "0.1.0"
 description = "Scoring-based multi-model router with circuit breakers, quality gates, and session persistence"
 requires-python = ">=3.11"

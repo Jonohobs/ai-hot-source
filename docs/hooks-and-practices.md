@@ -85,7 +85,7 @@ For quick tasks (<= 1 hour), use this to keep agents aligned:
 
 ## Rig Upgrade Capture Rule
 
-If a session discovers a reusable improvement to agent behavior, memory hygiene, hooks, handoffs, routing, review workflow, or safety policy, treat it as a Hot Sauce upgrade candidate.
+If a session discovers a reusable improvement to agent behavior, memory hygiene, hooks, handoffs, routing, review workflow, or safety policy, treat it as a Hot Source upgrade candidate.
 
 Default rule:
 - Add the improvement to this repo when it is generalisable beyond one project

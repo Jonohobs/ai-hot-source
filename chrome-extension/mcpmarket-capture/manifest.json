@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "MCP Market Capture",
   "version": "0.1.0",
-  "description": "Capture MCP Market entries into the ai-hot-sauce JSON format.",
+  "description": "Capture MCP Market entries into the ai-hot-source JSON format.",
   "permissions": ["storage", "downloads", "activeTab", "scripting"],
   "host_permissions": ["https://mcpmarket.com/*"],
   "background": {

@@ -1,0 +1,245 @@
+name: DTR Pipeline Sentinel
+description: >
+  Watches ~/dreams-to-reality/test_videos/ for new .mp4 files and
+  auto-runs the full Dreams-to-Reality 3D reconstruction pipeline:
+  frame extraction → U2Net segmentation → COLMAP SfM → meshing → GLB export.
+  Logs every result to PIPELINE_TESTS.md and compares quality against benchmarks.
+version: "1.0"
+
+# ---------------------------------------------------------------------------
+# Paths
+# ---------------------------------------------------------------------------
+paths:
+  dtr_root: "~/dreams-to-reality"
+  watch_dir: "~/dreams-to-reality/test_videos"
+  exports_dir: "~/dreams-to-reality/exports"
+  results_dir: "~/dreams-to-reality/results"
+  pipeline_tests_log: "~/dreams-to-reality/PIPELINE_TESTS.md"
+  watcher_log: "~/ai-hot-sauce/sentinels/dtr_watcher.log"
+
+# ---------------------------------------------------------------------------
+# Triggers
+# ---------------------------------------------------------------------------
+triggers:
+  - type: file_watch
+    path: "~/dreams-to-reality/test_videos/"
+    pattern: "*.mp4"
+    event: created
+    debounce_seconds: 3        # wait 3s after creation to ensure file is fully written
+    min_size_bytes: 100000     # ignore empty / partial files (<100 KB)
+
+# ---------------------------------------------------------------------------
+# Actions (executed in order on trigger)
+# ---------------------------------------------------------------------------
+actions:
+  - name: extract_frames
+    description: "Pull 1 frame/sec from the orbit video, up to 60 frames"
+    command: >
+      python {dtr_root}/dreams_export.py {video_path}
+        --fps 1
+        --max-frames 60
+        --output-dir {export_dir}
+    # Note: dreams_export.py runs all steps in one pass.
+    # The per-step breakdown below documents what happens internally
+    # and is used by dtr_watcher.py when calling with different flags.
+
+  - name: segment
+    description: "U2Net background removal (runs inside dreams_export.py)"
+    model: u2net
+    # Invoked automatically by dreams_export.py unless --no-segment passed.
+    # To force skip: add --no-segment to extract_frames command above.
+
+  - name: colmap_sfm
+    description: "Sparse Structure-from-Motion via pycolmap 3.13"
+    notes: >
+      Uses incremental mapping. Dense pass is skipped by default on CPU-only
+      machines (no CUDA). Add --skip-dense=false once CUDA pycolmap is installed.
+    sparse_only: true          # set false when CUDA pycolmap/COLMAP binary is available
+
+  - name: mesh_and_export
+    description: "Alpha shape (sparse < 50K pts) or Poisson meshing → GLB"
+    mesh_mode: delaunay        # delaunay | poisson
+    # delaunay proven better for Dreams subjects (session 2026-03-22)
+
+  - name: record_result
+    description: "Auto-log to PIPELINE_TESTS.md + copy to results/"
+    command: >
+      python {dtr_root}/record_result.py
+        --subject {video_stem}
+        --pipeline colmap_u2net
+        --output {glb_path}
+        --frames {frame_count}
+        --segmented
+        --segment-model u2net
+        --notes "Auto-logged by DTR Pipeline Sentinel"
+    git_commit: true
+
+# ---------------------------------------------------------------------------
+# Quality Gates
+# ---------------------------------------------------------------------------
+# If any gate fails, the run is flagged DEGRADED in the log.
+# Thresholds based on best results as of 2026-03-22:
+#   RK-03 (best rocket):  17,313 verts / 34,622 faces / watertight
+#   SS-06 (best ship):    ~unknown verts / ~unknown faces
+#   Baseline (sparse):    3,544 verts  / 43,870 faces
+quality_gates:
+  min_vertices: 3000        # hard minimum — below this is likely failed reconstruction
+  min_faces: 5000           # hard minimum
+  warn_vertices: 10000      # soft warn — below best-known quality
+  warn_faces: 20000         # soft warn
+  watertight_required: false  # sparse COLMAP meshes are rarely watertight; don't fail on this
+  max_file_size_mb: 100     # flag runaway file sizes (hallucinated dense meshes)
+  min_file_size_kb: 50      # flag suspiciously empty outputs
+
+# Previous best benchmarks (used for regression comparison)
+benchmarks:
+  best_vertices: 17313      # RK-03 (RealityScan + U2Net)
+  best_faces: 34622
+  best_pipeline: "realityscan_u2net"
+  baseline_vertices: 3544   # dreams_export.py sparse first run (2026-03-22)
+  baseline_faces: 43870
+
+# ---------------------------------------------------------------------------
+# Quality Improvement Suggestions
+# Auto-surfaced by dtr_watcher.py when quality gates trigger
+# ---------------------------------------------------------------------------
+suggestions:
+  low_vertices:
+    threshold_pct: 50        # below 50% of best_vertices
+    message: >
+      Vertex count is well below the best known result (17,313).
+      Try: (1) increase --max-frames to 100+, (2) use --fps 2 for denser sampling,
+      (3) install CUDA-enabled pycolmap for dense reconstruction (target: 19K+ verts).
+
+  no_watertight:
+    message: >
+      Mesh is not watertight — may cause 3D print failures.
+      Try: (1) run blender_postprocess.py for hole filling,
+      (2) use --mesh-mode poisson (better manifold output at cost of smoothing),
+      (3) target dense COLMAP for water-tight surfaces.
+
+  large_file:
+    threshold_mb: 50
+    message: >
+      Output file is unusually large — possible hallucinated geometry.
+      Inspect with viewer before printing. Check if a hard-cut segment
+      was included (see spaceship SS-02/SS-05 lessons: single-angle segment only).
+
+  failed_reconstruction:
+    message: >
+      COLMAP registered < 5 cameras. Common causes:
+      (1) Low resolution source (640p fails — use 1080p),
+      (2) Mixed camera angles / hard cuts in video (trim first),
+      (3) Featureless / shiny surface (Dreams objects should be fine),
+      (4) Too few frames — try --fps 2 --max-frames 100.
+      Fallback: try Hunyuan3D-2.1 4-view on mid-orbit frames (see dreams-to-reality.md).
+
+  vggt_available:
+    check_command: "python -c \"import vggt\" 2>/dev/null && echo YES"
+    on_available_message: >
+      VGGT is installed. Consider adding a VGGT branch: it replaces COLMAP SfM
+      (camera poses in <1s, CVPR 2025 Best Paper). May significantly improve quality.
+
+# ---------------------------------------------------------------------------
+# Pipeline Variants (for future expansion / A/B testing)
+# ---------------------------------------------------------------------------
+variants:
+  - id: sparse_colmap          # current default
+    command_extra_flags: "--skip-dense"
+    description: "CPU-safe. Sparse cloud → mesh. Proven working."
+
+  - id: dense_colmap
+    command_extra_flags: ""    # no skip-dense flag
+    description: "Requires CUDA pycolmap or binary COLMAP with CUDA. Target 19K+ verts."
+    requires: "CUDA pycolmap"
+    blocked: true
+
+  - id: more_frames
+    command_extra_flags: "--fps 2 --max-frames 100"
+    description: "2x frame density. ~2x longer. May improve sparse cloud."
+
+  - id: poisson_mesh
+    command_extra_flags: "--skip-dense --mesh-mode poisson"
+    description: "Poisson meshing instead of Delaunay. Better manifold, softer result."
+
+  - id: vggt_pipeline
+    description: "VGGT camera pose estimation → gsplat → MeshSplatting. No COLMAP."
+    requires: "VGGT, gsplat, MeshSplatting"
+    blocked: true
+    notes: "See dreams-to-reality.md Quality improvement paths #2"
+
+# ---------------------------------------------------------------------------
+# Notifications
+# ---------------------------------------------------------------------------
+notifications:
+  on_success:
+    log_to: "PIPELINE_TESTS.md"         # auto-logged by record_result.py
+    print_summary: true
+    format: |
+      [DTR SENTINEL] SUCCESS: {video_stem}
+        Pipeline:   colmap_u2net (sparse)
+        Verts:      {vertices}  (best: {best_vertices})
+        Faces:      {faces}     (best: {best_faces})
+        Watertight: {watertight}
+        Size:       {file_size}
+        Time:       {elapsed}
+        Output:     {glb_path}
+        Quality:    {quality_status}  [PASS | WARN | DEGRADED]
+
+  on_failure:
+    log_to: "PIPELINE_TESTS.md"
+    print_summary: true
+    format: |
+      [DTR SENTINEL] FAILED: {video_stem}
+        Error:      {error_message}
+        Stage:      {failed_stage}
+        Suggestion: {suggestion}
+
+  on_quality_warn:
+    format: |
+      [DTR SENTINEL] QUALITY WARNING: {video_stem}
+        {quality_message}
+        Suggestion: {suggestion}
+
+  on_degraded:
+    format: |
+      [DTR SENTINEL] REGRESSION DETECTED: {video_stem}
+        Current:    {vertices} verts / {faces} faces
+        Previous:   {prev_vertices} verts / {prev_faces} faces
+        Drop:       {drop_pct:.1f}%
+        Action:     Review {pipeline_tests_log}
+
+# ---------------------------------------------------------------------------
+# Runtime Notes (read by dtr_watcher.py)
+# ---------------------------------------------------------------------------
+runtime:
+  python_interpreter: "python"     # or "python3" — adjust per environment
+  cwd: "~/dreams-to-reality"       # all commands run from here
+  log_file: "~/ai-hot-sauce/sentinels/dtr_watcher.log"
+  log_level: INFO                  # DEBUG | INFO | WARNING | ERROR
+
+# ---------------------------------------------------------------------------
+# Dependencies check (dtr_watcher.py runs this on startup)
+# ---------------------------------------------------------------------------
+deps:
+  required:
+    - package: watchdog
+      check: "pip show watchdog"
+      install: "pip install watchdog"
+    - package: pycolmap
+      check: "python -c \"import pycolmap\""
+    - package: rembg
+      check: "python -c \"import rembg\""
+    - package: trimesh
+      check: "python -c \"import trimesh\""
+    - package: opencv-python
+      check: "python -c \"import cv2\""
+    - package: tqdm
+      check: "python -c \"import tqdm\""
+  optional:
+    - package: vggt
+      check: "python -c \"import vggt\""
+      purpose: "Replace COLMAP SfM with VGGT (CVPR 2025 Best Paper)"
+    - package: pyyaml
+      check: "python -c \"import yaml\""
+      purpose: "Load this config file in dtr_watcher.py"

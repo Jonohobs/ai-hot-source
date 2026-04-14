@@ -3,308 +3,613 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Hot Source — Spice up your AI workflow</title>
+<title>AI Hot Source — Open source tools for AI-assisted development</title>
 <meta name="description" content="Open source AI tools: LLM router, session hooks, KPI library, security skills, and more. All MIT licensed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
+  /* ── Reset & Custom Properties ── */
   :root {
-    --bg: #0d1117;
-    --surface: #161b22;
-    --border: #30363d;
-    --text: #e6edf3;
-    --muted: #8b949e;
-    --accent: #f97316;
-    --accent2: #fb923c;
-    --green: #3fb950;
-    --blue: #58a6ff;
+    --brand-hue: 25;
+    --bg: oklch(0.10 0.01 25);
+    --surface: oklch(0.14 0.015 25);
+    --border: oklch(0.22 0.02 25);
+    --text: oklch(0.93 0.01 25);
+    --muted: oklch(0.60 0.02 25);
+    --accent: oklch(0.72 0.18 25);
+    --accent-glow: oklch(0.65 0.20 25);
+    --cyan: oklch(0.75 0.14 190);
+    --green: oklch(0.68 0.16 145);
+    --radius: 12px;
+    --max-w: 1200px;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
-  }
-  a { color: var(--blue); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-
-  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
-
-  header {
-    padding: 80px 0 48px;
-    text-align: center;
-    border-bottom: 1px solid var(--border);
-  }
-  header h1 {
-    font-size: 3rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--accent), #ef4444);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 12px;
-  }
-  header p {
-    color: var(--muted);
-    font-size: 1.2rem;
-    max-width: 600px;
-    margin: 0 auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
-  section { padding: 48px 0; }
-  section + section { border-top: 1px solid var(--border); }
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  a:hover { color: var(--cyan); }
+  a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ── Typography ── */
+  h1 {
+    font-size: clamp(3rem, 1rem + 6vw, 7rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
   h2 {
-    font-size: 1.5rem;
-    margin-bottom: 24px;
-    color: var(--accent2);
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-  }
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 20px;
-    transition: border-color 0.2s;
-  }
-  .card:hover { border-color: var(--accent); }
-  .card h3 { font-size: 1.1rem; margin-bottom: 8px; }
-  .card h3 a { color: var(--text); }
-  .card h3 a:hover { color: var(--accent); text-decoration: none; }
-  .card p { color: var(--muted); font-size: 0.9rem; }
-  .tag {
-    display: inline-block;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 2px 10px;
-    font-size: 0.75rem;
-    color: var(--muted);
-    margin-top: 8px;
-    margin-right: 4px;
-  }
-  .tag.hot { border-color: var(--accent); color: var(--accent); }
-
-  .stack-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9rem;
-  }
-  .stack-table th, .stack-table td {
-    text-align: left;
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--border);
-  }
-  .stack-table th {
-    color: var(--muted);
-    font-weight: 600;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-  }
-  .status { font-size: 0.85rem; }
-
-  .tier {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px 20px;
-    margin-bottom: 12px;
-    font-family: monospace;
-    font-size: 0.9rem;
-  }
-  .tier strong { color: var(--accent); }
-
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 32px 0;
-    text-align: center;
-    color: var(--muted);
-    font-size: 0.85rem;
-  }
-
-  .live-badge {
-    display: inline-block;
-    background: var(--green);
-    color: var(--bg);
-    font-size: 0.7rem;
+    font-size: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
     font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 10px;
-    margin-left: 8px;
-    vertical-align: middle;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+  h2::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin-top: 0.5rem;
+  }
+  h3 {
+    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.2rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
   }
 
-  /* Hero with logo in misty distance */
-  header {
+  /* ── Layout ── */
+  .container {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 clamp(1rem, 3vw, 2.5rem);
+  }
+
+  main {
     position: relative;
-    overflow: hidden;
-    min-height: 420px;
+  }
+
+  section {
+    padding: clamp(3rem, 6vw, 6rem) 0;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
   }
+
   .hero-bg {
     position: absolute;
     inset: 0;
     background: url('logo.jpg') center center / cover no-repeat;
-    opacity: 0.15;
-    filter: blur(2px) brightness(0.8);
+    opacity: 0.12;
+    filter: blur(12px) brightness(0.7) saturate(1.3);
     z-index: 0;
-    transform: scale(1.1);
+    transform: scale(1.15);
   }
+
+  /* Mist layers */
   .hero-mist {
     position: absolute;
     inset: 0;
     z-index: 1;
     pointer-events: none;
   }
-  .hero-mist::before,
-  .hero-mist::after {
-    content: '';
+
+  .hero-mist-a,
+  .hero-mist-b,
+  .hero-mist-c {
     position: absolute;
-    width: 200%;
+    width: 250%;
     height: 100%;
     top: 0;
-    left: -50%;
-    background: radial-gradient(ellipse at 30% 80%, rgba(13,17,23,0.9) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 60%, rgba(13,17,23,0.7) 0%, transparent 50%);
-    animation: mist-drift 12s ease-in-out infinite alternate;
+    left: -75%;
   }
-  .hero-mist::after {
-    background: radial-gradient(ellipse at 60% 90%, rgba(13,17,23,0.8) 0%, transparent 55%),
-                radial-gradient(ellipse at 20% 40%, rgba(249,115,22,0.03) 0%, transparent 40%);
-    animation: mist-drift 16s ease-in-out infinite alternate-reverse;
+
+  .hero-mist-a {
+    background:
+      radial-gradient(ellipse 80% 50% at 25% 85%, oklch(0.10 0.01 25 / 0.95) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 70% 30%, oklch(0.10 0.01 25 / 0.7) 0%, transparent 50%);
+    animation: mist-drift-1 18s ease-in-out infinite alternate;
   }
-  @keyframes mist-drift {
-    0% { transform: translateX(-3%) translateY(0); opacity: 0.8; }
-    50% { transform: translateX(3%) translateY(-2%); opacity: 1; }
-    100% { transform: translateX(-1%) translateY(1%); opacity: 0.9; }
+  .hero-mist-b {
+    background:
+      radial-gradient(ellipse 70% 60% at 55% 90%, oklch(0.10 0.01 25 / 0.85) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 30% at 15% 50%, oklch(0.72 0.18 25 / 0.04) 0%, transparent 45%);
+    animation: mist-drift-2 24s ease-in-out infinite alternate-reverse;
   }
-  /* Bottom fade to bg */
-  header::after {
+  .hero-mist-c {
+    background:
+      radial-gradient(ellipse 90% 40% at 40% 70%, oklch(0.10 0.01 25 / 0.6) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 50% at 80% 40%, oklch(0.75 0.14 190 / 0.02) 0%, transparent 40%);
+    animation: mist-drift-3 30s ease-in-out infinite alternate;
+  }
+
+  @keyframes mist-drift-1 {
+    0%   { transform: translateX(-4%) translateY(1%);  opacity: 0.8; }
+    50%  { transform: translateX(3%)  translateY(-2%); opacity: 1;   }
+    100% { transform: translateX(-2%) translateY(0%);  opacity: 0.9; }
+  }
+  @keyframes mist-drift-2 {
+    0%   { transform: translateX(3%)  translateY(-1%); opacity: 0.7; }
+    50%  { transform: translateX(-5%) translateY(2%);  opacity: 0.95;}
+    100% { transform: translateX(2%)  translateY(-1%); opacity: 0.85;}
+  }
+  @keyframes mist-drift-3 {
+    0%   { transform: translateX(-2%) translateY(2%);  opacity: 0.6; }
+    50%  { transform: translateX(4%)  translateY(-1%); opacity: 0.8; }
+    100% { transform: translateX(-3%) translateY(1%);  opacity: 0.7; }
+  }
+
+  /* Bottom gradient fade */
+  .hero::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 120px;
-    background: linear-gradient(transparent, var(--bg));
+    height: 200px;
+    background: linear-gradient(to bottom, transparent, var(--bg));
     z-index: 2;
+    pointer-events: none;
   }
-  header .container {
+
+  .hero-content {
     position: relative;
     z-index: 3;
+    text-align: center;
+    padding: 2rem clamp(1rem, 3vw, 2.5rem);
+    max-width: 900px;
+  }
+
+  .hero-title {
+    background: linear-gradient(135deg, var(--accent), oklch(0.80 0.16 30), var(--accent-glow));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes gradient-shift {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 0.8rem + 0.8vw, 1.35rem);
+    color: var(--muted);
+    max-width: 640px;
+    margin: 1.5rem auto 0;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  /* ── Grid ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  @media (min-width: 640px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: clamp(1.25rem, 2vw, 1.75rem);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow:
+      0 8px 32px oklch(0.72 0.18 25 / 0.08),
+      0 0 0 1px oklch(0.72 0.18 25 / 0.12);
+  }
+
+  .card:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px oklch(0.72 0.18 25 / 0.25);
+  }
+
+  .card h3 { margin-bottom: 0.5rem; }
+  .card h3 a {
+    color: var(--text);
+    transition: color 0.2s ease;
+  }
+  .card h3 a:hover { color: var(--accent); }
+  .card h3 a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .card p {
+    color: var(--muted);
+    font-size: clamp(0.85rem, 0.8rem + 0.2vw, 0.95rem);
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  .card-tags {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  /* ── Tags ── */
+  .tag {
+    display: inline-block;
+    background: oklch(0.10 0.01 25);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 3px 12px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .tag.hot {
+    border-color: oklch(0.72 0.18 25 / 0.4);
+    color: var(--accent);
+    background: oklch(0.72 0.18 25 / 0.06);
+  }
+
+  /* ── Live Badge ── */
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: oklch(0.68 0.16 145 / 0.12);
+    color: var(--green);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 100px;
+    border: 1px solid oklch(0.68 0.16 145 / 0.25);
+    margin-left: 8px;
+    vertical-align: middle;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .live-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.3; }
+  }
+
+  /* ── Token Routing (Tiers) ── */
+  .tiers {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .tier {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: clamp(1rem, 2vw, 1.25rem) clamp(1.25rem, 2vw, 1.5rem);
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: clamp(0.8rem, 0.75rem + 0.2vw, 0.95rem);
+    line-height: 1.6;
+    transition: border-color 0.2s ease;
+  }
+  .tier:hover {
+    border-color: oklch(0.72 0.18 25 / 0.3);
+  }
+  .tier strong {
+    color: var(--accent);
+  }
+
+  .tier-note {
+    color: var(--muted);
+    margin-top: 1.25rem;
+    font-size: clamp(0.85rem, 0.8rem + 0.2vw, 0.95rem);
+    line-height: 1.6;
+  }
+
+  /* ── Divider between sections ── */
+  .section-divider {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: clamp(2rem, 4vw, 3rem) 0;
+    text-align: center;
+  }
+  footer p {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  footer p + p {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: oklch(0.45 0.02 25);
+  }
+
+  /* ── Scroll-driven fade-in animations ── */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 30%;
+    }
+
+    .reveal-card {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 25%;
+    }
+
+    /* Stagger cards */
+    .reveal-card:nth-child(1)  { animation-delay: 0ms; }
+    .reveal-card:nth-child(2)  { animation-delay: 60ms; }
+    .reveal-card:nth-child(3)  { animation-delay: 120ms; }
+    .reveal-card:nth-child(4)  { animation-delay: 180ms; }
+    .reveal-card:nth-child(5)  { animation-delay: 240ms; }
+    .reveal-card:nth-child(6)  { animation-delay: 300ms; }
+
+    @keyframes reveal-in {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  /* Fallback: if scroll-driven animations not supported, just show everything */
+  @supports not (animation-timeline: view()) {
+    .reveal,
+    .reveal-card {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .reveal, .reveal-card {
+      opacity: 1;
+      transform: none;
+    }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="hero-bg"></div>
-  <div class="hero-mist"></div>
-  <div class="container">
-    <h1>AI Hot Source</h1>
-    <p>Open source tools that solve real friction in AI-assisted development. No frameworks for frameworks' sake — just the source code that makes everything better.</p>
+<!-- ═══════ HERO ═══════ -->
+<header class="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-mist" aria-hidden="true">
+    <div class="hero-mist-a"></div>
+    <div class="hero-mist-b"></div>
+    <div class="hero-mist-c"></div>
+  </div>
+  <div class="hero-content">
+    <h1 class="hero-title">AI Hot Source</h1>
+    <p class="hero-subtitle">Open source tools that solve real friction in AI-assisted development. No frameworks for frameworks' sake — just the source code that makes everything better.</p>
   </div>
 </header>
 
-<div class="container">
+<!-- ═══════ MAIN ═══════ -->
+<main>
+  <div class="container">
 
-<section>
-  <h2>Tools</h2>
-  <div class="grid">
-    <div class="card">
-      <h3><a href="https://github.com/Jonohobs/hot-source">Hot Source</a></h3>
-      <p>Multi-model LLM router with scoring-based routing, circuit breakers, quality gates, and SQLite persistence. Supports OpenAI, Anthropic, Google, Ollama.</p>
-      <span class="tag hot">engine</span><span class="tag">python</span><span class="tag">MIT</span>
-    </div>
-    <div class="card">
-      <h3><a href="https://github.com/Jonohobs/context-manager">Context Manager</a></h3>
-      <p>Session summarization, archival, and context injection hooks for Claude Code. Tiered LLM fallback: Gemini CLI, Ollama, structured fallback.</p>
-      <span class="tag hot">claude-code</span><span class="tag">hooks</span><span class="tag">MIT</span>
-    </div>
-    <div class="card">
-      <h3><a href="https://github.com/Jonohobs/kpi-library">KPI Library</a></h3>
-      <p>52 KPI definitions across 9 business domains. Formula evaluation via safe AST parsing. CLI + Pydantic models + benchmarks.</p>
-      <span class="tag">analytics</span><span class="tag">CLI</span><span class="tag">MIT</span>
-    </div>
-    <div class="card">
-      <h3><a href="https://github.com/Jonohobs/guiding-sprite">Guiding Sprite</a></h3>
-      <p>AI-powered screen overlay that guides your cursor to UI elements using natural language. Supports Claude, GPT-4 Vision, and Gemini.</p>
-      <span class="tag">vision</span><span class="tag">PyQt5</span><span class="tag">MIT</span>
-    </div>
-    <div class="card">
-      <h3><a href="https://github.com/Jonohobs/cyberwoods">Cyberwoods</a></h3>
-      <p>Security workflow skill for safely reviewing and adopting untrusted external code, skills, packages, and MCP integrations.</p>
-      <span class="tag hot">security</span><span class="tag">skill</span><span class="tag">MIT</span>
-    </div>
-    <div class="card">
-      <h3><a href="https://github.com/Jonohobs/sent-before-i-read-that">sent-before-i-read-that</a></h3>
-      <p>Tells Claude when your message was typed before you saw its response. Two bash hooks, zero dependencies.</p>
-      <span class="tag hot">claude-code</span><span class="tag">UX</span><span class="tag">MIT</span>
-    </div>
+    <!-- ── Tools ── -->
+    <section>
+      <div class="reveal">
+        <p class="section-label">Open Source</p>
+        <h2>Tools</h2>
+      </div>
+      <div class="grid">
+        <div class="card reveal-card">
+          <h3><a href="https://github.com/Jonohobs/hot-source">Hot Source</a></h3>
+          <p>Multi-model LLM router with scoring-based routing, circuit breakers, quality gates, and SQLite persistence. Supports OpenAI, Anthropic, Google, Ollama.</p>
+          <div class="card-tags">
+            <span class="tag hot">engine</span><span class="tag">python</span><span class="tag">MIT</span>
+          </div>
+        </div>
+        <div class="card reveal-card">
+          <h3><a href="https://github.com/Jonohobs/context-manager">Context Manager</a></h3>
+          <p>Session summarization, archival, and context injection hooks for Claude Code. Tiered LLM fallback: Gemini CLI, Ollama, structured fallback.</p>
+          <div class="card-tags">
+            <span class="tag hot">claude-code</span><span class="tag">hooks</span><span class="tag">MIT</span>
+          </div>
+        </div>
+        <div class="card reveal-card">
+          <h3><a href="https://github.com/Jonohobs/kpi-library">KPI Library</a></h3>
+          <p>52 KPI definitions across 9 business domains. Formula evaluation via safe AST parsing. CLI + Pydantic models + benchmarks.</p>
+          <div class="card-tags">
+            <span class="tag">analytics</span><span class="tag">CLI</span><span class="tag">MIT</span>
+          </div>
+        </div>
+        <div class="card reveal-card">
+          <h3><a href="https://github.com/Jonohobs/guiding-sprite">Guiding Sprite</a></h3>
+          <p>AI-powered screen overlay that guides your cursor to UI elements using natural language. Supports Claude, GPT-4 Vision, and Gemini.</p>
+          <div class="card-tags">
+            <span class="tag">vision</span><span class="tag">PyQt5</span><span class="tag">MIT</span>
+          </div>
+        </div>
+        <div class="card reveal-card">
+          <h3><a href="https://github.com/Jonohobs/cyberwoods">Cyberwoods</a></h3>
+          <p>Security workflow skill for safely reviewing and adopting untrusted external code, skills, packages, and MCP integrations.</p>
+          <div class="card-tags">
+            <span class="tag hot">security</span><span class="tag">skill</span><span class="tag">MIT</span>
+          </div>
+        </div>
+        <div class="card reveal-card">
+          <h3><a href="https://github.com/Jonohobs/sent-before-i-read-that">sent-before-i-read-that</a></h3>
+          <p>Tells Claude when your message was typed before you saw its response. Two bash hooks, zero dependencies.</p>
+          <div class="card-tags">
+            <span class="tag hot">claude-code</span><span class="tag">UX</span><span class="tag">MIT</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── Live Projects ── -->
+    <section>
+      <div class="reveal">
+        <p class="section-label">In Production</p>
+        <h2>Live Projects</h2>
+      </div>
+      <div class="grid grid-2">
+        <div class="card reveal-card">
+          <h3><a href="https://dreamstoreality.app">Dreams to Reality</a> <span class="live-badge">LIVE</span></h3>
+          <p>Proprietary camera-orbit-to-3D-model pipeline. Upload a video, get a printable 3D model back.</p>
+          <div class="card-tags">
+            <span class="tag">3D</span><span class="tag">SaaS</span>
+          </div>
+        </div>
+        <div class="card reveal-card">
+          <h3><a href="https://www.poseidonplumbing.co.nz">Poseidon Plumbing</a> <span class="live-badge">LIVE</span></h3>
+          <p>Commercial plumbing website. Modern design, SEO optimized, built for a real client.</p>
+          <div class="card-tags">
+            <span class="tag">web</span><span class="tag">client work</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── More Repos ── -->
+    <section>
+      <div class="reveal">
+        <p class="section-label">Also Shipping</p>
+        <h2>More Repos</h2>
+      </div>
+      <div class="grid">
+        <div class="card reveal-card">
+          <h3><a href="https://github.com/Jonohobs/claude-skills">Claude Skills</a></h3>
+          <p>Open-source skills for Claude Code — MIT licensed.</p>
+          <div class="card-tags">
+            <span class="tag">skills</span>
+          </div>
+        </div>
+        <div class="card reveal-card">
+          <h3><a href="https://github.com/Jonohobs/ai-tech-tree">AI Tech Tree</a></h3>
+          <p>Civilization-style interactive tech tree for AI stack building.</p>
+          <div class="card-tags">
+            <span class="tag">visualization</span>
+          </div>
+        </div>
+        <div class="card reveal-card">
+          <h3><a href="https://github.com/Jonohobs/webgpu-claude-skill">WebGPU Skill</a></h3>
+          <p>Claude skill for developing WebGPU applications with Three.js.</p>
+          <div class="card-tags">
+            <span class="tag">WebGPU</span><span class="tag">Three.js</span>
+          </div>
+        </div>
+        <div class="card reveal-card">
+          <h3><a href="https://github.com/Jonohobs/sf-parking-heatmap">SF Parking Heatmap</a></h3>
+          <p>Temporal heatmap from 206M+ meter transactions with bike share and isochrone overlays.</p>
+          <div class="card-tags">
+            <span class="tag">data viz</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── Token Routing ── -->
+    <section>
+      <div class="reveal">
+        <p class="section-label">Infrastructure</p>
+        <h2>Token Routing</h2>
+      </div>
+      <div class="tiers">
+        <div class="tier reveal-card"><strong>TIER 0 (local):</strong> Ollama — $0, your GPU</div>
+        <div class="tier reveal-card"><strong>TIER 1 (free API):</strong> SambaNova 20M/day → Mistral 1B/mo → Cerebras 1M/day → Groq 14K/day → Gemini 250K TPM</div>
+        <div class="tier reveal-card"><strong>TIER 2 (cheap):</strong> GLM-5.1 via OpenRouter, Grok $175/mo credits</div>
+        <div class="tier reveal-card"><strong>TIER 3 (supervised):</strong> Claude Code — human approval only</div>
+      </div>
+      <p class="tier-note">50M+ free tokens/day across all providers. Hot Source routes automatically based on task type, cost, latency, and reliability.</p>
+    </section>
+
   </div>
-</section>
+</main>
 
-<section>
-  <h2>Live Projects</h2>
-  <div class="grid">
-    <div class="card">
-      <h3><a href="https://dreamstoreality.app">Dreams to Reality</a> <span class="live-badge">LIVE</span></h3>
-      <p>Proprietary camera-orbit-to-3D-model pipeline. Upload a video, get a printable 3D model back.</p>
-      <span class="tag">3D</span><span class="tag">SaaS</span>
-    </div>
-    <div class="card">
-      <h3><a href="https://www.poseidonplumbing.co.nz">Poseidon Plumbing</a> <span class="live-badge">LIVE</span></h3>
-      <p>Commercial plumbing website. Modern design, SEO optimized, built for a real client.</p>
-      <span class="tag">web</span><span class="tag">client work</span>
-    </div>
-  </div>
-</section>
-
-<section>
-  <h2>More Repos</h2>
-  <div class="grid">
-    <div class="card">
-      <h3><a href="https://github.com/Jonohobs/claude-skills">Claude Skills</a></h3>
-      <p>Open-source skills for Claude Code — MIT licensed.</p>
-      <span class="tag">skills</span>
-    </div>
-    <div class="card">
-      <h3><a href="https://github.com/Jonohobs/ai-tech-tree">AI Tech Tree</a></h3>
-      <p>Civilization-style interactive tech tree for AI stack building.</p>
-      <span class="tag">visualization</span>
-    </div>
-    <div class="card">
-      <h3><a href="https://github.com/Jonohobs/webgpu-claude-skill">WebGPU Skill</a></h3>
-      <p>Claude skill for developing WebGPU applications with Three.js.</p>
-      <span class="tag">WebGPU</span><span class="tag">Three.js</span>
-    </div>
-    <div class="card">
-      <h3><a href="https://github.com/Jonohobs/sf-parking-heatmap">SF Parking Heatmap</a></h3>
-      <p>Temporal heatmap from 206M+ meter transactions with bike share and isochrone overlays.</p>
-      <span class="tag">data viz</span>
-    </div>
-  </div>
-</section>
-
-<section>
-  <h2>Token Routing</h2>
-  <div class="tier"><strong>TIER 0 (local):</strong> Ollama — $0, your GPU</div>
-  <div class="tier"><strong>TIER 1 (free API):</strong> SambaNova 20M/day → Mistral 1B/mo → Cerebras 1M/day → Groq 14K/day → Gemini 250K TPM</div>
-  <div class="tier"><strong>TIER 2 (cheap):</strong> GLM-5.1 via OpenRouter, Grok $175/mo credits</div>
-  <div class="tier"><strong>TIER 3 (supervised):</strong> Claude Code — human approval only</div>
-  <p style="color: var(--muted); margin-top: 16px; font-size: 0.9rem;">50M+ free tokens/day across all providers. Hot Source routes automatically based on task type, cost, latency, and reliability.</p>
-</section>
-
-</div>
-
+<!-- ═══════ FOOTER ═══════ -->
 <footer>
   <div class="container">
     <p>Built by <a href="https://github.com/Jonohobs">Jonathan Hobman</a> — MIT Licensed</p>
-    <p style="margin-top: 8px;">Ship tools that solve real friction. No frameworks for frameworks' sake.</p>
+    <p>Ship tools that solve real friction. No frameworks for frameworks' sake.</p>
   </div>
 </footer>
 

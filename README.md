@@ -2,22 +2,22 @@
 
 A collection of spicy AI tools, agents, and utilities — the secret ingredients that make agentic workflows actually work.
 
-## What's Inside
+## Packages
 
-### Sentinels
-Trigger-based agent daemon system. Define "when X happens, spawn agent Y with context Z" rules. Event-to-agent wiring without a heavy framework.
+Each tool now lives in its own repo:
 
-- [Design Doc](SENTINELS.md)
-- [Pipeline Watcher](sentinels/dtr_watcher.py) — file-system watcher that triggers 3D reconstruction pipelines
+| Package | Description | Repo |
+|---------|-------------|------|
+| **[Hot Source](https://github.com/Jonohobs/hot-source)** | Multi-model LLM router with circuit breakers, quality gates, and SQLite persistence | `~/projects/hot-source` |
+| **[Context Manager](https://github.com/Jonohobs/context-manager)** | Session summarization, archival, and context injection hooks for Claude Code | `~/projects/context-manager` |
+| **[Guiding Sprite](https://github.com/Jonohobs/guiding-sprite)** | AI-powered screen overlay that guides your cursor to UI elements via natural language | `~/projects/guiding-sprite` |
+| **[KPI Library](https://github.com/Jonohobs/kpi-library)** | 52 KPI definitions across 9 domains with formula evaluation and CLI | `~/projects/kpi-library` |
+| **[Cyberwoods](https://github.com/Jonohobs/cyberwoods)** | Security workflow skill for safely reviewing untrusted external code | `~/projects/cyberwoods` |
 
-### Context Manager (`src/context-manager/`)
-Tools for managing AI agent context across sessions — observation logging, session digests, pre-compaction summaries, and attention residual analysis.
+## Still Here
 
-### Guiding Sprite (`src/guiding-sprite/`)
-AI-powered screen overlay that guides your cursor to UI elements using natural language. Describe what you're looking for ("the save button"), and an animated sprite floats to it. Supports Claude, GPT-4 Vision, and Gemini.
-
-### AI Stack Manifest
-[STACK.md](STACK.md) — living inventory of every model, API, and tool in the stack with health status and token budget routing tiers.
+- [STACK.md](STACK.md) — living inventory of every model, API, and tool in the stack
+- [SENTINELS.md](SENTINELS.md) — design doc for trigger-based agent daemon (aspirational)
 
 ## Philosophy
 
